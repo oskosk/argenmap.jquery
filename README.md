@@ -31,8 +31,8 @@ Sin embargo te da acceso a la API completa de Google Maps.
  - Los servicios del IGN (WMS, ...) y de Google Maps son aprovechables sin código extra (geocodificación, datos de elevación ...) ([ejemplo de geocodificación transparente] (http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/api_agregarMarcador.html))
 
 5. Etiquetas y datos personalizados
- - Todos los objetos agregados (marcadores, overlays ...) pueden ser etiquetados para usarlos m'as adelante por medio de la funcion "get"  filtrados por una o más etiquetas ([ejemplo de etiquetado] (http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/api_agregarCapaKml) )
- - Todos los objetos pueden tener asociados datos personalizados que son enviados a los eventos ([ejemplo de datos personaliazdos] (http://www.ign.gob.ar/agenmap/argenmap.jquery/docs/api_agregarMarcadores.html) )
+ - Todos los objetos agregados (marcadores, overlays ...) pueden ser etiquetados para usarlos más adelante por medio de la funcion "get"  filtrados por una o más etiquetas ([ejemplo de etiquetado] (http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/agregarCapaKml) )
+ - Todos los objetos pueden tener asociados datos personalizados que son enviados a los eventos ([ejemplo de datos personaliazdos] (http://www.ign.gob.ar/agenmap/argenmap.jquery/docs/agregarMarcadores.html) )
  
 6. Muchos ejemplos
  - En el sitio [API] (http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/api.html) y [Ejemplos] (http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/ejemplos.html)
