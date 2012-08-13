@@ -28,7 +28,7 @@ Sin embargo te da acceso a la API completa de Google Maps.
  - Aunque argenmap.jquery presenta tipos de datos simplificados, podés usar los formatos de Google Maps.
 
 4. Uso transparente de los servicios del IGN y de Google Maps.
- - Los servicios del IGN (WMS, ...) y de Google Maps son aprovechables sin código extra (geocodificación, datos de elevación ...) ([ejemplo de geocodificación transparente] (http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/api_agregarMarcador.html))
+ - Los servicios del IGN (WMS, ...) y de Google Maps son aprovechables sin código extra (geocodificación, datos de elevación ...) ([ejemplo de geocodificación transparente] (http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/agregarMarcador.html))
 
 5. Etiquetas y datos personalizados
  - Todos los objetos agregados (marcadores, overlays ...) pueden ser etiquetados para usarlos más adelante por medio de la funcion "get"  filtrados por una o más etiquetas ([ejemplo de etiquetado] (http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/agregarCapaKml) )
