@@ -1,4 +1,4 @@
-[argenmap.jquery](http://www.ign.gob.ar/argenmap/argenmap.jquery/) - Mapas web del IGN y jQuery
+[argenmap.jquery](http://www.ign.gob.ar/argenmap/argenmap.jquery/docs) - Mapas web del IGN y jQuery
 ===================================================
 
 Presentación
