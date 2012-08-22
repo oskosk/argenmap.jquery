@@ -10,13 +10,14 @@ de la República Argentina.
 
 Te ofrece funciones potentes (clustering, resolución de direcciones...) y simples que te evitan tener que escribir mucho código
 repetitivo.
-Sin embargo te da acceso a la API completa de Google Maps.
+
+Igualmente, te da acceso a la API completa de Google Maps.
 
 
 ¿Por qué usar argenmap.jquery ?
 -----------------
 
-1. Mapas con los nombres oficiales en lugas de los nombres que usa Google Maps : 
+1. Mapas con los nombres oficiales en lugar de los nombres que usa Google Maps : 
  - El mapa de argenmap presenta las capas base de Google Maps o las del IGN pero siempre con nombres oficialmente reconocidos por Argentina.
 
 2. Completa compatibilidad con jQuery : 
