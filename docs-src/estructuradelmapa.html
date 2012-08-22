@@ -1,0 +1,149 @@
+<section id="mapaRamsac">
+	<div class="page-header">
+		<h1>ESTRUCTURA DE UN MAPA DE ARGENMAP</h1>
+		</div>
+		<div class="page-header">
+		<h3>Comparación entre Google Maps y Argenmap.jquery</h3>
+		</div> <!--header-->
+		<div class="row-fluid">
+			<div class="span4">
+				<h2>Imagen Institucional <br/>del IGN</h2>
+				<h4>No hay duda del origen de los datos</h4>
+				<div>
+					<p>
+					El encabezado y pie de cada mapa de argenmap ofrece la información de que este mapa
+					<strong>tiene origen en el IGN</strong>. 
+					</p>
+					<p>
+					Asegura al observador que los <em>topónimos y datos vectoriales</em> son datos del Instituto Geográfico Nacional
+					de la República Argentina.
+					</p>
+				</div>
+			</div> <!--span -->		
+
+			<div class="span4">
+				<h2>Mapa vectorial del<br/>IGN</h2>
+				<h4>La capa basesigign de nuestro WMS</h4>
+				<div id="mapaA1" style="height:300px;border:1px dashed black"></div>
+			</div>  <!--span -->		
+			
+			<div class="span4">
+				<h2>Mapa vectorial de<br/> Google Maps</h2>
+				<h4>Capa base <em>ROADMAP</em> de Google Maps</h4>
+				<div id="mapaA2" style="height:300px;border:1px dashed black"></div>
+			</div> <!--span -->
+			
+		</div>	<!--row --> 
+		
+		<div class="page-header">
+		<h3>Datos aprobados por el Instituto Geográfico Nacional</h3>
+		</div> <!--header-->
+		<div class="row-fluid">
+			<div class="span4">
+				<h2>Topónimos oficiales</h2>
+				<div>
+				<p>
+					Todos sabemos que Google tiene una base de datos con nombres no aprobados por el IGN.
+				</p>
+				</p>
+					Por lo tanto, el origen de la nomenclatura de calles, partidos, localidaes y accidentes geográficos es dudoso
+					con respecto a la cartografía oficial.
+				</p>
+				<p>
+				Argenmap superpone <em>por default</em> nuestros topónimos sobre la satelitarias de Google.
+				</p>
+				</div>
+			</div> <!--span -->		
+
+			<div class="span4">
+				<h2>Topónimos del IGN</h2>
+				<div id="mapaB1" style="height:300px;border:1px dashed black"></div>
+			</div>  <!--span -->		
+			
+			<div class="span4">
+				<h2>Topónimos de Google Maps</h2>
+				<div id="mapaB2" style="height:300px;border:1px dashed black"></div>
+			</div> <!--span -->
+			
+		</div>	<!--row -->
+
+		<div class="page-header">
+		<h3>Simple acceso</h3>
+		</div> <!--header-->
+		<div class="row-fluid">
+			<div class="span4">
+				<h2>Programación</h2>
+				<h5>Así de fácil es montar un mapa de argenmap con datos de otro organismo</h5>
+				<div>
+<pre class="prettyprint linenums">
+
+$('#mapaC1').argenmap({
+	accion: 'agregarCapaKml',
+	url:'http://sarmientoba.buenosaires.gob.ar/wp-content/themes/plansarmiento/infografia/xml/escuelas.kml',
+});
+</pre>
+				
+				</div>
+			</div> <!--span -->		
+
+			<div class="span8">
+				<h2>Carga de KML sobre argenmap</h2>
+				<h5>Escuelas de la Ciudad de Buenos Aires<br/>
+				según el proyecto SarmientoBA</h5>
+				<div id="mapaC1" style="height:300px;border:1px dashed black"></div>
+			</div>  <!--span -->		
+	
+		</div>	<!--row --> 
+
+</section>		
+		<script type="text/javascript">
+		$(function() {
+			goMapaA();
+			goMapaB();
+			goMapaC();
+		});
+		function goMapaA() {
+			$('#mapaA1').argenmap({
+				accion: 'agregarMarcador',
+				latLng: [-28.267428002034045, -64.73662569531251],
+				map: {
+					center:true,
+					zoom:8
+				}
+			});
+			var gmapOptions = {
+	          center: new google.maps.LatLng(-28.267428002034045, -64.73662569531251),
+	          zoom: 8,
+	          mapTypeId: google.maps.MapTypeId.ROADMAP
+	        };			
+			gmap1 = new google.maps.Map( document.getElementById('mapaA2'), gmapOptions );
+			
+			
+		}
+		function goMapaB() {
+			$('#mapaB1').argenmap({
+				accion: 'agregarMarcador',
+				direccion: 'Islas Malvinas',
+				map: {
+					mapTypeId: 'satellite',
+					center:true,
+					zoom:8
+				}
+			});
+			var gmapOptions = {
+	          center: new google.maps.LatLng(-51.796253, -59.52361300000001),
+	          zoom: 8,
+	          mapTypeId: google.maps.MapTypeId.ROADMAP
+	        };			
+			gmap1 = new google.maps.Map( document.getElementById('mapaB2'), gmapOptions );
+			
+			
+		}
+		function goMapaC() {
+			$('#mapaC1').argenmap({
+				accion: 'agregarCapaKml',
+				url:'http://sarmientoba.buenosaires.gob.ar/wp-content/themes/plansarmiento/infografia/xml/escuelas.kml',
+			});
+
+		}		
+		</script>

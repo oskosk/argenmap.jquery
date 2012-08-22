@@ -1,0 +1,106 @@
+			<section id="presentacion">
+				<div class="page-header">
+					<h1>Presentación</h1>
+				</div>
+				<div class="row-fluid">
+					<h2>Características de argenmap.jquery</h2>
+					<p>
+					argenmap.jquery es un plugin para jQuery que permite combinar los mapas web del IGN con la API de Google Maps con el fin
+					de obtener beneficio de los datos geoespaciales oficiales del IGN sobre las imágenes satelitales de google.
+					</p>
+					<h3>Multi instancia</h3>
+					<p>
+					Podés usar varios mapas en la misma página.
+					</p>
+					<h3>Encadenable</h3>
+					<p>
+					Podés utilizar argenmap.jquery como cualquier plugin de jQuery.
+					</p>
+<pre class="prettyprint linenums">
+$('#prueba').show().argenmap().css('border', '1px solid #000000');					
+</pre>
+					<h3>jQuery completo</h3>
+					<p>
+						<em>Con este body html... </em>
+					</p>
+<pre class="prettyprint linenums">
+&lt;body&gt;
+&lt;div id="prueba1" class="mapa arriba"&gt;&lt;/div&gt;
+&lt;div id="prueba2" class="mapa centro"&gt;&lt;/div&gt;
+&lt;div id="prueba3" class="mapa abajo"&gt;&lt;/div&gt;
+&lt;/body&gt;
+</pre>
+					<p>
+						<em>... este código primero inicializa todos los mapas, y luego agrega un marcador en los dos primeros 
+						utilizando 2 selectores diferentes.
+						</em>
+					</p>
+<pre class="prettyprint linenums">
+$('.mapa').argenmap({
+	accion: 'init',
+	opciones:{
+		center:[-34, -59],
+		zoom:2,
+		mapTypeControl: true,
+		mapTypeControlOptions: {
+			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+		},
+		navigationControl: true,
+		scrollwheel: true,
+		streetViewControl: true
+	}
+});
+ 
+$('#prueba2').argenmap({
+	accion:'agregarMarcador',
+	latLng:[-34.001, -59.03]
+});
+ 
+$('.mapa.arriba').argenmap({
+	accion:'agregarMarcador',
+	latLng:[-34.02, -59.01]
+})
+</pre>
+					<h3>Acceso completo a la API de Google Maps</h3>
+					<p>
+						Aunque argenmap simplifica el uso de mapas en web con datos oficiales, también permite el acceso a la API de Google Maps nativamente.<br/>
+						<em>Este ejemplo muestra cómo agregar un marcador utilizando un ícono desde un sprite</em>
+					</p>
+<pre class="prettyprint linenums">
+					
+$('#prueba').argenmap({
+	accion: 'agregarMarcador',
+	direccion: "Av. Cabildo 381",
+	marker: {
+		options:{
+			icon: new google.maps.MarkerImage("ui-icons_222222_256x240.png", new google.maps.Size(16, 16), new google.maps.Point((14.5*1), (14.5*10)))
+		}
+	},
+	map: {
+		center: true,
+		zoom: 14,
+		mapTypeId: google.maps.MapTypeId.TERRAIN
+	}
+});
+</pre>
+
+					<h3>Contextual</h3>
+					<p>
+						El elemento <strong>div</strong> que invoca a argenmap es el contexto <strong><em>this</em></strong> de las funciones de callback y de eventos.
+					</p>
+<pre class="prettyprint linenums">
+					
+$('#prueba').argenmap({
+	accion: 'agregarMarcador',
+	latLng: [-33, 151],
+	map: {
+		center: true,
+		zoom: 8
+	},
+	callback: function() {
+		$(this).css('border', '1px solid red');
+	}
+});
+</pre>
+				</div>
+			</section> 
