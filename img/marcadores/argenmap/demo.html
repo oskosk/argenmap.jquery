@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+
+function load(){
+
+  var point = new google.maps.LatLng(50.875311, 0.351563);
+
+  var myMapOptions = {
+    zoom: 5,
+    center: point,
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+
+  var map = new google.maps.Map(document.getElementById("map"),myMapOptions);
+
+  var image = new google.maps.MarkerImage(
+    'marker-images/image.png',
+    new google.maps.Size(64,64),
+    new google.maps.Point(0,0),
+    new google.maps.Point(32,64)
+  );
+
+  var shadow = new google.maps.MarkerImage(
+    'marker-images/shadow.png',
+    new google.maps.Size(100,64),
+    new google.maps.Point(0,0),
+    new google.maps.Point(32,64)
+  );
+
+  var shape = {
+    coord: [38,1,40,2,42,3,44,4,45,5,46,6,47,7,47,8,48,9,49,10,49,11,50,12,50,13,50,14,51,15,51,16,51,17,51,18,51,19,51,20,51,21,51,22,51,23,51,24,51,25,51,26,50,27,50,28,49,29,49,30,48,31,48,32,47,33,46,34,45,35,44,36,43,37,41,38,40,39,39,40,39,41,38,42,37,43,37,44,36,45,36,46,35,47,35,48,35,49,37,50,39,51,40,52,41,53,41,54,42,55,42,56,41,57,41,58,40,59,39,60,38,61,34,62,31,62,27,61,26,60,25,59,24,58,23,57,23,56,23,55,24,54,24,53,25,52,26,51,28,50,29,49,29,48,28,47,28,46,27,45,27,44,26,43,25,42,25,41,24,40,23,39,22,38,21,37,19,36,18,35,17,34,16,33,16,32,15,31,14,30,14,29,13,28,13,27,13,26,13,25,12,24,12,23,12,22,12,21,12,20,12,19,12,18,12,17,12,16,13,15,13,14,13,13,14,12,14,11,14,10,15,9,16,8,16,7,17,6,18,5,19,4,21,3,23,2,25,1,38,1],
+    type: 'poly'
+  };
+
+  var marker = new google.maps.Marker({
+    draggable: true,
+    raiseOnDrag: false,
+    icon: image,
+    shadow: shadow,
+    shape: shape,
+    map: map,
+    position: point
+  });
+
+}
+
+</script>
+</head>
+<body onload="load()">
+<div id="map" style="width:600px;height:400px;margin:40px auto;"></div>
+<h1>Your Google Map Custom Marker</h1>
+<p>Created at <a href="http://powerhut.co.uk/googlemaps/custom_markers.php" target="_blank">http://powerhut.co.uk/googlemaps/custom_markers.php</a></p>
+
+
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="V6XPJYKRS6T34">
+<input type="image" src="https://www.paypal.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online.">
+<img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+</body>
+</html>
