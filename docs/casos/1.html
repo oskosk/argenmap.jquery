@@ -11,7 +11,6 @@ var argenmapYaCargo = false;
 function go ()
 {
 	if ( argenmapYaCargo ) {
-		console.log( $('#map_canvas').argenmap('get').getCenter() );
 		return;
 	}
 	jQuery.getScript('http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js', function() {
@@ -33,7 +32,6 @@ function quitarMapaOriginal()
 
 function cargarArgenmap()
 {
-	console.log(centro);
 	$('#map_canvas').argenmap({
 		accion:'init',
 		center: [centro.lat(), centro.lng()], 
