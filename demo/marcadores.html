@@ -1,0 +1,67 @@
+<html>    
+  <head> 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>        
+    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <script type="text/javascript" src="../argenmap.jquery.js"></script>
+    <style>
+      body{
+        text-align:center;
+      }
+      .mapa{
+        margin: 20px auto;
+        border: 1px dashed #C0C0C0;
+        width: 500px;
+        height: 500px;
+      }
+    </style>
+    
+    <script type="text/javascript">
+        
+      $(function(){
+      
+        $('#prueba')
+          .argenmap(
+          { accion:'init',
+            opciones:{
+              center:[-34,-59],
+              zoom: 11
+            }
+          },
+          { accion: 'agregarMarcadores',
+            markers:[
+              {lat:-34.02, lng:-59.02, data:'Margen este'},
+              {lat:-34.03,lng:-59.03, data:'Margen oeste'},
+              {lat:-34.01, lng:-59.01, data:'Otro marcador'}
+            ],
+            marker:{
+              opciones:{
+                draggable: true
+              },
+              events:{
+                mouseover: function(marker, event, data){
+                  var map = $(this).argenmap('get'),
+                      infowindow = $(this).argenmap({accion:'get', name:'infowindow'});
+                  if (infowindow){
+                    infowindow.open(map, marker);
+                    infowindow.setContent(data);
+                  } else {
+                    $(this).argenmap({accion:'addinfowindow', anchor:marker, opciones:{content: data}});
+                  }
+                },
+                mouseout: function(){
+                  var infowindow = $(this).argenmap({accion:'get', name:'infowindow'});
+                  if (infowindow){
+                    infowindow.close();
+                  }
+                }
+              }
+            }
+          }
+        );
+      });
+    </script>
+  <body>
+    <div id="prueba" class="mapa"></div>
+    Cuando el mouse est&aacute; sobre un marcador, una ventana de info &uacute;nica aparece (se crea al principio y luego se recicla).
+  </body>
+</html>
