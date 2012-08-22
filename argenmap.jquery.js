@@ -2290,11 +2290,6 @@
     return this;
   }
 
-	
-  
-
-
-
 var argenmap = argenmap || {};
 
 argenmap.BASEURL  = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
@@ -2586,11 +2581,20 @@ argenmap._prepararContenedor = function( div )
 
 /*
  * Cambia el tamaño del canvas del mapa de acuerdo al alto del contenedor
+ * y setea el listener para cuando resizeo el div
  */
 argenmap._maximizarCanvas = function(contenedor_, mapHeader_, mapFooter_, mapCanvas_)
 {
 	var dif = contenedor_.height() - mapHeader_.height() - mapFooter_.height();
 	mapCanvas_.height( dif );
+
+	//me encargo del cambio de tamaño del mapa
+	contenedor_.on('resized',function(e){
+		var dif = contenedor_.height() - mapHeader_.height() - mapFooter_.height();
+		mapCanvas_.height( dif );
+		google.maps.event.trigger(contenedor_.argenmap('get'), "resize");
+	});
+
 }
 
 /**
@@ -2623,6 +2627,27 @@ argenmap.latLngAMercator = function (lat, lon) {
 	return {lat:y, lng:x};
 }
 
-
+//-----------------------------------------------------------------------//
+	// jQuery event
+	//-----------------------------------------------------------------------//
+	//resized event: se escucha desde un DOMElement y se dispara
+	//cada vez que ese elemento cambia de tamanio (ancho o alto)
+	$.event.special.resized = {
+		setup: function(){
+				var self = this, $this = $(this);
+				var $w = $this.width();
+				var $h = $this.height();
+				interval = setInterval(function(){
+						if($w != $this.width() || $h != $this.height()) {
+							$w = $this.width();
+							$h = $this.height();
+							jQuery.event.handle.call(self, {type:'resized'});
+						}
+				},100);
+		},
+		teardown: function(){
+				clearInterval(interval);
+		}
+	};
 
 })(jQuery);
