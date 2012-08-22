@@ -505,7 +505,7 @@
   }
 
   /***************************************************************************/
-  /*                           GMAP3 GLOBALS                                 */
+  /*                           GLOBALS de Argenmap                                 */
   /***************************************************************************/
   
   var _default = {},
@@ -2262,17 +2262,17 @@
     // loop on each jQuery object
     $.each(this, function() {
       var $this = $(this),
-          gmap3 = $this.data('argenmap');
+          _argenmap = $this.data('argenmap');
       empty = false;
-      if (!gmap3){
-        gmap3 = new Argenmap($this);
-        $this.data('argenmap', gmap3);
+      if (! _argenmap){
+        _argenmap = new Argenmap($this);
+        $this.data('argenmap', _argenmap);
       }
       // direct call : bypass jQuery method (not stackable, return mixed)
       if ( (list.length == 1) && (isDirect(list[0])) ){
-        results.push(gmap3._direct(list[0]));
+        results.push(_argenmap._direct(list[0]));
       } else {
-        gmap3._plan(list);
+        _argenmap._plan(list);
       }
     });
     // return for direct call (only) 
