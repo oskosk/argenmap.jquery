@@ -2589,7 +2589,7 @@ argenmap._maximizarCanvas = function(contenedor_, mapHeader_, mapFooter_, mapCan
 	mapCanvas_.height( dif );
 
 	//me encargo del cambio de tamaño del mapa
-	contenedor_.on('resized',function(e){
+	contenedor_.bind('resized',function(e){
 		var dif = contenedor_.height() - mapHeader_.height() - mapFooter_.height();
 		mapCanvas_.height( dif );
 		google.maps.event.trigger(contenedor_.argenmap('get'), "resize");
