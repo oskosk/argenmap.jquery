@@ -93,7 +93,7 @@
 			<h2>Argenmap como servicio de alta disponibilidad</h2>
 		</div>		
 		<div class="row-fluid">
-			
+			<!--
 			<div class="span6">
 				<h3>Argenmap ofrece fácil acceso y alta disponibilidad</h3>
 				<p>
@@ -102,10 +102,11 @@
 				
 				<img src="img/docs/argenmapinteracciongeneral.png"/>
 			</div>
-			<div class="span6">
+			-->
+			<div class="span12">
 				<h3>Así se ven los mapas con Argenmap</h3>
 				<p>
-					<a class="btn btn-large" href="estructuradelmapa.html">Ver detalles de la estructura del mapa</a>
+					<a class="btn btn-large" href="estructuradelmapa.html">Detalles de la estructura del mapa</a>
 				</p>
 				<div style="height:470px;border:1px dashed #222" id="mapa">
 				</div>
@@ -120,7 +121,7 @@
 		$(function() {
 			$('#mapa').argenmap({
 				accion:'agregarMarcador',
-				direccion:'Cataratas del Iguazú',
+				direccion:'Cerro Aconcagua',
 				map: {
 					center:true,
 					zoom:13,
