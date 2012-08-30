@@ -16,7 +16,7 @@
     <link rel="apple-touch-icon" href="http://bartaz.github.com/impress.js/apple-touch-icon.png" />
 </head>
 
-<body class="impress-not-supported">
+<body onload="impress().init()" class="impress-not-supported">
 
 <div class="fallback-message">
     <p>Tu browser no soporta las características necesarias para la presentación Así que vas a ver una versión simplificada de la presentación.</p>
@@ -64,8 +64,9 @@
         
     -->
     <div id="bored" class="step slide" data-x="-1000" data-y="-1500">
-        <q>Muchas webs del Estado utilizan <b>hoy</b> mapas de Google Maps.<br/>
-        Los diseñadores web los utilizan porque siempre están disponibles y son fáciles de aprovechar.</q>
+        <q>Todos conocemos estos <b>mapas</b>
+        <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/?ie=UTF8&amp;ll=-51.76784,-59.963379&amp;spn=3.77408,10.821533&amp;t=h&amp;z=7&amp;output=embed"></iframe><br />
+        </q>
     </div>
 
     <!--
@@ -86,13 +87,12 @@
     <div class="step slide" data-x="0" data-y="-1500">
     	<q>El problema son<br/>
     	<strong>los nombres y límites</strong><br/>
-    	que Google muestra.<br/>
-    	<b>No son los reconocidos por el IGN.</b></q>
+    	que Google muestra.</q>
     </div>
 
     <div class="step slide" data-x="1000" data-y="-1500">
     	<q>Competir con estos mapas es una tarea difícil.<br/>
-    	Y pretender criterio profesional SIG por parte de los diseñadores web es imposible.
+    	Y los diseñadores web no son profesionales SIG.
     	</q>
         
     </div>
@@ -109,8 +109,7 @@
     -->
     <div id="title" class="step" data-x="0" data-y="0" data-scale="4">
         <span class="try">por eso hicimos </span>
-        <h1>Argenmap<sup>*</sup></h1>
-        <span class="footnote"><sup>*</sup> o "Cómo Mostrarle A los Argentinos Lo Que Hace El IGN"</span>
+        <h1>Argenmap</h1>
     </div>
 
     <!--
@@ -122,9 +121,9 @@
         
     -->
     <div id="its" class="step" data-x="850" data-y="3000" data-rotate="90" data-scale="5">
-        <p>El plugin Argenmap para javascript es una herramienta online para desarrolladores web.<br/>
+        <p>Una herramienta online para desarrolladores web.<br/>
         Inspirada en la necesidad de mostrar el trabajo del IGN a quienes usan los mapas de Google en su web.<br/>
-        Y basado en los datos del <strong>servicio WMS del Instituto</strong> acercándolo a los browsers modernos.</p>
+        </p>
     </div>
 
     <div id="big" class="step" data-x="4500" data-y="3600" data-rotate="180" data-scale="6">
@@ -162,7 +161,7 @@
     </div>
 
     <div id="argenmapenargentina.gob.ar" class="step slide" data-x="-3000" data-y="-2500">
-    	<iframe src="http://cargar.php?caso=http://www.argentina.gob.ar/directorio/mapa/" allowtransparency="true" frameborder="0" scrolling="0" width="100%" height="100%"></iframe>
+    	<iframe src="cargar.php?caso=http://www.argentina.gob.ar/directorio/mapa/" allowtransparency="true" frameborder="0" scrolling="0" width="100%" height="100%"></iframe>
 
     </div>  
 
@@ -194,10 +193,6 @@
         <p><b>nuestro SIG</b> en cada web del <b class="imagination">Estado</b></p>
     </div>
 
-    <div id="source" class="step" data-x="6300" data-y="2000" data-rotate="20" data-scale="4">
-        <p>Argenmap <b>ya está online</b></p>
-        <q><a href="http://www.ign.gob.ar/argenmap/">ign.gob.ar/argenmap</a></q>
-    </div>
 
     <div id="one-more-thing" class="step" data-x="6000" data-y="4000" data-scale="2">
         <p>y una cosa más...</p>
@@ -215,10 +210,6 @@
         as `data-rotate` (these two are basically aliases).
         
     -->
-    <div id="its-in-3d" class="step" data-x="6200" data-y="4300" data-z="-100" data-rotate-x="-40" data-rotate-y="10" data-scale="2">
-        <p><span class="have">Hacia </span> <span class="you">dónde</span> <span class="noticed">va</span> <span class="in">argenmap</span> <b>?<sup>*</sup></p>
-        <span class="footnote">* en realidad ya estamos en esto ;)</span>
-    </div>
 
     <div id="futuro" class="step" data-x="7500" data-y="6000" data-scale="2">
         <p>Cuando los mapas del IGN y la infraestructura de servidores estén maduros activamos argenmap javascript para que funcione <b>independiente</b> de Google Maps.</p>
@@ -226,6 +217,10 @@
 
     <div id="its-in-3d2" class="step" data-x="7800" data-y="6500" data-z="-300" data-rotate-x="-40" data-rotate-y="10" data-scale="2">
         <p><span class="have">Y los  </span> <span class="you">usuarios </span> <span class="noticed">de argenmap.jquery</span> <span class="its"><b>no necesitan volver a modificar sus páginas</b></span>.</p>
+    </div>
+    <div id="source" class="step" data-x="6300" data-y="2000" data-rotate="20" data-scale="4">
+        <p>Argenmap <b>ya está online</b></p>
+        <q><a href="http://www.ign.gob.ar/argenmap/">ign.gob.ar/argenmap</a></q>
     </div>
 
     <!--
@@ -297,7 +292,6 @@ if ("ontouchstart" in document.documentElement) {
     
 -->
 <script src="js/impress.js"></script>
-<script>impress().init();</script>
 
 <!--
     
@@ -397,3 +391,23 @@ if ("ontouchstart" in document.documentElement) {
     <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
     <!--argenmap.jquery online -->
     <script type="text/javascript" src="http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js"></script>
+<script>
+    function countNow() {
+	    playCount = 0;
+	    nSlides = $('#impress').find("div").length;
+	    imp = impress();
+	    
+	    soundEfx = new Audio('http://www.onlywebpro.com/demo/jquery/resources/zoom.wav');    	
+        imp.init();
+        setTimeout("animateNow()",3000);
+    };
+
+    function animateNow() {
+        playCount++;
+        if(playCount <= nSlides) {
+            imp.next();
+            countNow();
+            soundEfx.play();
+        }
+    }
+</script>
