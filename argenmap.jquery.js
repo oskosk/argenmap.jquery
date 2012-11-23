@@ -2357,6 +2357,22 @@
 		});
 	}
 	
+	$.fn.agregarCapaKML = function(opciones)
+	{
+		//chainability
+		return this.each(function(){
+			var $this = $(this);
+			var a = $this.data('argenmap');
+			if(!a) return;
+			$this.argenmap({
+				accion:'agregarCapaKml',
+				opciones: {preserveViewport :true},
+				url: opciones.url
+			});
+
+		});
+	}
+	
 	$.fn.centro = function(lat,lon)
 	{
 		//getter
