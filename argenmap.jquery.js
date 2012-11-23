@@ -2373,7 +2373,7 @@
 		});
 	}
 	
-	$.fn.centro = function(lat,lon)
+	$.fn.centro = function(lat,lng)
 	{
 		//getter
 		//el getter/lector solo devuelve la primer coincidencia de selector
@@ -2390,7 +2390,7 @@
 			var a = $this.data('argenmap');
 			if(!a) return;
 			
-			$this.data('gmap').setCenter(new google.maps.LatLng(lat,lon));
+			$this.data('gmap').setCenter(new google.maps.LatLng(lat,lng));
 		});
 	}
 	
@@ -2445,7 +2445,7 @@
 		}
 		*/
 		return this.each(function(){
-			var o = $.extend({},opciones);
+			var o = $.extend({}, opciones);
 			var $this = $(this);
 			var a = $this.data('argenmap');
 			if(!a) return;
@@ -2457,13 +2457,28 @@
 			$this.argenmap({
 					accion: 'agregarMarcador',
 					latLng: [o.lat,o.lng],
-
-					infowindow: {
-						opciones: {
-							content: 'Hola mundo !'
+					data:o.contenido,
+					events: {
+						click: function(marker, event, data) {
+							if (o.contenido == undefined) {
+								return;
+							}
+							var map = $this.data('gmap'),
+							infowindow = $this.argenmap({accion:'get', name:'infowindow'});
+			 
+							if (infowindow) {
+								infowindow.open(map, marker);
+								infowindow.setContent(data);
+							} else {
+								$(this).argenmap({
+									accion:'addinfowindow',
+									anchor:marker, 
+									opciones:{content: data}});
+							}
 						}
 					}
-				});
+
+			});
 		});
 	}
 	
