@@ -2481,6 +2481,19 @@
 			});
 		});
 	}
+
+	$.fn.agregarMarcadores = function(marcadores)
+	{
+	
+		var $this = $(this);
+		var a = $this.data('argenmap');
+		if (!a) {
+			return ;
+		}
+		$.each( marcadores, function(i, v) {
+			$this.agregarMarcador( v ) ;
+		});
+	}
 	
     var argenmap = argenmap || {};
 
