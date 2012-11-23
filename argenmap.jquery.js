@@ -2338,6 +2338,28 @@
             }));
 		});
 	}
+	
+	$.fn.centro = function(lat,lon)
+	{
+		//getter
+		//el getter/lector solo devuelve la primer coincidencia de selector
+		if(arguments.length === 0)
+		{
+			if( !this.data('argenmap') ) return [];
+			
+			var ctro = this.data('gmap').getCenter();
+			return ctro ? [ctro.lat(),ctro.lng()] : [];
+		}
+		//setter
+		return this.each(function(){
+			var $this = $(this);
+			var a = $this.data('argenmap');
+			if(!a) return;
+			
+			$this.data('gmap').panTo(new google.maps.LatLng(lat,lon));
+		});
+	}	
+	
     var argenmap = argenmap || {};
 
     argenmap.BASEURL = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
