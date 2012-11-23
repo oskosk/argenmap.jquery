@@ -2377,6 +2377,57 @@
 		});
 	}
 	
+	/**
+	 * Agrega un marcador al mapa instanciado en el selector
+	 * agregarMarcador(float,float)
+	 * agregarMarcador(objeto): {lonlat:OpenLayers.LonLat} ó {lon:float,lat:float}
+	 * agregarMarcador(string): "-35,-57"
+	 * Opciones:
+	 *   capa: string, nombre de la capa donde colocar el marcador
+	 *   contenido: string/HTML, contenido descriptivo del marcador
+	 *   nombre: string
+	 *   eventos: TO DO
+	 *   cuadro: objeto con opciones de cuadro (ver agregarCuadro)
+	 */
+	$.fn.agregarMarcador = function(opciones,lon)
+	{
+		//si llega con un par de numeros como args...
+		/*
+		if(undefined != lon && $.isNumeric(opciones) && $.isNumeric(lon))
+		{
+			opciones = [opciones,lon];
+		}else if(typeof(opciones) == "string") {
+			//si llega con un string estilo "-34.218,-56.813"...
+			var arsplit = opciones.split(",");
+			arsplit[0] = parseFloat(arsplit[0]);
+			arsplit[1] = parseFloat(arsplit[1]);
+			if(isNaN(arsplit[0]) || isNaN(arsplit[1]))
+			{
+				opciones = null;
+			}else{
+				opciones = arsplit;
+			}
+		}
+		*/
+		return this.each(function(){
+			var o = $.extend({},opciones);
+			var $this = $(this);
+			var a = $this.data('argenmap');
+			if(!a) return;
+			
+			$this.argenmap({
+					accion: 'agregarMarcador',
+					latLng: [opciones.lat,opciones.lng],
+
+					infowindow: {
+						opciones: {
+							content: 'Hola mundo !'
+						}
+					}
+				});
+		});
+	}
+	
     var argenmap = argenmap || {};
 
     argenmap.BASEURL = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
