@@ -1212,12 +1212,6 @@
 			});
             argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseIGN());
 
-            argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseWMS({
-                name: 'manual de signos',
-                baseURL: 'http://wms.ign.gob.ar/geoserver/wms?',
-                layers: 'capabase_msc'
-            }));
-
             argenmap.GmapAgregarCapaWms(map, new argenmap.CapaWMSIGN());
 
             // y los estilos previamente agregados
