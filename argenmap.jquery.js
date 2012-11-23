@@ -2358,7 +2358,24 @@
 			
 			$this.data('gmap').panTo(new google.maps.LatLng(lat,lon));
 		});
-	}	
+	}
+	
+	$.fn.zoom = function(zoom)
+	{
+		if(undefined == zoom)
+		{
+			if( !this.data('argenmap') ) return null;
+			var z = this.data('gmap').getZoom();
+			return z ? z : null;
+		}
+		return this.each(function(){
+			var $this = $(this);
+			var a = $this.data('argenmap');
+			if(!a || !$.isNumeric(zoom)) return;
+			
+			$this.data('gmap').setZoom(zoom);
+		});
+	}
 	
     var argenmap = argenmap || {};
 
