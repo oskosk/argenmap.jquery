@@ -2448,10 +2448,13 @@
 			var $this = $(this);
 			var a = $this.data('argenmap');
 			if(!a) return;
-			
+			if ( o.lat === undefined  || o.lng ===undefined) {
+				o.lat = $this.data('gmap').getCenter().lat();
+				o.lng = $this.data('gmap').getCenter().lng();
+			}
 			$this.argenmap({
 					accion: 'agregarMarcador',
-					latLng: [opciones.lat,opciones.lng],
+					latLng: [o.lat,o.lng],
 
 					infowindow: {
 						opciones: {
