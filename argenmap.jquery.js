@@ -2484,15 +2484,31 @@
 
 	$.fn.agregarMarcadores = function(marcadores)
 	{
+		return this.each(function(){
+			var $this = $(this);
+			var a = $this.data('argenmap');
+			if (!a) {
+				return ;
+			}
+			$.each( marcadores, function(i, v) {
+				$this.agregarMarcador( v ) ;
+			});
+		});	
+	}
+
+	$.fn.limpiarMapa = function(marcadores)
+	{
 	
-		var $this = $(this);
-		var a = $this.data('argenmap');
-		if (!a) {
-			return ;
-		}
-		$.each( marcadores, function(i, v) {
-			$this.agregarMarcador( v ) ;
+		return this.each(function(){
+			var $this = $(this);
+			var a = $this.data('argenmap');
+			if (!a) {
+				return ;
+			}
+			$this.argenmap({accion:'limpiar'});
+
 		});
+		
 	}
 	
     var argenmap = argenmap || {};
