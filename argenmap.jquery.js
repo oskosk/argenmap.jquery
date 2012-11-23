@@ -2390,7 +2390,7 @@
 			var a = $this.data('argenmap');
 			if(!a) return;
 			
-			$this.data('gmap').panTo(new google.maps.LatLng(lat,lon));
+			$this.data('gmap').setCenter(new google.maps.LatLng(lat,lon));
 		});
 	}
 	
@@ -2425,6 +2425,7 @@
 	 */
 	$.fn.agregarMarcador = function(opciones,lon)
 	{
+		var _arguments = arguments;
 		//si llega con un par de numeros como args...
 		/*
 		if(undefined != lon && $.isNumeric(opciones) && $.isNumeric(lon))
@@ -2448,10 +2449,11 @@
 			var $this = $(this);
 			var a = $this.data('argenmap');
 			if(!a) return;
-			if ( o.lat === undefined  || o.lng ===undefined) {
+			if ( _arguments.length == 0 ) {
 				o.lat = $this.data('gmap').getCenter().lat();
 				o.lng = $this.data('gmap').getCenter().lng();
 			}
+
 			$this.argenmap({
 					accion: 'agregarMarcador',
 					latLng: [o.lat,o.lng],
