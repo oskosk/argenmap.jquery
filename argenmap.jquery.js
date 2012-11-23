@@ -2410,6 +2410,27 @@
 			$this.data('gmap').setZoom(zoom);
 		});
 	}
+
+	$.fn.capaBase = function(nombre)
+	{
+		if(undefined == nombre)
+		{
+			if( !this.data('argenmap') ) {
+				return null;
+			}
+			var z = this.data('gmap').mapTypeId;
+			return z ? z : null;
+		}
+		return this.each(function(){
+			var $this = $(this);
+			var a = $this.data('argenmap');
+			if(!a ) {
+				return;
+			}
+			
+			$this.data('gmap').setMapTypeId(nombre);
+		});
+	}
 	
 	/**
 	 * Agrega un marcador al mapa instanciado en el selector
