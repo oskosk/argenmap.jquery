@@ -2327,7 +2327,23 @@
         return this;
     }
 
+	$.fn.agregarCapaWMS = function(opciones)
+	{
+		//chainability
+		return this.each(function(){
+			var $this = $(this);
+			var a = $this.data('argenmap');
+			if(!a) return;
 
+			var map = $this.data('gmap');
+
+            argenmap.GmapAgregarCapaWms(map, new argenmap.CapaWMS({
+                name: opciones.nombre,
+                baseURL: opciones.url,
+                layers: opciones.capas
+            }));
+		});
+	}
     var argenmap = argenmap || {};
 
     argenmap.BASEURL = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
@@ -2452,7 +2468,6 @@
     }
 
 
- 
     
    argenmap.CapaWMS = function (opts) {
         // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
@@ -2519,7 +2534,7 @@
         return url;
     };
 
-	 argenmap.CapaWMSIGN = function()
+	argenmap.CapaWMSIGN = function()
 	{
 		var opts = {
 	        name: 'IGN',
@@ -2580,7 +2595,8 @@
     argenmap.GmapAgregarCapaWms = function (gmap, capa) {
 
         capa.gmap = gmap;
-        gmap.overlayMapTypes.insertAt(0, capa.imageMapType);
+        //gmap.overlayMapTypes.insertAt(0, capa.imageMapType);
+        gmap.overlayMapTypes.push(capa.imageMapType);
 
     };
 
