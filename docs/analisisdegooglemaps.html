@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+    <head>
+        <meta charset="utf-8">
+        <title>IGN - Argenmap para jQuery</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Mapas del IGN para la web">
+        <meta name="author" content="">
+        <!-- Le styles -->
+        <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap/css/docs.css" rel="stylesheet">
+        <link href="google-code-prettify/prettify.css" rel="stylesheet">
+        <style type="text/css">
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+            .sidebar-nav {
+                padding: 9px 0;
+            }
+            .marketing .row {
+                margin-bottom: 9px;
+            }
+            .marketing h1 {
+                margin: 36px 0 27px;
+                font-size: 40px;
+                font-weight: 300;
+                text-align: center;
+            }
+            .marketing h2, .marketing h3 {
+                font-weight: 300;
+            }
+            .marketing h2 {
+                font-size: 22px;
+            }
+            .marketing p {
+                margin-right: 10px;
+            }
+            .marketing .bs-icon {
+                float: left;
+                margin: 7px 10px 0 0;
+                opacity: .8;
+            }
+            .marketing .small-bs-icon {
+                float: left;
+                margin: 4px 5px 0 0;
+            }
+            .marketing-byline {
+                margin: -18px 0 27px;
+                font-size: 18px;
+                font-weight: 300;
+                line-height: 24px;
+                color: #999;
+                text-align: center;
+            }
+            #ejemplo {
+                height: 350px;
+                margin: 20px auto;
+                border: 1px dashed gray;
+            }
+        </style>
+        <link href="css/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <!-- Le fav and touch icons -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    </head>
+    
+    <body onload="prettyPrint()">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+ <a class="brand" style="padding-left:90px;background:url(img/logoignsintexto-40px.png) no-repeat"
+                    href="index.html">argenmap.jquery</a>
+
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="index.html">argenmap.jquery</a>
+                            </li>
+                            <li><a href="#contacto" onclick="UE.Popin.show(); return false;">Contacto</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span3">
+                    <div class="well sidebar-nav">
+                        <ul class="nav nav-list">
+                            <!--li class=""><a href="documentacion.html">Generador de mapas <span class="label label-important">experimental</span></a></li-->
+                            <li class="nav-header ">Conceptos básicos</li>
+                            <li class=" active"><a href="index.html">argenmap.jquery</a>
+
+                            </li>
+                            <li><a href="index.html#mapaBasico">Cómo incluir un mapa básico en tu web</a>
+
+                            </li>
+                            <li class="nav-header ">Documentación para desarrolladores</li>
+                            <li><a href="documentacion.html">Característias de argenmap.jquery</a>
+
+                            </li>
+                            <li><a href="documentacion.html#api">API</a>
+
+                            </li>
+                            <li><a href="ejemplos.html">Ejemplos</a>
+
+                            </li>
+                            <li class="nav-header ">Información adicional</li>
+                            <li><a href="presentacion.html">Presentación</a>
+
+                            </li>
+                            <li><a href="analisisdegooglemaps.html">Análisis de Google Maps</a>
+
+                            </li>
+                            <li><a href="datosvectoriales.html">Datos vectoriales de argenmap</a>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.well -->
+                </div>
+                <!--/span-->
+                <div class="span9">
+                    <header class="marketing">
+                        	<h1>Análisis de Google Maps</h1>
+
+                        <p class="marketing-byline">Esperamos que esta página concientice acerca del uso racional de Google
+                            Maps.</p>
+                    </header>
+                    <section id="analisisdegooglemaps" class="marketing">
+                        <div class="page-header">
+                            	<h2>El problema de Google Maps<small> desde varias perspectivas</small></h2>
+
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                	<h5>Desde el Estado</h5>
+
+                                	<h3>Nombres no oficiales<br/>
+						en los mapas</h3>
+
+                                <p>	<em>Google Maps</em> muestra nombres no oficiales en sus mapas. Esto tiene
+                                    consecuencias que van desde la tergiversación de las responsabilidades
+                                    sobre el terreno hasta la carencia de información por parte de los ciudadanos
+                                    acerca del territorio reclamado por la Argentina en el globo.</p>
+                            </div>
+                            <!--/span-->
+                            <div class="span4">
+                                	<h5>Desde los desarrolladores</h5>
+
+                                	<h3>Google Maps<br/> no es software libre</h3>
+
+                                <p>A pesar de que Google Maps no sea software libre, su uso actual es incuestionable.
+                                    <br/>Más de 350.000 sitios en la web utilizan la API de google para utilizar
+                                    mapas web.</p>
+                            </div>
+                            <!--/span-->
+                            <div class="span4">
+                                	<h5>Desde los expertos SIG</h5>
+
+                                	<h3>El sistema de Proyección de<br/>Google Maps es impreciso</h3>
+
+                                <!-- Fuente: http://alastaira.wordpress.com/2011/01/23/the-google-maps-bing-maps-spherical-mercator-projection/
+                                -->
+                                <p>Mucha gente se confunde o se queja al intentar proyectar datos geoespaciales
+                                    para crear imágenes raster que se alineen con las capas base de mapas utilizadas
+                                    por <em>Google Maps</em>. Y no ayuda a esto el hecho de que hay mucha mala
+                                    información en la red al respecto. .</p>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+                        <div style="display:none;" class="row-fluid">
+                            <div class="span12">
+                                <div class="alert alert-warning">Los mapas web no terminan en la representación de una sola escala.
+                                    <br/>Los mapas web son una unidad desde la primera hasta la última escala que
+                                    presentan.
+                                    <br/>Es por ello que la proyección que presenten tienen que ser seleccionada
+                                    de acuerdo a <strong>todas las escalas</strong> que este mapa web desee mostrarle
+                                    al usuario</div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="page-header">
+                            	<h2>LA EXPLICACIÓN <small>para organismos</small></h2>
+
+                        </div>
+                        <div class="row-fluid">
+                            <p>En noviembre de 2010 se promulgó La <a target="_blank" href="http://www.ign.gob.ar/AreaInstitucional/Normativa/Leyes/LeyBicontinental">Ley 26.651</a> que
+                                establece la obligatoriedad de utilizar el mapa bicontinental de la República
+                                Argentina.</p>
+                        </div>
+                        <!--/row-->
+                        <div class="page-header">
+                            	<h2>LA EXPLICACIÓN<small> para los desarrolladores web</small></h2>	
+                        </div>
+                        <div class="row-fluid">
+                            	<h3>Solución al uso inminente de Google Maps API</h3>
+
+                            <p>Con <em>argenmap.jquery</em> pretendemos ofrecer la transición a mapas con
+                                datos argentinos sin hacer que los desarrolladores de otros sitios se vean
+                                en la necesidad de optar por Google Maps en contraste con un servicio local
+                                que pueda parecer obsoleto en contraste con el de Google.</p>
+                        </div>
+                        <!--/row-->
+                        <div class="row-fluid">
+                            	<h3>Facilitar el contraste entre Google Maps y los datos del IGN</h3>
+
+                            <p>Uno de los principales objetivos es poner a dispocisión de muchos herramientas
+                                que permitan cotejar nuestros datos contra los de un sistema tan importante
+                                como lo es Google Maps.</p>
+                        </div>
+                        <!--/row-->
+                        <div class="row-fluid">
+                            	<h3>Todos usamos Google Maps</h3>
+
+                            <p>Sabemos que por más aplicaciones web personalizadas que uno haga siempre
+                                en algún momento los usuarios buscan cotejar nuestros datos con Google.
+                                <br/>En el caso del IGN, incluso a veces es una herramienta de ayuda anexa
+                                en el momento de la revisión geográfica.
+                                <br/>No por el software en sí como interfaz gráfica, sino por la infraestructura
+                                de imágenes (satelitarias y vectoriales de calles) que ofrecen . Tanto
+                                en casa como en el trabajo siempre están disponibles.</p>
+                        </div>
+                        <!--/row-->
+                        <div class="row-fluid">
+                            	<h3>¿Por qué GMaps API y no Openlayers por ejemplo?</h3>
+
+                            <p>Tranquilamente podríamos utilizar OpenLayers o Mapstraction como base
+                                para argenmap.jquery pero creemos que es más importante dar una solución
+                                concrecta a los problemas que la masificación de Google Maps API presenta
+                                a la representación de la geografía nacional.
+                                <br/>Argenmap.jquery no tiene por objetivo ofrecer una alternativa a todo el
+                                servicio de Google Maps (compuesto Tecnologías WEB + APIs + infraestructura
+                                de servidores) en su totalidad.</p>
+                        </div>
+                        <!--/row-->
+                        <div class="page-header">
+                            	<h2>LA EXPLICACIÓN<small> para los profesionales de SIG</small></h2>	
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                	<h3>Acerca de proyecciones </h3>
+
+                                <p>Aunque la selección de la proyección de lo mapas de Google Maps parezca
+                                    poco profesional, la mayoría de los servicios de mapas online (Arcgis Online,
+                                    Bing Maps, OpenStreetMap, MapQuest, Yahoo Maps y otros) también utilizan
+                                    esta variación de la proyección de Mercator para sus imágenes de mapas.</p>
+                            </div>
+                            <!--/span-->
+                            <div class="span4">
+                                	<h3>¿Qué proyección utiliza Google Maps?</h3>
+
+                                <p>	<em>Google Maps</em> utiliza una variación de la<a target="_blank" href="http://es.wikipedia.org/wiki/Proyecci%C3%B3n_de_Mercator"
+                                    />proyección de Mercator</a>.	<em>ESRI la denomina <a target="_blank" href="http://help.arcgis.com/en/arcgisexplorer/help/index.html#//01560000003p000000">WGS 1984 Web Mercator [Auxiliary Sphere] projection</a></em>.</p>
+                            </div>
+                            <!--/span-->
+                            <div class="span4">
+                                	<h3>¿Por qué hacen esto?</h3>
+
+                                <p>Más allá del desplazamiento observable a escalas pequeñas, la proyección
+                                    se ajusta muy bien al mundo de los mapas interactivos sobre los cuales
+                                    se puede hacer zoom trivialmente hasta escalas mayores (<em>escalas locales</em>),
+                                    en donde la distorsión es <em><strong>realmente ínfima</strong></em>
+debido
+                                    a la conformidad cercana de esta proyección.
+                                    <br/>
+                                </p>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+                        <div class="page-headër">
+                            	<h3>La proyección de Mercator esférica de Google Maps</h3>	
+                        </div>
+                        <div class="row-fluid">
+                            <!-- Fuente: http://alastaira.wordpress.com/2011/01/23/the-google-maps-bing-maps-spherical-mercator-projection/
+                            -->
+                            <div class="span12">
+                                <p>Parecería ser una proyección trivial, y hay <a target="_blank" href="http://trac.osgeo.org/proj/">muchas</a>
+
+                                    <a
+                                    target="_blank" href="http://code.google.com/p/cumberland/">librerías</a> <a target="_blank" href="http://projnet.codeplex.com/">geoespaciales</a>
+que
+                                        pueden realizar transformaciones y proyecciones entre sistemas de coordenadas
+                                        geográficas y proyectadas, entonces <em>¿Por qué esta conversión
+						presenta tantos problemas?</em>
+
+                                </p>
+                                <p>Podemos observar tres razones principales:</p>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+                        <div class="row-fluid">
+                            <div class="span4">
+                                	<h3>1. Quienes vuelcan datos sobre Google Maps no son (en general) profesionales de SIG</h3>
+
+                                <p>Este comentario no es para desmerecer la calidad de los datos que generan.
+                                    Sin embargo, el hecho es que la mayoría de los profesionales de SIG todavía
+                                    usan el set de productos <em>ArcGIS</em> de ESRI (producto comercial y de
+                                    alto costo) y las herramientas libres como Google Maps y Google Earth tienden
+                                    a atraer a los desarrolladores geoespaciales casuales. Como tales, estos
+                                    desarrolladores tienen menor chance de saber (o querer saber) acerca de
+                                    cuestiones como datums, sistemas de coordenadas, proyecciones... Solo quieren
+                                    un mapa que ande.</p>
+                            </div>
+                            <!--/span-->
+                            <div class="span4">
+                                	<h3>2. Hay mucha<br/>Mala información en la web</h3>
+
+                                <p>El código asignado a la proyección utilizada por Google Maps ha cambiado
+                                    varias veces y mucha de la información que se encuentra en internet, así
+                                    como la utilizada en software geoespacial está desactualizada.
+                                    <br/>Podés encontrar referencias al código <em>EPSG 900913, 3857, 3785, 3587</em> y
+                                    varias definiciones diferentes de cada uno de esos sistemas.</p>
+                            </div>
+                            <!--/span-->
+                            <div class="span4">
+                                	<h3>3. Parámetros de reproyección incorrectos</h3>
+
+                                <p>En realidad, la proyección utilizada por Google y Microsoft (Bing Maps)
+                                    es una especie de <em>combinación</em>, que puede llevar a inconvenientes
+                                    de falta de alineamiento cuando otro software hace la proyección <em>de la manera correcta</em>.
+                                    Por ejemplo, es común encontrar inconvenientes en unas cuantas herramientas
+                                    que cuando convierten entre WGS84 y Bing/Google Maps se lelga a valores
+                                    de Y que están <em>corridos</em> aproximadamente 20km. &mdash; Podés ver
+                                    los reportes para <em>Proj.NET</em>
+	<a target="_blank" href="http://projnet.codeplex.com/Thread/View.aspx?ThreadId=83818">aquí</a>,
+                                    <a
+                                    target="_blank" href="http://projnet.codeplex.com/Thread/View.aspx?ThreadId=77458">aquí</a>,	<a target="_blank" href="http://projnet.codeplex.com/Thread/View.aspx?ThreadId=79889">aquí</a>,
+                                        <a
+                                        target="_blank" href="http://projnet.codeplex.com/Thread/View.aspx?ThreadId=45600">aquí</a>y <a target="_blank" href="http://projnet.codeplex.com/Thread/View.aspx?ThreadId=216098">aquí</a>.
+                                            El problema con la API de ArcGIS para silverlight <a target="_blank" href="http://forums.arcgis.com/threads/6356-Proj.NET-and-102100-Projection">aquí</a>.
+                                            O el reporte sobre la librería <em>Proj.4</em>  <a target="_blank" href="http://stackoverflow.com/questions/3728393/postgis-proj-900913-to-4326-projection-issues-with-y-coordinate">acá</a>,
+                                            por ejemplo.</p>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+                        <div class="row-fluid">
+                            <p>Para dar una demostración práctica de este problema, tengamos en cuenta
+                                la siguiente ubicación expresada en coordenadas WGS84 (latitud, longitud):
+                                <br/>
+                            </p>
+                            <p>	<code>(52.4827802220782, -5.625 )</code>
+
+                            </p>
+                            <p>Este punto, casualmente, es la coordenada WGS84 del punto que se encuenta
+                                en la esquina inferior izquierda de la <em>tesela</em> 031311 de Bing Maps.
+                                Si proyectás esta ubicación a la proyección oficial de Google / Bing Maps
+                                (EPSG:3857) utilizando la librería de reproyección <em>Proj.NET</em>, obtenés
+                                el siguiente resultado:
+                                <br/>
+                            </p>
+                            <p>	<code>(-626172.13571216376, 6853955.508199729)</code>
+
+                            </p>
+                            <p>Podés confirmar esto usando la herramienta online en <a target="_blank"
+                                href="http://www.synectics-tc.com/resources/downloads/coordinate-reprojection.html">http://www.synectics-tc.com/resources/downloads/coordinate-reprojection.html</a>
+que
+                                está basada en la librería Proj.Net. (Librería que sin embargo utiliza
+                                el código viejo 3785 para referirse a esta proyección).</p>
+                            <p>De cualquier maner,a si transformás este punto utilizando, la última versión
+                                (esto es importante) de la herramienta <a href="http://trac.osgeo.org/proj/wiki/man_cs2cs">CS2CS</a>
+de
+                                esta manera:</p>
+                            <p>	<code>echo -5.625 52.4827802220782 | cs2cs -f “%.10f” +init=epsg:4326 +to +init=epsg:3857</code>
+
+                            </p>
+                            <p>entonces obtenés el siguiente resultado en lugar del anterior:</p>
+                            <p>	<code>(-626172.1357121646, 6887893.4928337997)</code>
+
+                                <p>Observá que, mientras la coordenada X se mantiene igual, la coordenada
+                                    Y difiere en algo así como 25km entre las dos conversiones.
+                                    <!-- Una tarea
+                                    como proyectar un polígono <em>simplificado</em> del Reino Unido utilizando los mismos parámetros de proyección en estas dos herramientas
+					resulta en diferencias como las que se ven en las siguientes imágenes:
+					</p>
+					<p>
+					<img src="img/docs/reinounidomalproyectado.png" />
+						</p>
+					<p>
+						La misma discrepancia aparece a lo largo de una gran variedad de herramientas de conversión &mdash; algunas devuelve el primero resultado y otras, el segundo
+						(que se alinea correctamente con Bing y Google Maps). Entonces, ¿Cuál es la reproyección correcta?.
+					</p>
+					-->
+                        </div>
+                        <!--/row-->
+                        <div class="page-header">
+                            	<h2>LA EXPLICACIÓN</h2>
+
+                        </div>
+                        <div class="row-fluid">
+                            <p>El inconveniente #1 no necesita explicación realmente. Mientras más masivo
+                                se hace el uso de datos geoespaciales, es inevitable que nuevos programadores
+                                quieran hacer cosas con datos geoespaciales y mostrarlos sobre un mapa
+                                de Google Maps o Bing Maps es obviamente una de las primeras cosas que
+                                intentan hacer. Estas herramientas ofrecen interfaces de usuario grandiosas
+                                e intuitivas para navegar y analizar datos geoespaciales y siendo que WGS84
+                                es la fuente de datos más prolífica, parece razonable esperar que la conversión
+                                WGS84
+                                <->Bing / Google no fuese tan difícil de lograr.</p>
+                            <p>En cuanto a las otras cuestiones...</p>
+                            	<h3>Confusiones acerca de los códigos EPSG</h3>
+
+                            <p>Los sistemas de coordenadas se definen utilizando un set de parámetros,
+                                incluyendo el tipo de proyección utilizada (Mercator, Albers, etc), desplazamiento
+                                de las coordenadas (Falso Este, Falso Norte), la unidad de medida (metro,
+                                Pie, etc.), el datum subyacente (WGS84, NAD27, etc) y muchos más.</p>
+                            <p>Como es bastante molesto tener que seguir citando este listado completo
+                                de parámetros, cada sistema es comunmente identificado por un código (un
+                                número entero) único. (también llamado <a target="_blank" href="http://en.wikipedia.org/wiki/SRID">SRID</a>).
+                                El set de SRIDs asignados a los sistemas de referencia espaciales de uso
+                                común fue originalmente desarrollado por el Grupo de Investigaciones Petroleras
+                                Europeas (<em><a target="_blank" href="http://es.wikipedia.org/wiki/European_Petroleum_Survey_Group">European Petroleum Survey Group</a></em>)
+                                y en general, estos códigos reciben el nombre de <em>Códigos EPSG</em>.</p>
+                            	<h3>"EPSG": 900913</h3>
+
+                            <p>Los programadores comenzaron a proyectar sus datos geoespaciales para
+                                superponerlos sobre Google o Bing Maps desde que su API lo permite, que
+                                fue aproximadamente en el año 2005. Desafortundamente, la gente de EPSG
+                                se comportaron despectivamente con respecto al sistema utilizado por Microsoft
+                                y Google (más adelante, podés encontrar más información) y se negaron a
+                                asignarle un código EPSG oficial. En un comunicado (reportado por Morten
+                                Nielsen) se podía leer:</p>
+                            <p>	<cite>
+						"Hemos revisado el sistema de referencia de coordenadas utilizado por Microsoft, Google, etc y creemos
+						que está fallado, técnicamente hablando. No vamos a devaluar el set de datos EPSG incluyendo semejante
+						geodesia y cartografía inapropiada"
+						</cite>
+
+                            </p>
+                            <p>Como resultado de esto, durante los primeros años, los desarrolladores
+                                necesitaron una manera alternativa de referirse al set de parámetros de
+                                proyección utilizados en los mapas de Google, y el código 900913 (es decir,
+                                Google) se hizo popular. Vale la pena notar que este código nunca fue desarrollado,
+                                ni soportado, por el EPSG (por eso las comillas en el título de esta sección).</p>
+                            <p>El problema que surgió fue, a falta de un organismo oficial que supervise
+                                el estándar, que aparecieron muchas variantes diferentes &mdash;todas usando
+                                en general los mismos parámetros, pero con diferentes convenciones en su
+                                denominación, etc... y estas variantes tenían que ser agregadas en las
+                                bases de datos que, de otra manera, solo tenían las listas de los sistemas
+                                oficialmente reconocidos por el EPSG.</p>
+                            	<h3>EPSG: 3785</h3>
+
+                            <p>Al EPSG le llevó un tiempo masticar el sistema utilizado por Microsoft
+                                y Google, pero eventualmente, a mediados del 2008 se decidieron a agregar
+                                el sistema a su registros de códigos, asignándole el código EPSG:3785.
+                                Hubo unas cuatnas alegrías entre quienes participan de la comunidad geoespacial,
+                                y la gente comenzó a recodificar el viejo 900913 para utilizar el nuevo
+                                código "oficial" en su lugar.</p>
+                            <p>El set de parámetros de proyección correspondiente al EPSG:3785 era el
+                                siguiente:</p>	<pre>
+PROJCS["Popular Visualisation CRS / Mercator",
+  GEOGCS["Popular Visualisation CRS",
+    DATUM["Popular Visualisation Datum",
+      SPHEROID["Popular Visualisation Sphere", 6378137, 0, AUTHORITY["EPSG",7059]],
+      TOWGS84[0, 0, 0, 0, 0, 0, 0],
+      AUTHORITY["EPSG",6055]],
+    PRIMEM["Greenwich", 0, AUTHORITY["EPSG", "8901"]],
+    UNIT["degree", 0.0174532925199433, AUTHORITY["EPSG", "9102"]],
+    AXIS["E", EAST],
+    AXIS["N", NORTH],
+    AUTHORITY["EPSG",4055]],
+  PROJECTION["Mercator"],
+  PARAMETER["False_Easting", 0],
+  PARAMETER["False_Northing", 0],
+  PARAMETER["Central_Meridian", 0],
+  PARAMETER["Latitude_of_origin", 0],
+  UNIT["metre", 1, AUTHORITY["EPSG", "9001"]],
+  AXIS["East", EAST],
+  AXIS["North", NORTH],
+  AUTHORITY["EPSG",3785]]					
+					</pre>
+
+                            <p>(Como dato extra, la proyección era listada en el registro EPSG con una
+                                nota que decía "No es un sistema geodésico reconocido").</p>
+                            	<h3>EPSG: 3857</h3>
+
+                            <p>Sin embargo, menos de un año luego de que el código oficial EPS:3785 fuera
+                                presentado, el EPSG realizó un nuevo pedido de cambio (EPSG::2008.114,
+                                de Diciembre de 2008), dando de baja el código 3785 y presentando un nuevo
+                                código, 3857, con los siguiente parámetros correspondientes:</p>	<pre>
+PROJCS["WGS 84 / Pseudo-Mercator",
+  GEOGCS["WGS 84",
+    DATUM["WGS_1984",
+      SPHEROID["WGS 84", 6378137, 298.257223563, AUTHORITY["EPSG","7030"]],
+      AUTHORITY["EPSG","6326"]],
+    PRIMEM["Greenwich", 0, AUTHORITY["EPSG","8901"]],
+    UNIT["degree", 0.01745329251994328, AUTHORITY["EPSG","9122"]],
+    AUTHORITY["EPSG","4326"]],
+  PROJECTION["Mercator_1SP"],
+  PARAMETER["central_meridian",0],
+  PARAMETER["scale_factor",1],
+  PARAMETER["false_easting",0],
+  PARAMETER["false_northing",0],
+  UNIT["metre", 1, AUTHORITY["EPSG","9001"]],
+  AXIS["X",EAST],
+  AXIS["Y",NORTH],
+  AUTHORITY["EPSG","3857"]]					
+					</pre>
+
+                            <p>No es poco usual que los códigos EPSG se actualicen de vez en cuando,
+                                pero este cambio fue particularmente raro &mdash; primero porque ocurrió
+                                casi al instante después de que el primer código fuera presentado, y segundo
+                                porque el código de "reemplazo" 3857 era una permutación cercana del código
+                                anterior 3785 (¿Coincidencia?)</p>
+                            <p>Aunque uno siempre recuerda los códigos EPSG que usa frecuentamente, generalmente
+                                se hace dificultoso recordar si 3857 o 3785 es el nuevo y muchos sitios
+                                en la web listan los parámetros de uno bajo el título de otro de manera
+                                incorrecta. Además, a pesar del hecho de que el registro EPSG normalmente
+                                ofrece detalles de los códigos viejos, el 3785 desapareció misteriosamente
+                                de la base de datos por completo, con la única salvedad de una nota que
+                                dice "OGP revisó su enfoque a la descripción de CRS de Visualización Popular."...</p>
+                        </div>
+                        <div class="page-header">
+                            	<h2>LA PROYECCIÓN</h2>
+
+                        </div>
+                        <div class="row-fluid">
+                            <p>Una vez resuelto el misterio de cuál código EPSG es cuál, nos vemos en
+                                la problemática de entender las discrepancias entre los diferentes resultados
+                                de proyección que los códigos anteriores representan.</p>
+                            <p>Los parámetros de proyección definidos para el EPSG:3785 describen una
+                                proyección de Mercator de coordenadas geográficas definidas sobre un modelo <em>esférico de la Tierra, de radio de 6.378.137m</em>,
+                                como se especifica en la siguiente línea:	<pre>
+SPHEROID["Popular Visualisation Sphere", 6378137, 0, AUTHORITY["EPSG","7059"]]						
+						</pre>
+
+                            </p>
+                            <p>La proyección EPSG:3857, en contraste, sugiere una proyección Mercator
+                                de coordenadas definidas sobre el elipsoide WGS84, con un achatamiento
+                                (f) de 1/298,257223563:</p>	<pre>
+SPHEROID["WGS 84", 6378137, 298.257223563, AUTHORITY["EPSG","7030"]]
+					</pre>
+
+                            <p>El problema es que ninguna de las dos describe realmente la proyección
+                                utilizada por Google y Bing Maps, en la cual las coordenadas geográficas
+                                subyacentes están definidas utilizando el elipsoide WGS84 (como en la EPSG:3857)
+                                pero proyectadas como si estuvieran definidas sobre una esfera (como en
+                                el EPSG:3785).</p>
+                            <p>El problema surge porque no hay una manera estandarizada de representar
+                                este sistema de "doble"-elipsoide, en el cual se utiliza un elipsoide para
+                                interpretar las coordenadas geográficas diferente al utilizado para proyectarlas.</p>
+                            <p>Diferentes librerías de software manejan esta anomalía de varias maneras,
+                                lo que explica la diferencia entre las coordenadas obtenidas al utilizar
+                                esta proyección en varias herramientas</p>
+                            <p>Los sistemas que tratan las coordenadas ingresadas como si estuviesen
+                                medidas sobre una esfera son incorrectos, pero también los son los que
+                                proyectan el elipsoide WGS84 directamente utilizando la proyección de Mercator.
+                                De hecho, esta segunda clase de errores explica el aparente "desplazamiento
+                                de 20km" en la coordenada Y, que solo se aprecia en los links que nombramos
+                                anteriormente. Al ser el elipsoide WGS84 oblongo (como una esfera sobre
+                                la cual alguien se sentó) y menos "alto" que una esfera, los objetos geográficos
+                                en un mapa Mercator proyectados directamente sobre el elipsoide WGS84 parecerán
+                                estar más cercanos al ecuador que aquellos proyectados desde una esfera
+                                (es decir, ubicados un tanto a sur en el hemisferio norte o un tanto al
+                                norte en el hemisferio sur).</p>
+                            <div class="page-header">
+                                	<h2>LA SOLUCIÓN</h2>
+
+                            </div>
+                            <div class="row-fluid">
+                                <p>En primera instancia, uno debería asegurarse que está configurando el
+                                    software con el código EPSG correcto, 3857, y que éste se corresponde internamente
+                                    con los parámetros listados anteriormente.</p>
+                                <p>Sin embargo, a menos que uno utilice una librería de conversión que haya
+                                    sido específicamente designada para manejar el caso especial de la proyección
+                                    de Google Maps, también hay que proveerle de un poco más de información
+                                    para explicarle que la proyección debe ocurrir a partir de la esfera en
+                                    lugar del elipsoide WGS84 especificado en el sistema de coordenadas geográficas.
+                                    Esa información adicional puede ser provista de diferentes maneras:</p>
+                                <p>En la librería PROJ.4, se puede especificar un gridshift nulo utilizando
+                                    el parámetro +nadgrids=@null como se explica	<a target="_blank" href="http://trac.osgeo.org/proj/wiki/FAQ#ChangingEllipsoidWhycantIconvertfromWGS84toGoogleEarthVirtualGlobeMercator">aquí</a>.
+                                    De hecho, la razón por la cual, antes en esta página, especificamos que
+                                    hay que utilizar la última versión de CS2CS es que se le hizo <a target="_blank"
+                                    href="http://svn.osgeo.org/metacrs/proj/trunk/proj/NEWS">un cambio</a> en
+                                    la versión 4.7.0 a la librería PROJ.4. Este cambio implicó que el parámetro
+                                    +nadgrids=@null se agregue automáticamente a la definición interna de la
+                                    proyección 3857, lo que significa que cuando uno no tiene que agregarlo
+                                    manualmente cada vez. Se obtienen los resultados correctos utilizando la
+                                    proyección EPSG:3857 como viene especificada de manera predeterminada.</p>
+                                <p>Si uno usa<a target="_blank" href="http://geoserver.org/display/GEOS/Welcome"
+                                    />geoserver</a>, se necesita editar los parámetros de la proyección 3857
+                                    reemplazando la proyección "Mercator" por "Mercator_1SP_Google".</p>
+                                <p>Si se usa cualquier otro sistema, se necesita agregar un parámetro "semi
+                                    menor" adicional a los parámetros de proyección en el WKT. Este parámetro
+                                    permite especificar manualmente el semieje menor del elipsoide utilizado
+                                    por la proyección, que de lo contrario es asumido de manera predeterminada
+                                    como el mismo elpisoide especificado en el GEOGCS.</p>
+                                <p>Para crear una proyección basada en la esfera que tenga el mismo radio
+                                    que el elipsoide WGS84, como lo utilizan Google y Microsoft, se debe especificar
+                                    un semieje menor de 6.378.317. (Nota &mdash; también se puede configurar
+                                    un parámetro de semieje mayor si es necesario, pero en este caso queremos
+                                    una esfera basada en el mismo semieje mayor del WGS84, así que no es necesario).
+                                    Esto sobreescribe el semieje menor que habría sido utilizado para la proyección
+                                    de manera predeterminada, el de 6.356.752,314245m.</p>
+                                <p>Por lo tanto, el siguiente WKT funciona, por ejemplo en PRoj.NET para
+                                    especificar la proyección correcta de Bing Maps y Google Maps.</p>	<pre>
+PROJCS["Popular Visualisation CRS / Mercator",
+ GEOGCS["Popular Visualisation CRS",
+  DATUM["WGS84",
+    SPHEROID["WGS84", 6378137.0, 298.257223563, AUTHORITY["EPSG","7059"]],
+  AUTHORITY["EPSG","6055"]],
+ PRIMEM["Greenwich", 0, AUTHORITY["EPSG", "8901"]],
+ UNIT["degree", 0.0174532925199433, AUTHORITY["EPSG", "9102"]],
+ AXIS["E", EAST], AXIS["N", NORTH], AUTHORITY["EPSG","4055"]],
+PROJECTION["Mercator"],
+PARAMETER["semi_minor",6378137],
+PARAMETER["False_Easting", 0],
+PARAMETER["False_Northing", 0],
+PARAMETER["Central_Meridian", 0],
+PARAMETER["Latitude_of_origin", 0],
+UNIT["metre", 1, AUTHORITY["EPSG", "9001"]],
+AXIS["East", EAST], AXIS["North", NORTH],
+AUTHORITY["EPSG","3785"]]					
+					</pre>
+
+                                <p>La opción final, por supuesto, es pasar por alto las rutinas de proyección
+                                    generales y escribir tu propia transformación matemática diseñada para
+                                    convertir solo entre Bing Maps o Google Maps y WGS84. Por suerte, la decisión
+                                    de operar en una esfera perfecta hace que estas funciones sean muy fáciles
+                                    de escribir usando solo un poco de trigonometría esférica:</p>	<pre class="prettify linenums">
+double[] WGS84_a_GoogleBing(double lon, double lat) {
+	double x = lon * 20037508.34 / 180;
+	double y = Math.Log(Math.Tan((90 + lat) * Math.PI / 360)) / (Math.PI / 180);
+	y = y * 20037508.34 / 180;
+	return new double[] {x, y};
+}
+double[] GoogleBing_a_WGS84Mercator (double x, double y) {
+	double lon = (x / 20037508.34) * 180;
+	double lat = (y / 20037508.34) * 180;
+
+	lat = 180/Math.PI * (2 * Math.Atan(Math.Exp(lat * Math.PI / 180)) - Math.PI / 2);
+	return new double[] {lon, lat};
+}					
+					</pre>
+
+                            </div>
+                            <!--/row-->
+                    </section>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <hr>
+                <footer>
+                    <p>&copy; Instituto Geográfico Nacional 2012</p>
+                </footer>
+            </div>
+            <!--/.fluid-container-->
+            <!-- Le javascript==================================================-
+            ->
+    <!-- Placed at the end of the document so the pages load faster -->
+            <!--google maps api -->
+            <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+            <!--argenmap.jquery online -->
+            <script type="text/javascript" src="http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js"></script>
+            <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-31718537-2']);
+                _gaq.push(['_trackPageview']);
+
+                (function () {
+                    var ga = document.createElement('script');
+                    ga.type = 'text/javascript';
+                    ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+            <!--Para poner lindo el código fuente-->
+            <script src="google-code-prettify/prettify.js"></script>
+            <!--Utilidad de bootstrap-->
+            <script src="css/bootstrap/js/bootstrap.min.js"></script>
+            <!--User echo-->
+            <script type='text/javascript'>
+                var _ues = {
+                    host: 'argenmap.userecho.com',
+                    forum: '14204',
+                    lang: 'es',
+                    tab_corner_radius: 10,
+                    tab_font_size: 20,
+                    tab_image_hash: 'RmVlZGJhY2s%3D',
+                    tab_alignment: 'right',
+                    tab_text_color: '#FFFFFF',
+                    tab_bg_color: '#000000',
+                    tab_hover_color: '#F45C5C'
+                };
+
+                (function () {
+                    var _ue = document.createElement('script');
+                    _ue.type = 'text/javascript';
+                    _ue.async = true;
+                    _ue.src = ('https:' == document.location.protocol ? 'https://s3.amazonaws.com/' : 'http://') + 'cdn.userecho.com/js/widget-1.4.gz.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(_ue, s);
+                })();
+            </script>
+    </body>
+
+</html>

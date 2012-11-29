@@ -1,0 +1,88 @@
+<script defer="defer" type="text/javascript">
+
+
+
+$('body').append($('<div style="width:100%;height:40px;background:#000;position:fixed;top:0;left:0"><button onclick="go()" style="height:40px">Cambiar mapa a mapa de argenmap</button></div>') ).css('margin-top', '40px');
+
+
+// quita el mapa original, carga argenmap
+// y genera los marcadores para los datos de la página
+var argenmapYaCargo = false;
+function go ()
+{
+	if ( argenmapYaCargo ) {
+		return;
+	}
+	jQuery.getScript('http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js', function() {
+		quitarMapaOriginal();
+		cargarArgenmap();
+		agregarMarcadores();
+	});
+	argenmapYaCargo = true;
+	return false;
+}
+
+function quitarMapaOriginal()
+{
+	centro = map.getCenter(); 
+	zoom = map.getZoom(); 
+	$('#map_canvas').html('');
+
+}
+
+function cargarArgenmap()
+{
+	$('#map_canvas').argenmap({
+		accion:'init',
+		center: [centro.lat(), centro.lng()], 
+			zoom:zoom
+	});
+}
+
+function agregarMarcadores()
+{
+	// A partir de acá uso la array marcadores[];
+	
+	$.each(marcadores, function(i, marcador) {
+		if (marcador === undefined || marcador[0] === undefined) {
+			return;
+		}
+		$('#map_canvas').argenmap({
+			accion:'agregarMarcador',
+			latLng:marcador[0].position,
+			marker: {
+				icon:'http://www.argentina.gob.ar/images/ico_maps.png',
+			    data:marcador[1] ,
+
+				events: {
+					click: 
+						function(marker, event, data) {
+						var map = $(this).argenmap('get'),
+						infowindow = $(this).argenmap({accion:'get', name:'infowindow'});
+		 
+						if (infowindow) {
+							infowindow.open(map, marker);
+							infowindow.setContent(data);
+						} else {
+							$(this).argenmap({
+								accion:'addinfowindow',
+								anchor:marker, 
+								opciones:{content: data}});
+						}
+					},
+					mouseout: function() {
+						return ;
+						var infowindow = $(this).argenmap({accion:'get', name:'infowindow'});
+						if (infowindow) {
+							infowindow.close();
+						}
+					}
+				}
+			}
+		});
+	
+	 });
+	
+}
+
+</script>
