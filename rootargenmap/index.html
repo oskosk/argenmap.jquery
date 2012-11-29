@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>IGN - Argenmap </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mapas del IGN para la web">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="argenmap.jquery/docs/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      
+	.marketing .row {
+	  margin-bottom: 9px;
+	}
+	.marketing h1 {
+	  margin: 36px 0 27px;
+	  font-size: 40px;
+	  font-weight: 300;
+	  text-align: center;
+	}
+	.marketing h2,
+	.marketing h3 {
+	  font-weight: 300;
+	}
+	.marketing h2 {
+	  font-size: 22px;
+	}
+	.marketing p {
+	  margin-right: 10px;
+	}
+	.marketing .bs-icon {
+	  float: left;
+	  margin: 7px 10px 0 0;
+	  opacity: .8;
+	}
+	.marketing .small-bs-icon {
+	  float: left;
+	  margin: 4px 5px 0 0;
+	}    
+	
+	.marketing-byline {
+	  margin: -18px 0 27px;
+	  font-size: 18px;
+	  font-weight: 300;
+	  line-height: 24px;
+	  color: #999;
+	  text-align: center;
+	}	
+      
+	#mapa{
+		position:fixed;
+		top:40px;
+		left:0;
+		right:0;
+		bottom:0
+	}
+    </style>
+	<link href="argenmap.jquery/docs/css/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>           
+  </head>
+ 	
+  <body style="background:url(images/body.jpg) 0 0 no-repeat;">
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand"  href="index.html">argenmap</a>
+          <div class="nav-collapse ">
+	  
+            <a href="argenmap.jquery/docs" class="btn  btn-success">Usá un mapa del IGN en tu sitio</a>
+	   
+            <ul class="nav">
+              <li class="active"><a href="index.html">Inicio</a></li>
+              <li><a href="#contacto" onclick="UE.Popin.show(); return false;">Contacto</a></li>
+            </ul>
+            
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+	    <link href="argenmap.jquery/docs/css/bootstrap/css/docs.css" rel="stylesheet">
+    <div id="mapa" style="display:none" class="fluid-container">
+
+    </div><!-- /container -->
+	<link href="argenmap.jquery/docs/css/bootstrap/css/docs.css" rel="stylesheet">
+    <div id="presentacion" class="container">
+	
+	<!-- Masthead
+	================================================== -->
+	<header class="jumbotron masthead">
+	  <div class="inner">
+	    <!--h1>Argenmap, del IGN</h1-->
+		<div class="pagination-centered"><img src="images/argenmap.png"></div>
+	    <p>Mapas web de la República Argentina.</p>
+	    <p class="download-info">
+	      <a href="#"  onclick="empezar()" class="btn btn-primary btn-large">Mirá argenmap sobre Google</a>
+	      <a href="argenmap.jquery/docs/index.html" class="btn btn-large">Usá argenmap en tu sitio</a>
+	    </p>
+
+	  </div> <!--inner-->
+	  
+	  
+	</header>
+	
+	<!--hr class="soften"-->
+	<div class="marketing">
+	`	<!--
+		<div class="row">
+			<div class="span6 pagination-right">
+				<iframe src="https://docs.google.com/presentation/embed?id=1fcoDRkm1v0s_xHwQVpv3Iwi1N03xoJf5xb3kvLsxhjY&start=false&loop=false&delayms=3000" frameborder="0" width="400" height="312" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+			</div>
+			<div class="span6">
+				<div class="prezi-player"><style type="text/css" media="screen">.prezi-player { width: 400px; } .prezi-player-links { text-align: center; }</style><object id="prezi_fusibmqxrzfh" name="prezi_fusibmqxrzfh" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="400" height="312"><param name="movie" value="http://prezi.com/bin/preziloader.swf"/><param name="allowfullscreen" value="true"/><param name="allowFullScreenInteractive" value="true"/><param name="allowscriptaccess" value="always"/><param name="wmode" value="direct"/><param name="bgcolor" value="#ffffff"/><param name="flashvars" value="prezi_id=fusibmqxrzfh&amp;lock_to_path=1&amp;color=ffffff&amp;autoplay=no&amp;autohide_ctrls=0"/><embed id="preziEmbed_fusibmqxrzfh" name="preziEmbed_fusibmqxrzfh" src="http://prezi.com/bin/preziloader.swf" type="application/x-shockwave-flash" allowfullscreen="true" allowFullScreenInteractive="true" allowscriptaccess="always" width="400" height="312" bgcolor="#ffffff" flashvars="prezi_id=fusibmqxrzfh&amp;lock_to_path=1&amp;color=ffffff&amp;autoplay=no&amp;autohide_ctrls=0"></embed></object><div class="prezi-player-links"></div></div>
+			</div>
+		</div>
+		-->
+	  <h1>Diseñado para todos.</h1>
+	  <p class="marketing-byline">Estos son los componentes de Argenmap.</p>
+
+	  <div class="row">
+	    <div class="span4">
+	      <h2>Argenmap jQuery</h2>
+	      <p><strong>argenmap.jquery</strong> es una librería javascript diseñada en forma de plugin de jQuery. Está construida pensando en los browsers modernos
+	      y con la finalidad de ampliar la presencia de los mapas locales en la web. Esto significa que argenmap.jquery está pensado para correr sobre la mayoría de los browsers
+	      e incluso en tablets y smartphones.
+		  <p>
+	      <a href="argenmap.jquery/docs/index.html" class="btn btn-primary">Usá argenmap.jquery &raquo;</a>
+	      </p>
+
+	    </div>
+	    <div class="span4">
+	      <h2>Argenmap DB</h2>
+	      <p><strong>Argenmap DB</strong> es el componente Argenmap que permite subir archivos geoespaciales a através de la web y editarlos online
+		  por medio de protocolos estándar como WFS-T. Apunta a cubrir las necesidad de esos organismos que generan datos con referencia espacial pero carecen de la infraestructura
+		  para publicarlos en la web.
+		  </p>
+		  <p>
+	      <a class="btn disabled">No disponible públicamente aún</a>.
+	      </p>
+	    </div>
+	    <div class="span4">
+	      <h2>Argenmap WMS</h2>
+	      <p><strong>Argenmap WMS</strong> es un frontend web que ofrece alta disponibildad de las imágenes generadas por un servicio WMS. Entre otras cosas, está basado en memcached y PHP
+		  para promover el desarrollo abierto entre el gran número de programadores PHP que existen en la comunidad con acceso a estas herramientas libres.
+		  </p>
+		  <p>
+	      <a class="btn disabled">No disponible públicamente aún</a>.
+	      </p>
+	    </div>
+	  </div><!--/row-->	  
+	  <h1>¿Por qué hicimos Argenmap?</h1>
+	  <p class="marketing-byline">Esto nos inspiró a hacer Argenmap.</p>
+	  <div class="row">
+
+	    <div class="span4">
+	      <img class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_079_podium.png">
+	      <h2>Un diseño para todos los niveles</h2>
+	      <p>
+			  <ul>
+			  <li>Argenmap está diseñado para ayudar a desarrolladores web de todos los niveles. Diseñadores y programadores que busquen usar mapas en la web.</li>
+			  <li>Argenmap nos gusta y estamos decidios a ayudar a gente como nosotros a meterse en el mundo de los mapas
+			  sin el camino complejo aprendizaje que esto implica.</li>
+			  </ul>
+	      </p>
+	    </div>
+	    <div class="span4">
+	      <img class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_042_group.png">
+	      <h2>Organismos del Estado y usuarios novatos en SIG</h2>
+	      <p>
+		  <ul>
+		  <li>Al igual que vos, hacemos productos para la web y siempre buscamos las herramientas que nos faciliten lo mejor de la web y que nos
+	      quiten la mayor cantidad posible de problemas de encima.
+		  </li>
+		  <li>
+			Si trabajás en un organismo del Estado, podés actualizar los mapas de la web que administrás para que tenga mapas con nombres y límites
+			oficiales muy fácilmente.
+		  </li>
+		  </ul>
+		  </p>
+	    </div>
+		<div class="span4">
+	      <img class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_214_resize_small.png">
+				<h2>El IGN frente a Google Maps</h2>
+				<p>
+					<ul>
+						<li>
+							<strong>El uso masivo de Google Maps es un hecho</strong>. Muchos sitios del gobierno lo utilizan porque siempre está disponible y es fácil de
+							incrustar en sus sitios. El problema son <strong>los nombres y límites que Google muestra. <em>No son los oficiales.</em></strong>
+						</li>
+						<li><strong>argenmap.jquery</strong> te permite, con unas leves modificaciones, que el mapa de Google Maps que usás en el sitio que administrás,
+						deje de mostrar <em>Falkland Islands</em>.</li>
+						<li>
+							<strong>argenmap.jquery</strong> permite disminuir los casos de mapas en la web que muestran topónimos no oficiales. 
+						</li>					
+
+
+					</ul>
+				</p>
+			</div> <!--span -->
+	  </div><!--/row-->
+
+
+	  
+	  <div class="row">
+	    <div class="span3">
+	      <img class="small-bs-icon" src="argenmap.jquery/docs/img/icon-html5.png">
+	      <h3>HTML5</h3>
+	      <p>Hecho para soportar HTML5.</p>
+	    </div>
+	    <div class="span3">
+	      <img class="small-bs-icon" src="argenmap.jquery/docs/img/icon-css3.png">
+	      <h3>CSS3</h3>
+	      <p>La estilización de argenmap es CSS3.</p>
+	    </div>
+	    <div class="span3">
+	      <img class="small-bs-icon" src="argenmap.jquery/docs/img/icon-github.png">
+	      <h3>Open-source</h3>
+	      <p>Hecho y mantenido en <a href="https://github.com">GitHub</a>.</p>
+	    </div>
+	    <div class="span3">
+	      <img class="small-bs-icon" src="argenmap.jquery/docs/img/logoignsintexto-40px.png">
+	      <h3>Hecho en el IGN</h3>
+	      <p>Traído a ustedes por desarrolladores del Instituto Geográfico Nacional.</p>
+	    </div>
+	  </div><!--/row-->
+	  <div class="bs-links">
+	    <ul class="quick-links">
+	      <li><a target="_blank" href="argenmap.jquery/docs/presentacion.html">Presentación de Argenmap para javascript</a></li>
+	      <li><a target="_blank" href="http://www.ign.gob.ar/comunidad/">Estado de los mapas de Argentina en la web.</a></li>
+	      <li><a target="_blank" href="https://github.com/argenmap">argenmap en Github</a></li>
+	    </ul>
+
+	  </div><!--bs-links-->			
+	  <hr class="soften">
+	  <!--
+	  <h1>Built with Bootstrap.</h1>
+	  <p class="marketing-byline">For even more sites built with Bootstrap, <a href="http://builtwithbootstrap.tumblr.com/" target="_blank">visit the unofficial Tumblr</a> or <a href="./examples.html">browse the examples</a>.</p>
+	  <ul class="thumbnails example-sites">
+	    <li class="span3">
+	      <a class="thumbnail" href="http://soundready.fm/" target="_blank">
+	        <img src="assets/img/example-sites/soundready.png" alt="SoundReady.fm">
+	      </a>
+	    </li>
+	    <li class="span3">
+	      <a class="thumbnail" href="http://kippt.com/" target="_blank">
+	        <img src="assets/img/example-sites/kippt.png" alt="Kippt">
+	      </a>
+	    </li>
+	    <li class="span3">
+	      <a class="thumbnail" href="http://www.fleetio.com/" target="_blank">
+	        <img src="assets/img/example-sites/fleetio.png" alt="Fleetio">
+	      </a>
+	    </li>
+	    <li class="span3">
+	      <a class="thumbnail" href="http://www.jshint.com/" target="_blank">
+	        <img src="assets/img/example-sites/jshint.png" alt="JS Hint">
+	      </a>
+	    </li>
+	  </ul>
+	
+	</div><!-- /.marketing -->
+	
+	     <!-- Footer
+	      ================================================== -->
+	<!--
+		<footer class="footer">
+	        <p class="pull-right"><a href="#">Back to top</a></p>
+	        <p>Designed and built with all the love in the world <a href="http://twitter.com/twitter" target="_blank">@twitter</a> by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.</p>
+	        <p>Code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+	        <p>Icons from <a href="http://glyphicons.com">Glyphicons Free</a>, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+	      </footer>
+	-->
+    </div><!-- /container -->
+
+
+
+
+	    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <!--google maps api -->
+    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <!--argenmap.jquery online -->
+    <script type="text/javascript" src="http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js"></script>
+    <script type="text/javascript">
+    function goMapa() {
+    	$('#mapa').argenmap({
+    		accion:'agregarMarcador',
+    		latLng:[-51.69693888823194, -57.881865648706025],
+    		map: {
+    			opciones: {
+    				mapTypeId:'satellite'
+    			},
+    			center:true,
+    			zoom:10
+    		}
+    	});
+    }
+    function wipeMarketing()
+    {
+    	$('#presentacion').fadeOut('slow', function() {
+   			$('#presentacion').remove();
+  		});
+    }
+    
+    function empezar()
+    {
+    	wipeMarketing();
+    	$('#mapa').fadeIn();
+    	goMapa();
+    	return false;
+    }
+    </script>
+	
+	<script type="text/javascript">
+	
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-31718537-2']);
+	  _gaq.push(['_trackPageview']);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	
+	</script>
+	
+    <!--Utilidad de bootstrap-->
+    <script src="argenmap.jquery/docs/css/bootstrap/js/bootstrap.min.js"></script>
+    <!--User echo-->
+    <script type='text/javascript'>
+		var _ues = {
+		host:'argenmap.userecho.com',
+		forum:'14204',
+		lang:'es',
+		tab_corner_radius:10,
+		tab_font_size:20,
+		tab_image_hash:'RmVlZGJhY2s%3D',
+		tab_alignment:'right',
+		tab_text_color:'#FFFFFF',
+		tab_bg_color:'#000000',
+		tab_hover_color:'#F45C5C'
+		};
+		
+		(function() {
+		    var _ue = document.createElement('script'); _ue.type = 'text/javascript'; _ue.async = true;
+		    _ue.src = ('https:' == document.location.protocol ? 'https://s3.amazonaws.com/' : 'http://') + 'cdn.userecho.com/js/widget-1.4.gz.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(_ue, s);
+		  })();
+		
+		</script>    
+  </body>
+</html>
