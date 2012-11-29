@@ -4,7 +4,7 @@
     <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
     <script type="text/javascript" src="../argenmap.jquery.js"></script> 
     <style>
-      .mapa{
+      .argenmap{
         margin: 20px auto;
         border: 1px dashed #C0C0C0;
         width: 500px;
@@ -15,9 +15,9 @@
     <script type="text/javascript">
       $(function(){
       
-        $('#prueba').argenmap(
-          { accion: 'agregarMarcador',
-            direccion: "Av Cabildo 381 Buenos Aires",
+        $('#prueba1').argenmap(
+          { action: 'agregarMarcador',
+            address: "Av Cabildo 381 Buenos Aires",
             map:{
               center: true,
               zoom: 14
@@ -27,6 +27,6 @@
       });
     </script>
   <body>
-    <div id="prueba" class="mapa"></div>
+    <div id="prueba1" class="argenmap"></div>
   </body>
 </html>
