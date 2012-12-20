@@ -2254,7 +2254,7 @@
                 },
                 unit: 'km',
                 init: {
-                    mapTypeId: 'IGN',
+                    mapTypeId: 'Mapa IGN',
                     center: [-34, -59],
                     zoom: 5
                 },
@@ -2644,7 +2644,7 @@
     argenmap.CapaBaseIGN = function(opts)
     {
     	var opts = {
-            name: 'IGN',
+            name: 'Mapa IGN',
             baseURL: 'http://www.ign.gob.ar/wms/?',
             //baseURL: 'http://wms.ign.gob.ar/geoserver/wms?',
             layers: 'capabasesigign'
