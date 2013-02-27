@@ -2614,7 +2614,7 @@
         var baseURL = this.baseURL;
         var version = "1.3.0";
         var request = "GetMap";
-        var format = "image%2Fpng8"; //type of image returned  or image/jpeg
+        var format = "image%2Fpng"; //type of image returned  or image/jpeg
         //The layer ID.  Can be found when using the layers properties tool in ArcMap or from the WMS settings 
         var layers = this.layers;
         //projection to display. This is the projection of google map. Don't change unless you know what you are doing.  
@@ -2826,7 +2826,7 @@
         contenedor_.append(mapCanvas_);
         contenedor_.append(mapFooter_);
         mapFooter_.append(mapLogoAnchor_);
-        mapFooter_.append('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/datosvectoriales.html">Top&oacute;nimos, datos topogr&aacute;ficos - 2013 IGN Argentina // Calles OpenStreetMap</a>');
+        mapFooter_.append('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/datosvectoriales.html">Top&oacute;nimos, datos topogr&aacute;ficos - 2013 IGN Argentina // Calles - OpenStreetMap</a>');
 
         argenmap._maximizarCanvas(contenedor_, mapFooter_, mapCanvas_);
         return mapCanvas_.get(0);
