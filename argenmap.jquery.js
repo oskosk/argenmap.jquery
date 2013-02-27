@@ -2796,45 +2796,39 @@
      * @private 
      */
     argenmap._prepararContenedor = function (div) {
-        var LOGOURL = argenmap.BASEURL + 'img/ign-logo-255x45.png';
+        var LOGOURL = argenmap.BASEURL + 'img/logoignsintexto-25px.png';
         var mapCanvas_ = $('<div class="argenmapMapCanvas" />').css({
             'width': '100%',
                 'min-height': '200px'
         });
 
-        var mapHeader_ = $('<div class="argenmapMapHeader" />').css({
-            'background-color': '#00364F',
-            'height': '50px',
-            'color': 'white',
-            'padding': '0px',
-            'text-align': 'left'
-        });
         var mapFooter_ = $('<div class="argenmapMapFooter" />').css({
             'font-family': 'Arial',
                 'color': '#444',
-                'background-color': '#00364F',
+                'background-color': '#003964',
                 'font-size': '10px',
                 'text-align': 'right',
-                'height': '20px',
+                'height': '30px',
+				'line-height': '30px',
+				'vertical-align':'middle',
                 'color': 'white',
                 'padding': '2px 5px'
+
         });
         var mapLogo_ = $('<img />');
-        var mapLogoAnchor_ = $('<a target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs"></a>').append(
+        var mapLogoAnchor_ = $('<a style="float:left" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs"></a>').append(
         mapLogo_);
         var contenedor_ = div;
 
         mapLogo_.attr('src', LOGOURL).css({
             'border': '0'
         });
-        mapHeader_.append(mapLogoAnchor_);
-        contenedor_.append(mapHeader_);
         contenedor_.append(mapCanvas_);
         contenedor_.append(mapFooter_);
+        mapFooter_.append(mapLogoAnchor_);
+        mapFooter_.append('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/datosvectoriales.html">Top&oacute;nimos, datos topogr&aacute;ficos - 2013 IGN Argentina // Calles OpenStreetMap</a>');
 
-        mapFooter_.html('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/datosvectoriales.html">Top&oacute;nimos, datos topogr&aacute;ficos - 2012 IGN Argentina. Calles OSM</a>');
-
-        argenmap._maximizarCanvas(contenedor_, mapHeader_, mapFooter_, mapCanvas_);
+        argenmap._maximizarCanvas(contenedor_, mapFooter_, mapCanvas_);
         return mapCanvas_.get(0);
     };
 
@@ -2842,13 +2836,13 @@
      * Cambia el tamaño del canvas del mapa de acuerdo al alto del contenedor
      * y setea el listener para cuando resizeo el div
      */
-    argenmap._maximizarCanvas = function (contenedor_, mapHeader_, mapFooter_, mapCanvas_) {
-        var dif = contenedor_.height() - mapHeader_.height() - mapFooter_.height();
+    argenmap._maximizarCanvas = function (contenedor_, mapFooter_, mapCanvas_) {
+        var dif = contenedor_.innerHeight() -  mapFooter_.outerHeight();
         mapCanvas_.height(dif);
 
         //me encargo del cambio de tamaño del mapa
         contenedor_.bind('resized', function (e) {
-            var dif = contenedor_.height() - mapHeader_.height() - mapFooter_.height();
+            var dif = contenedor_.innerHeight() - mapFooter_.outerHeight();
             mapCanvas_.height(dif);
             google.maps.event.trigger(contenedor_.argenmap('get'), "resize");
         });
