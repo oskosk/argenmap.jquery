@@ -2647,7 +2647,7 @@
             name: 'Mapa IGN',
             baseURL: 'http://www.ign.gob.ar/wms/?',
             //baseURL: 'http://wms.ign.gob.ar/geoserver/wms?',
-            layers: 'capabasesigign'
+            layers: 'capabaseargenmap'
     	};
     	argenmap.CapaBaseWMS.apply(this, [opts]);
     }
