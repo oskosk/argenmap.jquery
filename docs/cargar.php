@@ -11,8 +11,8 @@ $caso = $_GET['caso'];
 //chequear if in array
 
 //chequear if file_exists
-echo $caso;
-print_r( array_keys($casos) );
+//echo $caso;
+//print_r( array_keys($casos) );
 if (! array_key_exists($caso, $casos ) ) {
 	die('1');
 }
