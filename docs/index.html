@@ -89,6 +89,202 @@
 				margin-top: -20px;
 				padding-top: 15px;
 			}
+
+
+			/* Sidenav for Docs
+			-------------------------------------------------- */
+
+			.bs-docs-sidenav {
+			  width: 228px;
+			  margin: 30px 0 0;
+			  padding: 0;
+			  background-color: #fff;
+			  -webkit-border-radius: 6px;
+				 -moz-border-radius: 6px;
+					  border-radius: 6px;
+			  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+				 -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+					  box-shadow: 0 1px 4px rgba(0,0,0,.065);
+			}
+			.bs-docs-sidenav > li > a {
+			  display: block;
+			  width: 190px \9;
+			  margin: 0 0 -1px;
+			  padding: 8px 14px;
+			  border: 1px solid #e5e5e5;
+			}
+			.bs-docs-sidenav > li:first-child > a {
+			  -webkit-border-radius: 6px 6px 0 0;
+				 -moz-border-radius: 6px 6px 0 0;
+					  border-radius: 6px 6px 0 0;
+			}
+			.bs-docs-sidenav > li:last-child > a {
+			  -webkit-border-radius: 0 0 6px 6px;
+				 -moz-border-radius: 0 0 6px 6px;
+					  border-radius: 0 0 6px 6px;
+			}
+			.bs-docs-sidenav > .active > a {
+			  position: relative;
+			  z-index: 2;
+			  padding: 9px 15px;
+			  border: 0;
+			  text-shadow: 0 1px 0 rgba(0,0,0,.15);
+			  -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+				 -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+					  box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+			}
+			/* Chevrons */
+			.bs-docs-sidenav .icon-chevron-right {
+			  float: right;
+			  margin-top: 2px;
+			  margin-right: -6px;
+			  opacity: .25;
+			}
+			.bs-docs-sidenav > li > a:hover {
+			  background-color: #f5f5f5;
+			}
+			.bs-docs-sidenav a:hover .icon-chevron-right {
+			  opacity: .5;
+			}
+			.bs-docs-sidenav .active .icon-chevron-right,
+			.bs-docs-sidenav .active a:hover .icon-chevron-right {
+			  background-image: url(../img/glyphicons-halflings-white.png);
+			  opacity: 1;
+			}
+			.bs-docs-sidenav.affix {
+			  top: 40px;
+			}
+			.bs-docs-sidenav.affix-bottom {
+			  position: absolute;
+			  top: auto;
+			  bottom: 270px;
+			}
+
+
+
+			/* Responsive
+			-------------------------------------------------- */
+
+			/* Desktop large
+			------------------------- */
+			@media (min-width: 1200px) {
+
+			  .bs-docs-sidenav {
+				width: 258px;
+			  }
+			  .bs-docs-sidenav > li > a {
+				width: 230px \9; /* Override the previous IE8-9 hack */
+			  }
+			}
+
+			/* Desktop
+			------------------------- */
+			@media (max-width: 980px) {
+			  /* Unfloat brand */
+			  body > .navbar-fixed-top .brand {
+				float: left;
+				margin-left: 0;
+				padding-left: 10px;
+				padding-right: 10px;
+			  }
+
+			  /* Inline-block quick links for more spacing */
+			  .quick-links li {
+				display: inline-block;
+				margin: 5px;
+			  }
+
+			  /* When affixed, space properly */
+			  .bs-docs-sidenav {
+				top: 0;
+				width: 218px;
+				margin-top: 30px;
+				margin-right: 0;
+			  }
+			}
+
+
+			/* Tablet to desktop
+			------------------------- */
+			@media (min-width: 768px) and (max-width: 979px) {
+			  /* Remove any padding from the body */
+			  body {
+				padding-top: 0;
+			  }
+			  /* Widen masthead and social buttons to fill body padding */
+			  .jumbotron {
+				margin-top: -20px; /* Offset bottom margin on .navbar */
+			  }
+			  /* Adjust sidenav width */
+			  .bs-docs-sidenav {
+				width: 166px;
+				margin-top: 20px;
+			  }
+			  .bs-docs-sidenav.affix {
+				top: 0;
+			  }
+			}
+
+			  /* Tablet
+			------------------------- */
+			@media (max-width: 767px) {
+			  /* Remove any padding from the body */
+			  body {
+				padding-top: 0;
+			  }
+
+			  /* Widen masthead and social buttons to fill body padding */
+			  .jumbotron {
+				padding: 40px 20px;
+				margin-top:   -20px; /* Offset bottom margin on .navbar */
+				margin-right: -20px;
+				margin-left:  -20px;
+			  }
+			  .masthead h1 {
+				font-size: 90px;
+			  }
+			  .masthead p,
+			  .masthead .btn {
+				font-size: 24px;
+			  }
+			  .marketing .span4 {
+				margin-bottom: 40px;
+			  }
+			  .bs-docs-social {
+				margin: 0 -20px;
+			  }
+
+			  /* Space out the show-grid examples */
+			  .show-grid [class*="span"] {
+				margin-bottom: 5px;
+			  }
+
+			  /* Sidenav */
+			  .bs-docs-sidenav {
+				width: auto;
+				margin-bottom: 20px;
+			  }
+			  .bs-docs-sidenav.affix {
+				position: static;
+				width: auto;
+				top: 0;
+			  }
+
+			  /* Unfloat the back to top link in footer */
+			  .footer {
+				margin-left: -20px;
+				margin-right: -20px;
+				padding-left: 20px;
+				padding-right: 20px;
+			  }
+			  .footer p {
+				margin-bottom: 9px;
+			  }
+			}
+			section {
+				padding-top: 30px;
+			}
+
             #mapa {
                 border: 1px dashed gray;
                 height: 350px;
@@ -130,33 +326,29 @@
         </div>
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="span3">
-                    <div class="well sidebar-nav">
-                        <ul class="nav nav-list">
+                <div class="span3 bs-docs-sidebar">
+                        <ul class="nav nav-list bs-docs-sidenav affix">
                              
                             <!--li class=""><a href="documentacion.html">Generador de mapas <span class="label label-important">experimental</span></a></li-->
                             <li class="nav-header ">Conceptos básicos</li>
-                            <li class=" active"><a href="index.html">argenmap.jquery</a>
+                            <li class=" active"><a href="index.html">argenmap.jquery <i class="icon-chevron-right"></i></a>
                             </li>
-                            <li><a href="index.html#mapaBasico">Cómo incluir un mapa básico en tu
-                                web</a>
+                            <li><a href="#mapaBasico">Un mapa básico en tu
+                                web<i class="icon-chevron-right"></i></a>
                             </li>
                             <li class="nav-header ">Documentación para desarrolladores</li>
-                            <li><a href="#caracteristicas">Características de argenmap.jquery</a>
+                            <li><a href="#caracteristicas">Características <i class="icon-chevron-right"></i></a>
                             </li>
-                            <li><a href="#api">API</a>
+                            <li><a href="#api">API <i class="icon-chevron-right"></i></a>
                             </li>
                             <li><a href="ejemplos.html">Ejemplos</a>
                             </li>
                             <li class="nav-header ">Información adicional</li>
+                            <li><a href="#datosvectoriales">Datos vectoriales de argenmap<i class="icon-chevron-right"></i></a>
+                            </li>
                             <li><a href="presentacion.html">Presentación</a>
                             </li>
-                            <li><a href="datosvectoriales.html">Datos vectoriales de argenmap</a>
-                            </li>
                         </ul>
-                    </div>
-                     
-                    <!--/.well -->
                 </div>
                  
                 <!--/span-->
@@ -176,11 +368,9 @@
 								</div>
                                 <pre id="fuente"  class="prettyprint linenums">
 	&lt;!doctype html&gt;
-	 
 	&lt;html lang="es"&gt;
 	&lt;head&gt;
 		&lt;meta charset="utf-8" /&gt;
-		&lt;title&gt;IGN - en Cerro Aconcagua&lt;/title&gt;
 		&lt;script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"&gt;&lt;/script&gt;
 		&lt;script src="http://code.jquery.com/jquery-1.8.2.js"&gt;&lt;/script&gt;
 		&lt;script type="text/javascript" src="http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js"&gt;&lt;/script&gt;
@@ -191,8 +381,7 @@
 		&lt;/script&gt;
 	&lt;/head&gt;
 	&lt;body&gt;
-		&lt;div id="mapa"&gt;
-		&lt;/div&gt;
+		&lt;div id="mapa"&gt;&lt;/div&gt;
 	&lt;/body&gt;
 	&lt;/html&gt;
 						</pre>
@@ -223,10 +412,10 @@
                             <!-- span-->
                             <p class="lead">Si querés saber más acerca de argenmap.jquery, consultá
                                 la
-                                <a href="documentacion.html#api">API de argenmap.jquery</a>
+                                <a href="#api">API de argenmap.jquery</a>
                             </p>
                             <p>Podés leer más acerca de
-                                <a href="datosvectoriales.html">los datos que muestra
+                                <a href="#datosvectoriales">los datos que muestra
                                     Argenmap.jquery</a>
                                 en esta documentación.</p>
                             <p>Si no sos programador ni diseñador web, podés ver los
@@ -299,14 +488,6 @@ $(document).ready(function(){ $("#mapa").argenmap(); });
                             <p class="alert alert-info">Importante: argenmap.jquery necesita un alto
                                 definido para el &lt;div&gt;. Así que tenés que definir el estilo
                                 "height" del div. Podés hacerlo por CSS o por style:</p>
-                            <h3>Cómo definir el alto del div Con CSS (como en el ejemplo de esta
-                                página)</h3>
-                            <pre class="prettyprint linenums">
-#mapa{
-  height: 315px;
-  border: 1px dashed gray;
-}              
-</pre>
                         </div>
                          
                         <!--row-->
@@ -360,9 +541,7 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                                 </small>
                             </h1>
                         </div>
-                        <div class="page-header">
-                            <h3>Lista rápida de las funciones del plugin</h4>
-                        </div>
+                        <h2>Lista rápida de los métodos del plugin</h2>
                         <h4>Inicialización</h4>
                         <p>
                             <ul>
@@ -398,19 +577,15 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                             </ul>
                         </p>
                     </section>
+                    <h3>Descripción de los métodos</h3>
                     <section id="argenmap">
-                        <div class="page-header">
-                            <h3 id="argenmap">$(selector).argenmap()</h3>
-                        </div>
+                        <h4 id="argenmap">$(selector).argenmap()</h4>
                         <p>Inicializa un mapa simple sobre un elemento HTML.
-                            <em>Preferentemente divs con un alto definido en píxels.
-                            </em>
+                            <em>Preferentemente divs con un alto definido en píxels.</em>
                         </p>
                     </section>
                     <section id="centro">
-                        <div class="page-header">
-                            <h3 id="centro">$(selector).centro( lat, lng )</h3>
-                        </div>
+                        <h4 id="centro">$(selector).centro( lat, lng )</h4>
                         <p>Luego de instanciar un mapa, puede usarse
                             <code>.centro(lat,lng)</code>
                             para cambiar el centro del mapa.</p>
@@ -422,9 +597,7 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                             array del tipo [lat,lng].</p>
                     </section>
                     <section id="zoom">
-                        <div class="page-header">
-                            <h3>$(selector).zoom(zoom)</h3>
-                        </div>
+                        <h4>$(selector).zoom(zoom)</h4>
                         <p>Aumenta o disminuye la escala del mapa.</p>
                         <p><code>zoom</code>
                             (requerido): 1 - 22 número indicando el nivel de zoom al que se quiere
@@ -433,9 +606,7 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                             actual</p>
                     </section>
                     <section id="capaBase">
-                        <div class="page-header">
-                            <h3>$(selector).capaBase(nombre)</h3>
-                        </div>
+                        <h4>$(selector).capaBase(nombre)</h4>
                         <p>
                             Cambia la capa base actualmente visible en el mapa por la capa
                             especificada por el parámetro nombre. Si no se le pasan parámetros
@@ -449,9 +620,7 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                         </p>
                     </section>
                     <section id="agregarCapaWMS">
-                        <div class="page-header">
-                            <h3>$(selector).agregarCapaWMS(opciones)</h3>
-                        </div>
+                        <h4>$(selector).agregarCapaWMS(opciones)</h4>
                         <p>Superpone una capa WMS sobre las capas base.</p>
                         <p>Las opciones que pueden pasarse son los parámetros que pueden pasarse
                             a cualquier WMS:</p>
@@ -494,9 +663,7 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                         </p>
                     </section>
                     <section id="agregarCapaBaseWMS">
-                        <div class="page-header">
-                            <h3>$(selector).agregarCapaBaseWMS(opciones)</h3>
-                        </div>
+                        <h4>$(selector).agregarCapaBaseWMS(opciones)</h4>
                         <p>Esta función te permite agregar una capa base al mapa que salga de un
                             servicio WMS.</p>
                         <p>Las opciones que pueden pasarse son los parámetros que pueden pasarse
@@ -543,9 +710,7 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                         </p>
                     </section>
                     <section id="agregarCapaKML">
-                        <div class="page-header">
-                            <h3>$(selector).agregarCapaKML(opciones)</h3>
-                        </div>
+                        <h4>$(selector).agregarCapaKML(opciones)</h4>
                         <p>Superpone una capa que se importa desde un archivo
                             <code>.kml</code>
                             que esté online accesible por URL.</p>Sus opciones son:
@@ -570,9 +735,7 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                     </p>
                 </section>
                 <section id="agregarMarcador">
-                    <div class="page-header">
-                        <h3>$(selector).agregarMarcador(marcador)</h3>
-                    </div>
+                    <h4>$(selector).agregarMarcador(marcador)</h4>
                     <p>
                         Trabajar con marcadores debería ser simple, esa es la idea con ArgenMap.
                         Para crear un marcador se puede suministrar un objeto con opciones o
@@ -618,10 +781,8 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                     </p>
                 </section>
                 <section id="agregarMarcadores">
-                    <div class="page-header">
-                        <h3>$(selector).agregarMarcadores([marcador1, marcador2,...,
-                            marcadorN])</h3>
-                    </div>
+                        <h4>$(selector).agregarMarcadores([marcador1, marcador2,...,
+                            marcadorN])</h4>
                     <p>
                         Crea varios marcadores sobre el mapa a partir de una array de objetos que
                         definen marcadores. Cada objeto es igual al que recibe
@@ -632,9 +793,68 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                             ejemplo de agregarMarcadores &raquo;</a>
                     </p>
                 </section>
-                    <footer>
-                        <p>&copy; Instituto Geográfico Nacional 2013</p>
-                    </footer>
+					<!-- page-header-->
+				<section id="datosvectoriales">
+					<div class="page-header">
+						<h1>Datos vectoriales de argenmap</h1>
+					</div>
+					<p class="lead">No todos los datos que muestra argenmap.jquery en el
+						mapa son del
+						<a href="http://www.ign.gob.ar" target="_blank">Instituto Geográfico
+							Nacional</a>.
+						<br/>En escalas chicas, Argenmap superpone los datos de calles, rutas y
+						autopistas de
+						<a href="http://es.wikipedia.org/wiki/OpenStreetMap">OpenStreetMap</a>
+						para darle continuidad a la experiencia del usuario sobre el mapa web
+						aunque el IGN no disponga de datos oficiales a escalas menores a
+						1:250.000 .</p>
+					<div class="row-fluid marketing">
+						<div class="span6">
+							<h2>Datos del Instituto Geográfico Nacional</h2>
+							<p class="lead">argenmap muestra los datos topográficos del IGN</p>
+							<p>Los datos vectoriales que argenmap muestra son los de la base de
+								datos Instituto Geográfico Nacional. Estos datos están descompuestos en
+								capas y pueden
+								<a href="http://www.ign.gob.ar/sign" target="_blank">descargarse
+									libremente</a>
+								desde el sitio del IGN.</p>
+							<p>Existe una versión antigua de los datos del IGN (denominada SIG250)
+								que
+								<a href="http://www.ign.gob.ar/sig250" target="_blank">también puede
+									descargarse</a>.</p>
+						</div>
+						<div class="span6">
+							<h2>Datos de Openstreetmap</h2>
+							<p class="lead">argenmap muestra las calles, rutas y autopistas
+								relevadas por los usuarios de OpenStreetMap</p>
+							<p>Los vectores de calles
+								<b>no son responsabilidad del IGN</b>
+								y los desplegamos sobre el mapa a manera representativa para dar una
+								referencia local en los espacios en los que la escala de captura de los
+								datos del IGN no tienen inferencia.</p>
+							<p>Openstreetmap es una base de datos mundial que ofrece datos
+								vectoriales de caminos de todo el mundo.</p>
+							<p>La base de datos es de libre acceso y libre modificación para cada
+								usuario que desee participar aportando sus datos obtenidos con GPS.</p>
+							<p>Actualmente cuenta con 145.351.000 calles alrededor del mundo y con
+								información (de diferentes precisiones) acerca de más de 221.000 calles
+								dentro del territorio argentino.
+								<p>
+									<p>Los datos en formato
+										<em>shapefile</em>
+										se pueden obtener desde:
+										<a href="http://wiki.openstreetmap.org/wiki/WikiProject_Argentina#Descargar_los_fuentes_del_mapa" target="_blank">http://wiki.openstreetmap.org/wiki/WikiProject_Argentina</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					 
+						<!--/span-->
+					</div>
+				</section>
+				<footer>
+					<p>&copy; Instituto Geográfico Nacional 2013</p>
+				</footer>
                 </div>
                  
                 <!--/.fluid-container-->
