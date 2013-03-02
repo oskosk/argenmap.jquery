@@ -2826,7 +2826,7 @@
         contenedor_.append(mapCanvas_);
         contenedor_.append(mapFooter_);
         mapFooter_.append(mapLogoAnchor_);
-        mapFooter_.append('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/datosvectoriales.html">Top&oacute;nimos, datos topogr&aacute;ficos - 2013 IGN Argentina // Calles - OpenStreetMap</a>');
+        mapFooter_.append('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/#datosvectoriales">Top&oacute;nimos, datos topogr&aacute;ficos - 2013 IGN Argentina // Calles - OpenStreetMap</a>');
 
         argenmap._maximizarCanvas(contenedor_, mapFooter_, mapCanvas_);
         return mapCanvas_.get(0);
