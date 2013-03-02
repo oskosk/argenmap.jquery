@@ -2570,7 +2570,7 @@
          */
         this.name = "Capa base WMS";
 
-        this.tipo = 'wms-1.3';
+        this.tipo = 'wms-1.1.1';
 
         jQuery.extend(this, opts);
         //Creating the WMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
@@ -2612,7 +2612,7 @@
         var lrw = projection.fromPointToLatLng(lr);
         //The user will enter the address to the public WMS layer here.  The data must be in WGS84
         var baseURL = this.baseURL;
-        var version = "1.3.0";
+        var version = "1.1.1";
         var request = "GetMap";
         var format = "image%2Fpng"; //type of image returned  or image/jpeg
         //The layer ID.  Can be found when using the layers properties tool in ArcMap or from the WMS settings 
@@ -2663,7 +2663,7 @@
         // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
         this.gmap = null;
 
-        this.tipo = 'wms-1.3';
+        this.tipo = 'wms-1.1.1';
 
 		this.name = 'CAPA WMS';
 		this.alt = 'CAPA WMS';
@@ -2701,7 +2701,7 @@
         var lrw = projection.fromPointToLatLng(lr);
         //The user will enter the address to the public WMS layer here.  The data must be in WGS84
         var baseURL = this.baseURL;
-        var version = "1.3.0";
+        var version = "1.1.1";
         var request = "GetMap";
         var format = "image/png"; //type of image returned 
         var layers = this.layers;
