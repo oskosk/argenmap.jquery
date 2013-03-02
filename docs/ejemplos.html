@@ -54,11 +54,45 @@
                 color: #999;
                 text-align: center;
             }
+
+			.ejemplo {
+				position: relative;
+				margin: 15px 0;
+				padding: 39px 19px 14px;
+				background-color: #fff;
+				border: 1px solid #ddd;
+				-webkit-border-radius: 4px;
+				-moz-border-radius: 4px;
+				border-radius: 4px;
+			} 
+
+			.ejemplo::after {
+				content: "Ejemplo";
+				position: absolute;
+				top: -1px;
+				left: -1px;
+				padding: 3px 7px;
+				font-size: 12px;
+				font-weight: bold;
+				background-color: #f5f5f5;
+				border: 1px solid #ddd;
+				color: #9da0a4;
+				-webkit-border-radius: 4px 0 4px 0;
+				-moz-border-radius: 4px 0 4px 0;
+				border-radius: 4px 0 4px 0;
+			}
+
+			.ejemplo + .prettyprint {
+				margin-top: -20px;
+				padding-top: 15px;
+			}
+
             #ejemplo {
                 height: 350px;
                 margin: 20px auto;
                 border: 1px dashed gray;
             }
+
         </style>
         <link href="css/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
         <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -92,7 +126,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container">
             <div class="row-fluid">
                 <div class="span9">
                     <section id="agregarMarcador">
@@ -102,10 +136,12 @@
                             </p>
                         </div>
                         <!--/row-->
-                        <div class="row-fluid">
-                            <div class="span6">
+						<div class="ejemplo">
+							<div id="mapa1" style="height:500px"></div>
+						</div>
 <pre class="prettyprint linenums">
-$('#mapa1').argenmap().centro(-34.5722189, -58.44053759999997).zoom(14);
+$('#mapa1').argenmap();
+$('#mapa1').centro(-34.5722189, -58.44053759999997).zoom(14);
 $('#mapa1').agregarMarcador({
 	lat:-34.5722189,
 	lng:-58.44053759999997,
@@ -113,14 +149,7 @@ $('#mapa1').agregarMarcador({
 });
 
 </pre>	
-                            </div>
-                            <!--/span-->
-                            <div class="span6">
-                                <div id="mapa1" style="height:500px"></div>
-                            </div>
-                            <!--/span-->
-                        </div>
-                        <!--/row-->
+
                     </section>
                     <script type="text/javascript">
                         $(function () { // o $(document).ready(function(){
@@ -135,8 +164,9 @@ $('#mapa1').agregarMarcador({
                             </p>
                         </div>
                         <!--/row-->
-                        <div class="row-fluid">
-                            <div class="span6">
+						<div class="ejemplo">
+						<div id="mapa2" style="height:500px"></div>
+						</div>
 <pre class="prettyprint linenums">
 $('#mapa2').argenmap().agregarMarcadores([
 	{lat: -25.695278, lng: -54.436667, contenido:'Cataratas del Iguazú!'},
@@ -145,14 +175,6 @@ $('#mapa2').argenmap().agregarMarcadores([
 ]);
 
 </pre>	
-                            </div>
-                            <!--/span-->
-                            <div class="span6">
-                                <div id="mapa2" style="height:500px"></div>
-                            </div>
-                            <!--/span-->
-                        </div>
-                        <!--/row-->
                     </section>
                     <script type="text/javascript">
                         $(function () { // o $(document).ready(function(){
