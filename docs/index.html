@@ -331,7 +331,7 @@
                              
                             <!--li class=""><a href="documentacion.html">Generador de mapas <span class="label label-important">experimental</span></a></li-->
                             <li class="nav-header ">Conceptos básicos</li>
-                            <li class=" active"><a href="index.html">argenmap.jquery <i class="icon-chevron-right"></i></a>
+                            <li class=" active"><a href="#argenmap.jquery">argenmap.jquery <i class="icon-chevron-right"></i></a>
                             </li>
                             <li><a href="#mapaBasico">Un mapa básico en tu
                                 web<i class="icon-chevron-right"></i></a>
@@ -376,7 +376,10 @@
 		&lt;script type="text/javascript" src="http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js"&gt;&lt;/script&gt;
 		&lt;script&gt;
 		$(function() {
-			$('#mapa').argenmap().centro(-32.564254972370165, -68.6540217765625).zoom(8).agregarMarcador();
+			$('#mapa').argenmap();
+			$('#mapa').centro(-32.564254972370165, -68.6540217765625)
+			$('#mapa').zoom(8);
+			$('#mapa').agregarMarcador();
 		});
 		&lt;/script&gt;
 	&lt;/head&gt;
