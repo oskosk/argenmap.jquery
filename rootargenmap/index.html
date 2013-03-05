@@ -9,53 +9,11 @@
 
     <!-- Le styles -->
     <link href="argenmap.jquery/docs/css/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="argenmap.jquery/docs/css/bootstrap/css/docs.css" rel="stylesheet">
     <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
-      
-	.marketing .row {
-	  margin-bottom: 9px;
-	}
-	.marketing h1 {
-	  margin: 36px 0 27px;
-	  font-size: 40px;
-	  font-weight: 300;
-	  text-align: center;
-	}
-	.marketing h2,
-	.marketing h3 {
-	  font-weight: 300;
-	}
-	.marketing h2 {
-	  font-size: 22px;
-	}
-	.marketing p {
-	  margin-right: 10px;
-	}
-	.marketing .bs-icon {
-	  float: left;
-	  margin: 7px 10px 0 0;
-	  opacity: .8;
-	}
-	.marketing .small-bs-icon {
-	  float: left;
-	  margin: 4px 5px 0 0;
-	}    
-	
-	.marketing-byline {
-	  margin: -18px 0 27px;
-	  font-size: 18px;
-	  font-weight: 300;
-	  line-height: 24px;
-	  color: #999;
-	  text-align: center;
-	}	
-      
+
+
+
 	#mapa{
 		position:fixed;
 		top:40px;
@@ -80,18 +38,18 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
+          <a class="brand"  href="/argenmap/#a">argenmap</a>
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand"  href="index.html">argenmap</a>
           <div class="nav-collapse ">
 	  
-            <a href="argenmap.jquery/docs" class="btn  btn-success">Usá un mapa del IGN en tu sitio</a>
+            <a href="argenmap.jquery/docs" class="btn  btn-primary">Usá un mapa del IGN en tu sitio &raquo;</a>
 	   
             <ul class="nav">
-              <li class="active"><a href="index.html">Inicio</a></li>
+              <li class="active"><a href="/argenmap/">Inicio</a></li>
               <li><a href="#contacto" onclick="UE.Popin.show(); return false;">Contacto</a></li>
             </ul>
             
@@ -99,33 +57,28 @@
         </div>
       </div>
     </div>
-	    <link href="argenmap.jquery/docs/css/bootstrap/css/docs.css" rel="stylesheet">
-    <div id="mapa" style="display:none" class="fluid-container">
 
-    </div><!-- /container -->
-	<link href="argenmap.jquery/docs/css/bootstrap/css/docs.css" rel="stylesheet">
     <div id="presentacion" class="container">
 	
 	<!-- Masthead
 	================================================== -->
-	<header class="jumbotron masthead">
+	<header class="jumbotron ">
 	  <div class="inner">
-	    <!--h1>Argenmap, del IGN</h1-->
-		<div class="pagination-centered"><img src="images/argenmap.png"></div>
+		<div class="pagination-centered"><img alt="Logo de Argenmap" src="images/argenmap.png"></div>
 	    <p>Mapas web de la República Argentina.</p>
-	    <p class="download-info">
-	      <a href="#"  onclick="empezar()" class="btn btn-primary btn-large">Mirá argenmap sobre Google</a>
-	      <a href="argenmap.jquery/docs/index.html" class="btn btn-large">Usá argenmap en tu sitio</a>
-	    </p>
 
+	    <p class="download-info">
+	      <a href="argenmap.jquery/docs/index.html" class="btn btn-primary btn-large">Usá argenmap en tu sitio &raquo;</a>
+	    </p>
+	  <p  id="a"><strong>Argenmap jQuery</strong> es una librería javascript diseñada en forma de plugin de jQuery que combina Google Maps API con los mapas del Instituto Geográfico Nacional a través de su servicio estándar WMS. Es una buena opción para usar mapas de Argentina en tu sitio si ya conocés jQuery.</p>
 	  </div> <!--inner-->
 	  
 	  
 	</header>
 	
 	<!--hr class="soften"-->
-	<div class="marketing">
-	`	<!--
+	<div class="">
+		<!--
 		<div class="row">
 			<div class="span6 pagination-right">
 				<iframe src="https://docs.google.com/presentation/embed?id=1fcoDRkm1v0s_xHwQVpv3Iwi1N03xoJf5xb3kvLsxhjY&start=false&loop=false&delayms=3000" frameborder="0" width="400" height="312" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
@@ -135,59 +88,103 @@
 			</div>
 		</div>
 		-->
-	  <h1>Diseñado para todos.</h1>
-	  <p class="marketing-byline">Estos son los componentes de Argenmap.</p>
 
-	  <div class="row">
-	    <div class="span4">
-	      <h2>Argenmap jQuery</h2>
-	      <p><strong>argenmap.jquery</strong> es una librería javascript diseñada en forma de plugin de jQuery. Está construida pensando en los browsers modernos
-	      y con la finalidad de ampliar la presencia de los mapas locales en la web. Esto significa que argenmap.jquery está pensado para correr sobre la mayoría de los browsers
-	      e incluso en tablets y smartphones.
+	  <div class="row ">
+	    <div class="span6">
+		
+	      <h2 style="text-align:center">argenmap.jquery v1</h2>
+
+	  	  <h3 style="text-align:center;color:#999">Google Maps API + IGN + OpenStreetMap</h3>
+	      <p>
+		  <strong>argenmap v1</strong> configura Google Maps API para que sólo muestro nombres y vectores reconocidos por el IGN. A partir de 
+		  la escala 1:250.000, se muestran los caminos de OpenStreetMap
+		  </p>
+		  <ul>
+			<li>Desactiva la capa vectorial de Google Maps.</li>
+			<li>Presenta la capa vectorial del IGN.</li>
+			<li>Superpone vectores y topónimos del IGN sobre la capa satelital de Google, ocultando los topónimos de Google Maps.</li>
+		  </ul>
+
 		  <p>
-	      <a href="argenmap.jquery/docs/index.html" class="btn btn-primary">Usá argenmap.jquery &raquo;</a>
 	      </p>
 
 	    </div>
-	    <div class="span4">
-	      <h2>Argenmap DB</h2>
-	      <p><strong>Argenmap DB</strong> es el componente Argenmap que permite subir archivos geoespaciales a através de la web y editarlos online
-		  por medio de protocolos estándar como WFS-T. Apunta a cubrir las necesidad de esos organismos que generan datos con referencia espacial pero carecen de la infraestructura
-		  para publicarlos en la web.
+	    <div class="span6">
+	      <h2 style="text-align:center">argenmap.jquery v2</h2>
+	  	  <h3 style="text-align:center;color:#999">OpenLayers + IGN + Google satellite + OSM</h3>
+  	      <h3></h3>
+	      <p><strong>argenmap v2</strong> combina OpenLayers con la capa base satelital de Google Maps y el WMS del Instituto Geográfico Nacional. Si te gusta jQuery
+		  y querés acceder al poder de OpenLayers, esta es tu elección.
 		  </p>
 		  <p>
 	      <a class="btn disabled">No disponible públicamente aún</a>.
 	      </p>
-	    </div>
-	    <div class="span4">
-	      <h2>Argenmap WMS</h2>
-	      <p><strong>Argenmap WMS</strong> es un frontend web que ofrece alta disponibildad de las imágenes generadas por un servicio WMS. Entre otras cosas, está basado en memcached y PHP
-		  para promover el desarrollo abierto entre el gran número de programadores PHP que existen en la comunidad con acceso a estas herramientas libres.
+		  <p class="lead">
+		      <a href="#mapascomparados" onclick="empezar()" class="btn btn-success btn-large">Compará las 2 versiones de argenmap &raquo;</a>
 		  </p>
-		  <p>
-	      <a class="btn disabled">No disponible públicamente aún</a>.
-	      </p>
 	    </div>
 	  </div><!--/row-->	  
-	  <h1>¿Por qué hicimos Argenmap?</h1>
-	  <p class="marketing-byline">Esto nos inspiró a hacer Argenmap.</p>
+	  </div>
+	  <!--marketing-->
+
+	  <section id="mapascomparados" style="display:none">
+		  <div class="row" id="mapas" >
+			<div class="span6">
+				<h2>argenmap.jquery v1</h2>
+				<h3 style="text-align:center;color:#999">Google Maps API + IGN + OpenStreetMap</h3>
+				<div id="mapa1" style="border:1px dashed black;height:400px">
+				</div>
+				<p>
+				<ul>
+					<li>Librería base: Google Maps API</li>
+					<li>Capas disponibles:
+						<ul>
+							<li>Capa Base IGN.</li>
+							<li>Satélite de Google Maps con topónimos oficiales superpuestos.</li>
+						</ul>
+					<li>Vectores de caminos de OpenStreetMap a partir de escala 1:250.000.</li>
+					</li>
+				</ul>
+				</p>
+			</div>
+			<div class="span6">
+				<h2>argenmap.jquery v2</h2>
+				<h3 style="text-align:center;color:#999">OpenLayers + IGN + Google satellite + OSM</h3>
+				<div id="mapa2" style="border:1px dashed black;height:400px">
+				</div>
+				<p>
+				<ul>
+					<li>Librería base: OpenLayers 2.12</li>
+					<li>Capas disponibles:
+						<ul>
+							<li>Capa Base IGN.</li>
+							<li>Satélite de Google Maps con topónimos oficiales superpuestos.</li>
+						</ul>
+					<li>Vectores de caminos de OpenStreetMap a partir de escala 1:250.000.</li>
+					</li>
+				</ul>
+				</p>
+			</div>		
+		  </div>
+		  <!--row-->
+	  </section>
+	<div class="marketing">
+	  <h1 style="text-align:center">¿Por qué hicimos Argenmap?</h1>
 	  <div class="row">
 
 	    <div class="span4">
-	      <img class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_079_podium.png">
-	      <h2>Un diseño para todos los niveles</h2>
-	      <p>
+			
+	      <img alt="ícono de un podio" class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_079_podium.png">
+	      <h3>Un diseño para todos los niveles</h3>
 			  <ul>
 			  <li>Argenmap está diseñado para ayudar a desarrolladores web de todos los niveles. Diseñadores y programadores que busquen usar mapas en la web.</li>
 			  <li>Argenmap nos gusta y estamos decidios a ayudar a gente como nosotros a meterse en el mundo de los mapas
 			  sin el camino complejo aprendizaje que esto implica.</li>
 			  </ul>
-	      </p>
 	    </div>
 	    <div class="span4">
-	      <img class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_042_group.png">
-	      <h2>Organismos del Estado y usuarios novatos en SIG</h2>
-	      <p>
+	      <img alt="ícono de grupo de gente" class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_042_group.png">
+	      <h3>Organismos del Estado y usuarios novatos en SIG</h3>
 		  <ul>
 		  <li>Al igual que vos, hacemos productos para la web y siempre buscamos las herramientas que nos faciliten lo mejor de la web y que nos
 	      quiten la mayor cantidad posible de problemas de encima.
@@ -197,12 +194,10 @@
 			oficiales muy fácilmente.
 		  </li>
 		  </ul>
-		  </p>
 	    </div>
 		<div class="span4">
-	      <img class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_214_resize_small.png">
-				<h2>El IGN frente a Google Maps</h2>
-				<p>
+	      <img alt="ícono de dos flechas en sentidos opuestos" class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_214_resize_small.png">
+				<h3>El IGN frente a Google Maps</h3>
 					<ul>
 						<li>
 							<strong>El uso masivo de Google Maps es un hecho</strong>. Muchos sitios del gobierno lo utilizan porque siempre está disponible y es fácil de
@@ -210,36 +205,32 @@
 						</li>
 						<li><strong>argenmap.jquery</strong> te permite, con unas leves modificaciones, que el mapa de Google Maps que usás en el sitio que administrás,
 						deje de mostrar <em>Falkland Islands</em>.</li>
-						<li>
-							<strong>argenmap.jquery</strong> permite disminuir los casos de mapas en la web que muestran topónimos no oficiales. 
-						</li>					
-
 
 					</ul>
-				</p>
 			</div> <!--span -->
 	  </div><!--/row-->
-
+	</div>
+	<!--marketing--> 
 
 	  
 	  <div class="row">
 	    <div class="span3">
-	      <img class="small-bs-icon" src="argenmap.jquery/docs/img/icon-html5.png">
+	      <img alt="ícono de html5" class="small-bs-icon" src="argenmap.jquery/docs/img/icon-html5.png">
 	      <h3>HTML5</h3>
 	      <p>Hecho para soportar HTML5.</p>
 	    </div>
 	    <div class="span3">
-	      <img class="small-bs-icon" src="argenmap.jquery/docs/img/icon-css3.png">
+	      <img alt="ícono de CSS3" class="small-bs-icon" src="argenmap.jquery/docs/img/icon-css3.png">
 	      <h3>CSS3</h3>
 	      <p>La estilización de argenmap es CSS3.</p>
 	    </div>
 	    <div class="span3">
-	      <img class="small-bs-icon" src="argenmap.jquery/docs/img/icon-github.png">
+	      <img alt="ícono de github" class="small-bs-icon" src="argenmap.jquery/docs/img/icon-github.png">
 	      <h3>Open-source</h3>
 	      <p>Hecho y mantenido en <a href="https://github.com">GitHub</a>.</p>
 	    </div>
 	    <div class="span3">
-	      <img class="small-bs-icon" src="argenmap.jquery/docs/img/logoignsintexto-40px.png">
+	      <img alt="logotipo del instituto geográfico nacional de la república argentina" class="small-bs-icon" src="argenmap.jquery/docs/img/logoignsintexto-40px.png">
 	      <h3>Hecho en el IGN</h3>
 	      <p>Traído a ustedes por desarrolladores del Instituto Geográfico Nacional.</p>
 	    </div>
@@ -253,44 +244,13 @@
 
 	  </div><!--bs-links-->			
 	  <hr class="soften">
-	  <!--
-	  <h1>Built with Bootstrap.</h1>
-	  <p class="marketing-byline">For even more sites built with Bootstrap, <a href="http://builtwithbootstrap.tumblr.com/" target="_blank">visit the unofficial Tumblr</a> or <a href="./examples.html">browse the examples</a>.</p>
-	  <ul class="thumbnails example-sites">
-	    <li class="span3">
-	      <a class="thumbnail" href="http://soundready.fm/" target="_blank">
-	        <img src="assets/img/example-sites/soundready.png" alt="SoundReady.fm">
-	      </a>
-	    </li>
-	    <li class="span3">
-	      <a class="thumbnail" href="http://kippt.com/" target="_blank">
-	        <img src="assets/img/example-sites/kippt.png" alt="Kippt">
-	      </a>
-	    </li>
-	    <li class="span3">
-	      <a class="thumbnail" href="http://www.fleetio.com/" target="_blank">
-	        <img src="assets/img/example-sites/fleetio.png" alt="Fleetio">
-	      </a>
-	    </li>
-	    <li class="span3">
-	      <a class="thumbnail" href="http://www.jshint.com/" target="_blank">
-	        <img src="assets/img/example-sites/jshint.png" alt="JS Hint">
-	      </a>
-	    </li>
-	  </ul>
-	
-	</div><!-- /.marketing -->
 	
 	     <!-- Footer
 	      ================================================== -->
-	<!--
 		<footer class="footer">
-	        <p class="pull-right"><a href="#">Back to top</a></p>
-	        <p>Designed and built with all the love in the world <a href="http://twitter.com/twitter" target="_blank">@twitter</a> by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.</p>
-	        <p>Code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
-	        <p>Icons from <a href="http://glyphicons.com">Glyphicons Free</a>, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+	        <p class="pull-left"><a href="http://www.ign.gob.ar">Instituto Geográfico Nacional de la República Argentina</a></p>
+	        <p class="pull-right"><a href="#">Ir arriba</a></p>
 	      </footer>
-	-->
     </div><!-- /container -->
 
 
@@ -305,18 +265,43 @@
     <!--argenmap.jquery online -->
     <script type="text/javascript" src="http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js"></script>
     <script type="text/javascript">
+		/**
+		 * Esta renombrada del objeto es innecesaria salvo
+		 * en esta página de demo en la que uso ambas versiones
+		 * del plugin porque tanto argenmap v1 como argenmap v2
+		 * se instancian igual con $().argenmap
+		 *
+		 */
+		jQuery.fn.argenmap1 = jQuery.fn.argenmap;
+		jQuery.fn.centro1 = jQuery.fn.centro;
+		jQuery.fn.zoom1 = jQuery.fn.zoom;
+	</script>
+	<script type="text/javascript" src="http://www.ign.gob.ar/argenmap2/argenmap.jquery/argenmap.jquery.min.js"></script>	
+    <script type="text/javascript">
     function goMapa() {
-    	$('#mapa').argenmap({
-    		accion:'agregarMarcador',
-    		latLng:[-51.69693888823194, -57.881865648706025],
-    		map: {
-    			opciones: {
-    				mapTypeId:'satellite'
-    			},
-    			center:true,
-    			zoom:10
-    		}
-    	});
+		$('#mapa1').argenmap1().centro1(-51.320861909179236, -63.91335978933077).zoom1(5);
+
+	   	$('#mapa2').argenmap().centro(-51.320861909179236, -63.91335978933077).zoom(5);
+
+		var gmap = $('#mapa1').data('gmap');
+		google.maps.event.addListener(gmap, 'center_changed', function() {
+			sync();
+		});
+
+		google.maps.event.addListener(gmap, 'zoom_changed', function() {
+			sync();
+		});
+		 function sync()
+		 {
+			var lat = gmap.getCenter().lat();
+			var lng = gmap.getCenter().lng();
+
+			$('#mapa2').centro(lat,lng);
+			var z = gmap.getZoom();
+
+			$('#mapa2').zoom(z);
+		 }
+
     }
     function wipeMarketing()
     {
@@ -327,10 +312,15 @@
     
     function empezar()
     {
-    	wipeMarketing();
-    	$('#mapa').fadeIn();
-    	goMapa();
-    	return false;
+    	//wipeMarketing();
+	if ( ! $('#mapascomparados').is(':visible') ) {
+    		$('#mapascomparados').fadeIn();
+    		goMapa();
+    		return void(0);
+	} else {
+		$('#mapascomparados').toggle();
+		return
+	}	
     }
     </script>
 	
