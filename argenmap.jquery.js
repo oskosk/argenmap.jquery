@@ -1204,15 +1204,17 @@
             // console.log($('#prueba .argenmapMapCanvas').children().length);
             map = new _default.classes.Map(mapCanvas, opts);
 
-			$this.data('gmap', map);
+			      $this.data('gmap', map);
             //Agrego la capa base del IGN a los tipos de mapas
-			google.maps.event.addListener(map, "maptypeid_changed",function(){
-				map.setZoom(map.getZoom()+1);
-				map.setZoom(map.getZoom()-1)
-			});
-            argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseIGN());
-
-            argenmap.GmapAgregarCapaWms(map, new argenmap.CapaWMSIGN());
+			      google.maps.event.addListener(map, "maptypeid_changed",function(){
+  				    map.setZoom(map.getZoom()+1);
+  				    map.setZoom(map.getZoom()-1)
+			      });
+            //argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseIGN());
+            //argenmap.GmapAgregarCapa(map, new argenmap.CapaWMSIGN());
+            argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseArgenmap());
+            argenmap.GmapAgregarCapa(map, new argenmap.CapaTMSArgenmap());
+            
 
             // y los estilos previamente agregados
             for (k in styles) {
@@ -2339,6 +2341,24 @@
 		});
 	}
 
+    $.fn.agregarCapaBaseTMS = function(opciones)
+    {
+        //chainability
+        return this.each(function(){
+            var $this = $(this);
+            var a = $this.data('argenmap');
+            if(!a) return;
+
+            var map = $this.data('gmap');
+
+            argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseTMS({
+                name: opciones.nombre,
+                baseURL: opciones.url,
+                layers: opciones.capas
+            }));
+        });
+    }    
+
 	$.fn.agregarCapaWMS = function(opciones)
 	{
 		//chainability
@@ -2349,7 +2369,7 @@
 
 			var map = $this.data('gmap');
 
-            argenmap.GmapAgregarCapaWms(map, new argenmap.CapaWMS({
+            argenmap.GmapAgregarCapa(map, new argenmap.CapaWMS({
                 name: opciones.nombre,
                 baseURL: opciones.url,
                 layers: opciones.capas
@@ -2357,6 +2377,24 @@
 		});
 	}
 	
+    $.fn.agregarCapaTMS = function(opciones)
+    {
+        //chainability
+        return this.each(function(){
+            var $this = $(this);
+            var a = $this.data('argenmap');
+            if(!a) return;
+
+            var map = $this.data('gmap');
+
+            argenmap.GmapAgregarCapaTMS(map, new argenmap.CapaTMS({
+                name: opciones.nombre,
+                baseURL: opciones.url,
+                layers: opciones.capas
+            }));
+        });
+    }
+
 	$.fn.agregarCapaKML = function(opciones)
 	{
 		//chainability
@@ -2595,6 +2633,8 @@
     }
 
 
+
+
    /**
      * Devuelve la url para conseguir una tile de google maps equivalente
      * en el servidor WMS
@@ -2641,22 +2681,81 @@
     };
 
 
-    argenmap.CapaBaseIGN = function(opts)
-    {
-    	var opts = {
-            name: 'Mapa IGN',
-            baseURL: 'http://www.ign.gob.ar/wms/?',
-            //baseURL: 'http://wms.ign.gob.ar/geoserver/wms?',
-            layers: 'capabaseargenmap'
-    	};
-    	argenmap.CapaBaseWMS.apply(this, [opts]);
-    }
-    argenmap.CapaBaseIGN.prototype.getTileUrl = function() {
-    		return argenmap.CapaBaseWMS.prototype.getTileUrl.apply(this, arguments);
-    }
+   /**
+     * @class Representa una capa TMS opaca que puede ser utilizada como capa base de los mapas
+     * @constructor
+     * @param {Object} opts opciones para construir la capa
+     * @export
+     */
+    argenmap.CapaBaseTMS = function (opts) {
+
+        /**
+         * El objeto ImageMapType q representa a esta capa en para la api de gmaps.
+         * @public 
+         * @type google.maps.ImageMapType
+         */
+        this.imageMapType = null;
+        /**
+         * Referencia al objeto map de google sobre el cual está capa está desplegada.
+         * Se setea con argenmap.agregarCapaBaseWMS().
+         * @public 
+         * @type google.maps.Map
+         */
+        this.gmap = null;
+        /**
+         * Un identificador de texto para esta capa. Este identificador
+         * es el que se mostrará en los selectores de capas del mapa.
+         * @public
+         * @default "Capa base WMS"
+         * @type google.maps.Map
+         */
+        this.name = "Capa base TMS";
+
+        this.tipo = 'tms-1.0.0';
+
+        jQuery.extend(this, opts);
+        //Creating the WMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
+        //wms layer is set 
 
 
-    
+        var tmsOptions = {
+            alt: this.name,
+            getTileUrl: jQuery.proxy(this.getTileUrl, this),
+            isPng: true,
+            maxZoom: 17,
+            minZoom: 3,
+            name: this.name,
+            tileSize: new google.maps.Size(256, 256)
+
+        };
+
+
+        //Creating the object to create the ImageMapType that will call the WMS Layer Options.
+
+        this.imageMapType = new google.maps.ImageMapType(tmsOptions);
+    }
+
+   /**
+     * Devuelve la url para conseguir una tile de google maps equivalente
+     * en el servidor TMS
+     * @param {google.maps.MapTile} tile La tile de GMap que se necesita emular en el servidor WMS
+     * @param {Number} zoom El nivel de zoom actual. Utilizado para los cálculos de resoluciones
+     */
+    argenmap.CapaBaseTMS.prototype.getTileUrl = function (tile, zoom) {
+
+        var baseURL = this.baseURL;
+        var layers = this.layers;
+        /*
+         * Dark magic. Convierto la y de google a una y de TMS
+         * http://alastaira.wordpress.com/2011/07/06/converting-tms-tile-coordinates-to-googlebingosm-tile-coordinates/
+         */
+        var ytms = (1<<zoom) - tile.y -1;        
+        var url = baseURL + "/" + layers + "/"+ zoom + "/" + tile.x + '/'+ ytms + ".png";
+
+        return url;
+    };
+
+  
    argenmap.CapaWMS = function (opts) {
         // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
         this.imageMapType = null;
@@ -2722,6 +2821,78 @@
         return url;
     };
 
+   argenmap.CapaTMS = function (opts) {
+        // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
+        this.imageMapType = null;
+        // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
+        this.gmap = null;
+
+        this.tipo = 'tms-1.0.0';
+
+        this.name = 'CAPA TMS';
+        this.alt = 'CAPA TMS';
+        jQuery.extend(this, opts);
+        //Creating the TMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
+        //wms layer is set 
+
+
+        var tmsOptions = {
+            alt: this.alt,
+            getTileUrl: jQuery.proxy(this.getTileUrl, this),
+            isPng: false,
+            maxZoom: 17,
+            minZoom: 6,
+            name: this.name,
+            tileSize: new google.maps.Size(256, 256)
+        };
+
+        //Creating the object to create the ImageMapType that will call the TMS Layer Options.
+
+        this.imageMapType = new google.maps.ImageMapType(tmsOptions);
+
+    };
+    
+    argenmap.CapaTMS.prototype.getTileUrl = function (tile, zoom)
+    {
+        var baseURL = this.baseURL;
+        var layers = this.layers;
+        /*
+         * Dark magic. Convierto la y de google a una y de TMS
+         * http://alastaira.wordpress.com/2011/07/06/converting-tms-tile-coordinates-to-googlebingosm-tile-coordinates/
+         */
+        var ytms = (1<<zoom) - tile.y -1;        
+        var url = baseURL + "/" + layers + "/"+ zoom + "/" + tile.x + '/'+ ytms + ".png";
+
+        return url;
+    };    
+
+    argenmap.CapaBaseIGN = function(opts)
+    {
+        var opts = {
+            name: 'Mapa IGN',
+            baseURL: 'http://www.ign.gob.ar/wms/?',
+            layers: 'capabaseargenmap'
+        };
+        argenmap.CapaBaseWMS.apply(this, [opts]);
+    }
+    argenmap.CapaBaseIGN.prototype.getTileUrl = function() {
+            return argenmap.CapaBaseWMS.prototype.getTileUrl.apply(this, arguments);
+    }
+
+    argenmap.CapaBaseArgenmap = function(opts)
+    {
+      var opts = {
+            name: 'Mapa IGN',
+            baseURL: 'http://www.ign.gob.ar/tms',
+            layers: 'capabaseargenmap'
+      };
+      argenmap.CapaBaseTMS.apply(this, [opts]);
+    }
+
+    argenmap.CapaBaseArgenmap.prototype.getTileUrl = function() {
+        return argenmap.CapaBaseTMS.prototype.getTileUrl.apply(this, arguments);
+    }
+
 	argenmap.CapaWMSIGN = function()
 	{
 		var opts = {
@@ -2743,7 +2914,25 @@
 		
     }
 
-
+    argenmap.CapaTMSArgenmap = function()
+    {
+        var opts = {
+            name: 'IGN',
+            baseURL: 'http://www.ign.gob.ar/tms',
+            layers: 'capabasesigign'
+        };
+        argenmap.CapaTMS.apply(this, [opts]);
+    }
+    argenmap.CapaTMSArgenmap.prototype.getTileUrl = function(a, b) 
+    {
+              // Solo cargo tiles para este overlay
+                // si estoy en la capa satelite
+                if (this.gmap.getMapTypeId() != 'satellite') {
+                    return false;
+                }
+                return argenmap.CapaTMS.prototype.getTileUrl.apply(this, arguments);
+        
+    }
     argenmap.GmapAgregarCapaBase = function (gmap, capa) {
         var mapTypeIds;
 
@@ -2778,9 +2967,9 @@
     /**
      * Superpone una capa WMS sobre las capas base y las demás capas ya superpuestas
      *
-     * @param {Object} capa La capa WMS a superponer sobre al mapa.
+     * @param {Object} capa La capa a superponer sobre al mapa.
      */
-    argenmap.GmapAgregarCapaWms = function (gmap, capa) {
+    argenmap.GmapAgregarCapa = function (gmap, capa) {
 
         capa.gmap = gmap;
         //gmap.overlayMapTypes.insertAt(0, capa.imageMapType);
