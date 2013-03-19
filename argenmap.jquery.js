@@ -2988,7 +2988,8 @@
         var LOGOURL = argenmap.BASEURL + 'img/logoignsintexto-25px.png';
         var mapCanvas_ = $('<div class="argenmapMapCanvas" />').css({
             'width': '100%',
-                'min-height': '200px'
+            'min-height': '200px',
+            'background-color': '#94D0D2'
         });
 
         var mapFooter_ = $('<div class="argenmapMapFooter" />').css({
