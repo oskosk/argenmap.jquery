@@ -11,7 +11,39 @@
  *  Todos los derechos reservados.
  *   
  */ (function ($) {
+    var IGN_CACHES = [ 'http://www.ign.gob.ar/tms', 'http://sig.ign.gob.ar/tms', 'http://190.220.8.216/tms' ];
 
+    /** 
+     * Constant: URL_HASH_FACTOR
+     * {Float} Used to hash URL param strings for multi-WMS server selection.
+     *         Set to the Golden Ratio per Knuth's recommendation.
+     */
+    var URL_HASH_FACTOR = (Math.sqrt(5) - 1) / 2;
+
+   /**
+     * Method: selectUrl
+     * selectUrl() implements the standard floating-point multiplicative
+     *     hash function described by Knuth, and hashes the contents of the 
+     *     given param string into a float between 0 and 1. This float is then
+     *     scaled to the size of the provided urls array, and used to select
+     *     a URL.
+     *
+     * Parameters:
+     * paramString - {String}
+     * urls - {Array(String)}
+     * 
+     * Returns:
+     * {String} An entry from the urls array, deterministically selected based
+     *          on the paramString.
+     */
+     function selectURL(paramString, urls) {
+        var product = 1;
+        for (var i=0, len=paramString.length; i<len; i++) { 
+            product *= paramString.charCodeAt(i) * URL_HASH_FACTOR; 
+            product -= Math.floor(product); 
+        }
+        return urls[Math.floor(product * urls.length)];
+    }
     /***************************************************************************/
     /*                                STACK                                    */
     /***************************************************************************/
@@ -2744,6 +2776,9 @@
     argenmap.CapaBaseTMS.prototype.getTileUrl = function (tile, zoom) {
 
         var baseURL = this.baseURL;
+	if (  typeof baseURL != 'string') {
+		baseURL = selectURL( tile.x + '' + tile.y, baseURL );
+	}
         var layers = this.layers;
         /*
          * Dark magic. Convierto la y de google a una y de TMS
@@ -2855,6 +2890,9 @@
     argenmap.CapaTMS.prototype.getTileUrl = function (tile, zoom)
     {
         var baseURL = this.baseURL;
+	if ( typeof baseURL != 'string') {
+		baseURL = selectURL( tile.x+''+tile.y, baseURL );
+	}
         var layers = this.layers;
         /*
          * Dark magic. Convierto la y de google a una y de TMS
@@ -2883,7 +2921,7 @@
     {
       var opts = {
             name: 'Mapa IGN',
-            baseURL: 'http://www.ign.gob.ar/tms',
+	    baseURL: IGN_CACHES,
             layers: 'capabaseargenmap'
       };
       argenmap.CapaBaseTMS.apply(this, [opts]);
@@ -2918,7 +2956,7 @@
     {
         var opts = {
             name: 'IGN',
-            baseURL: 'http://www.ign.gob.ar/tms',
+            baseURL: IGN_CACHES,
             layers: 'capabasesigign'
         };
         argenmap.CapaTMS.apply(this, [opts]);
