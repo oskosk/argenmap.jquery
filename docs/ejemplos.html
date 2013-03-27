@@ -197,7 +197,7 @@ $('#mapa2').argenmap().agregarMarcadores([
 <pre class="prettyprint linenums">
 $('#mapa3').argenmap().centro(-25.97885760520047, -59.437950015454135).zoom(7);
 $('#mapa3').agregarCapaWMS({
-	url:'http://idef.formosa.gob.ar/geoserver/wms?',
+	url:'http://idef.formosa.gob.ar/servicios/wms?',
 	capas:'mce_prov_escuelas'
 
 });
@@ -216,7 +216,7 @@ $('#mapa3').agregarCapaWMS({
                         $(function () { // o $(document).ready(function(){
 							$('#mapa3').argenmap().centro(-25.97885760520047, -59.437950015454135).zoom(7);
 							$('#mapa3').agregarCapaWMS({
-								url:'http://idef.formosa.gob.ar/geoserver/wms?',
+								url:'http://idef.formosa.gob.ar/servicios/wms?',
 								capas:'mce_prov_escuelas'
 
 							});
