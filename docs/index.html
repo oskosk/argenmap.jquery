@@ -236,7 +236,7 @@
               </div><!--span12-->
           </div><!--row-->
 
-          <h4>Todo esto, junto se ve así</h4>
+          <h4>Todo junto se ve así</h4>
           <div class="row-fluid">
             <pre class="prettyprint linenums">
 &lt;head&gt;                            	
@@ -305,6 +305,18 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
 </pre>
             </div>
           <div class="fb-comments" data-href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs#caracteristicas" data-width="600" data-num-posts="10"></div>
+        </section>
+        <section id="comofunciona">
+          <h3>Cómo funciona argenmap.jquery v1</h3>
+          <ul>
+            <li>Crea un objeto <code>google.maps.Map</code>.</li>
+            <li>Habilita como única capa el <a href="https://developers.google.com/maps/documentation/javascript/maptypes#BasicMapTypes" target="_blank">tipo de mapa</a> <code>satellite</code> nativo de Google Maps v3.</li>
+            <li>Define un par de funciones para crear <code>MapType</code>s que son capaces de obtener las tiles de servicios WMS y TMS acorde a la interfaz <code>MapType.getTile()</code> </li>
+            <li>Agrega una capa base (<em>MapType</em>) que usa estas funciones para superponer la capa <code>capabaseargenmap</code> del servicio WMS del IGN.
+            <li>Agrega una capa transparente (otro <em>MapType</em>) para superponer la capa <code>capabasesigign</code> del servicio WMS del IGN.
+            <li>Se encarga de que cada vez que el usuario cambie al mapa satélite, se superpongan sobre el los vectores del IGN.
+            <li>Ofrece la interfaz básica de un plugin de jQuery permitiendo crear un mapa rápidamente a partir de <a href="http://es.wikipedia.org/wiki/JQuery#Funci.C3.B3n_.24.28.29" target="_blank">selectores</a> de jQuery.</li>
+          </ul>
         </section>
         <section id="api">
           <h2>API
