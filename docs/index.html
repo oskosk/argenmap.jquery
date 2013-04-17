@@ -123,25 +123,28 @@
         <div class="row-fluid">
           <div class="span12">
             <p>
-              Así se ve un mapa de Argentina, con los datos del <a target="_blank" href="http://www.ign.gob.ar">Instituto Geográfico Nacional</a> en tu sitio. <a href="ejemplos/mapasimple.html" target="_blank">Mirá este ejemplo en una página aparte &raquo;</a> <em>(HTML listo para copiar y pegar)</em>.
+              Así se ve un mapa de Argentina, con los datos del <a target="_blank" href="http://www.ign.gob.ar">Instituto Geográfico Nacional</a> en tu sitio.
             </p>              
             <div id="mapa" style="height:315px;border:1px dashed #222"></div>    
+            <p>
+              <a href="ejemplos/mapasimple.html" target="_blank">Ver este ejemplo en una página aparte &raquo;</a> <em>(mapasimple.html)</em>.
+            </p>
           </div><!--span12-->
           <script type="text/javascript">
               $(function () {
-              
                   $('#mapa').argenmap().centro(-32.564254972370165, -68.6540217765625).zoom(8).agregarMarcador();
-              
               });
           </script>
         </div> <!--row-->
         <h4>Audiencia</h4>
+        <hr>
         <p>
           Esta sección está diseñada para gente familiarizada con el lenguaje de programación <a href="" target="_blank">Javascript</a>
           y con la librería <a href="http://jquery.com/" target="_blank">jQuery</a>.
 
         </p>
         <h4>Requerimientos</h4>
+        <hr>
         <ul>
           <li>argenmap.jquery necesita tanto la librería jQuery como la librería Google Maps.</li>
           <li>La versión mínima de jQuery que necesita es 1.7.2 pero se recomienda la última versión.</li>
@@ -359,7 +362,7 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
         <h4>Descripción de los métodos</h4>
         <section id="argenmap">
           <h5 id="argenmap">$(selector).argenmap()</h5>
-          <p>Inicializa un mapa simple sobre un elemento HTML.
+          <p>Crea un mapa simple sobre un elemento HTML.
               <em>Preferentemente divs con un alto definido en píxels.</em>
           </p>
         </section>
