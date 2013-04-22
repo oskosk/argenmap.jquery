@@ -104,7 +104,7 @@
             
             <div class="row-fluid">
                 <p class="lead"><strong>argenmap.jquery</strong> es un plugin para jQuery que permite combinar los
-                    mapas web del <a href="http://www.ign.gob.ar" target="_blank">IGN</a> y <a href="http://www.openstreetmap.org" target="_blank">OpenStreetMap</a> con <a href="http://developers.google.com/maps/documentation/javascript/?hl=es" target="_blank">Google Maps API</a>. De esta manera, podés poner en tu sitio
+                    mapas web del <a href="http://www.ign.gob.ar" target="_blank">Instituto Geográfico Nacional</a> y <a href="http://www.openstreetmap.org" target="_blank">OpenStreetMap</a> con <a href="http://developers.google.com/maps/documentation/javascript/?hl=es" target="_blank">Google Maps API</a>. De esta manera, podés poner en tu sitio
                     un mapa de Argentina con los datos oficiales del IGN sobre las
                     imágenes satelitales de google.</p>
                 <ul>
@@ -112,8 +112,7 @@
                   <li><strong>Es un plugin de jQuery encadenable.</strong> Podés utilizar argenmap.jquery encadenando llamadas, como cualquier plugin de jQuery <code>$('#mapa').show().argenmap()</code>.</li>
 
                   <li><strong>argenmap.jquery usa el servicio WMS del Instituto Geográfico Nacional.</strong> Acerca el servicio WMS del
-                    <a href="http://www.ign.gob.ar" target="_blank">Instituto Geográfico
-                        Nacional</a>
+                    IGN</a>
                     a los diseñadores de páginas de instituciones públicas y permite ampliar
                     la presencia de los mapas nacionales en la web.</li>
                   <li><strong>Acceso completo a la API de Google Maps.</strong> Aunque argenmap simplifica el uso de mapas en web con datos
@@ -144,7 +143,7 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
             <li>Ofrece la interfaz básica de un plugin de jQuery permitiendo crear un mapa rápidamente a partir de <a href="http://es.wikipedia.org/wiki/JQuery#Funci.C3.B3n_.24.28.29" target="_blank">selectores</a> de jQuery.</li>
           </ul>
         </section>
-        <section id="estructuraDelMapa">
+        <section id="estructuradelmapa">
             <div class="page-header">
                   <h2>Estructura de un mapa de Argenmap</h2>
             </div> <!--page-header-->
@@ -174,8 +173,8 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
               <p><strong>Google tiene una base de datos con nombres no aprobados
                   por el IGN.</strong> Por lo tanto, el origen de la nomenclatura de calles, partidos, localidades
                   y accidentes geográficos es dudoso con respecto a la cartografía oficial.
-                  <strong>Argenmap superpone <em>de manera predeterminada</em> nuestros topónimos
-                  sobre la imágenes de Google.</strong></p>
+                  <strong>Argenmap superpone <em>de manera predeterminada</em> los topónimos
+                  reconocidos por la Argentina sobre la imágenes de Google.</strong></p>
               <div class="row-fluid">
                   <!--span -->
                   <div class="span6">
@@ -190,12 +189,10 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                   <!--span -->
               </div>
               <!--row -->
-                <h4>Simple acceso a datos ya publicados bajo estándares</h4>
+              <h4>Simple acceso a datos ya publicados bajo estándares</h4>
 
               <div class="row-fluid">
                   <div class="span12">
-                        <h3>programación simple</h3>
-
                       <p>Así de fácil es con argenmap, usar un mapa de Argentina con datos de otro organismo</p>
                       <div>
 <pre class="prettyprint linenums">
