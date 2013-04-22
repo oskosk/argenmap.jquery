@@ -98,7 +98,21 @@
           </div>
         </div>   
         <div class="row-fluid">
-          <div class="span12">
+          <div class="span4">
+            <h4>Audiencia</h4>
+            <p>
+              Esta sección está diseñada para gente familiarizada con el lenguaje de programación <a href="" target="_blank">Javascript</a>
+              y con la librería <a href="http://jquery.com/" target="_blank">jQuery</a>.
+
+            </p>
+            <h4>Requerimientos</h4>
+            <ul>
+              <li>argenmap.jquery necesita tanto la librería jQuery como la librería de Google Maps API.</li>
+              <li>La versión mínima de jQuery que necesita es 1.7.2 pero se recomienda la última versión.</li>
+            </ul>
+          </div>
+          <div class="span8">
+            <h4>Un ejemplo</h4>
             <p>
               Así se puede ver un mapa de Argentina, con los datos del <a target="_blank" href="http://www.ign.gob.ar">Instituto Geográfico Nacional</a> en tu sitio.
             </p>              
@@ -113,26 +127,16 @@
               });
           </script>
         </div> <!--row-->
-        <h4>Audiencia</h4>
-        <p>
-          Esta sección está diseñada para gente familiarizada con el lenguaje de programación <a href="" target="_blank">Javascript</a>
-          y con la librería <a href="http://jquery.com/" target="_blank">jQuery</a>.
 
-        </p>
-        <h4>Requerimientos</h4>
-        <ul>
-          <li>argenmap.jquery necesita tanto la librería jQuery como la librería de Google Maps API.</li>
-          <li>La versión mínima de jQuery que necesita es 1.7.2 pero se recomienda la última versión.</li>
-        </ul>
         <section id="mapaBasico">
-          <h3>Cómo usar un mapa en tu sitio
-            <small>un mapa simple
-            </small>
-          </h3>
+          <div class="page-header">
+            <h3>Cómo usar un mapa en tu sitio</h3>
+          </div>
+ 
           <div class="row-fluid">
              
             <p>
-              Vamos con el paso a paso para incluir un mapa del IGN en tu web, pero también podés mirar el código del mapa ejemplo. 
+              Vamos con el paso a paso para incluir un mapa del IGN en tu web, pero también podés mirar el código del ejemplo de arriba. 
             </p>                          
             <p class="alert alert-warning">
               <strong>Importante: </strong><em>Si en tu sitio ya usás jQuery (versión mayor a 1.7.2) y Google Maps API (v3), podés empezar desde el paso 2</em>.
@@ -177,10 +181,8 @@
           <h4>4. Convertí el div en un mapa</h4>
           <div class="alert alert-warning alert-block">
             <h4>Recordá esperar hasta que cargue el documento</h4>
-            Como con cualquier plugin de jQuery, tenés que esperar que el div
-            que vas a convertir en mapa ya esté generado en el DOM
-            esté cargado antes de usar argenmap.jquery (el DOM, o el div que vayas a
-            usar).
+            Al igual que con cualquier plugin de jQuery, tenés que esperar que el div
+            que vas a convertir en mapa ya esté creado antes de convertirlo en un mapa.
             
           </div>                          
           <div class="row-fluid">
@@ -206,7 +208,7 @@
               </pre>
               <p>Si querés hacer más cosas sobre el mapa como cambiar el centro del
                   mapa, el zoom o agregar un marcador, consultá la
-                  <a href="documentacion.html#api">API de argenmap.jquery</a>
+                  <a href="api.html">API de argenmap.jquery</a>
               </p>
               </div><!--span12-->
           </div><!--row-->
@@ -234,11 +236,11 @@
             <div class="span12">
               <p class="lead">Si querés saber más acerca de argenmap.jquery, consultá
                   la
-                  <a href="#api">API de argenmap.jquery</a>
+                  <a href="api.html">API de argenmap.jquery</a>
               </p>
               <ul>
-                <li>Podés leer más acerca de <a href="#datosvectoriales">los datos que muestra Argenmap.jquery</a>.</li>
-                <li>Si no sos programador ni diseñador web, podés ver los <a href="estructuradelmapa.html">detalles de la estructura del mapa</a>.</li>
+                <li>Podés leer más acerca de <a href="#datosvectoriales">los datos que muestra un mapa hecho con argenmap.jquery</a>.</li>
+                <li>Si no sos programador ni diseñador web, podés ver los <a href="caracteristicas.html#estructuradelmapa">detalles de la estructura del mapa</a>.</li>
                 <li>Y si argenmap.jquery no te sirve, siempre podés contar con el WMS del IGN en <a href="http://wms.ign.gob.ar/geoserver/wms" target="_blank">http://wms.ign.gob.ar/geoserver/wms</a>.</li>
               </ul>
             </div><!--span12-->
