@@ -98,15 +98,18 @@
           </div>
         </div>   
          <section id="caracteristicas">
-            <h2>Características<small> de argenmap.jquery</small></h2>
+            <div class="page-header">
+              <h2>Características<small> de argenmap.jquery</small></h2>
+            </div>
+            
             <div class="row-fluid">
                 <p class="lead"><strong>argenmap.jquery</strong> es un plugin para jQuery que permite combinar los
-                    mapas web del IGN y OpenStreetMap con Google Maps API. De esta manera, podés poner en tu sitio
-                    un mapa de Argentina con los datos oficiales del <a href="http://www.ign.gob.ar" target="_blank">IGN</a> sobre las
+                    mapas web del <a href="http://www.ign.gob.ar" target="_blank">IGN</a> y <a href="http://www.openstreetmap.org" target="_blank">OpenStreetMap</a> con <a href="http://developers.google.com/maps/documentation/javascript/?hl=es" target="_blank">Google Maps API</a>. De esta manera, podés poner en tu sitio
+                    un mapa de Argentina con los datos oficiales del IGN sobre las
                     imágenes satelitales de google.</p>
                 <ul>
-                  <li><strong>Multi instancia.</strong> Podés usar varios mapas en la misma página</li>
-                  <li><strong>Encadenable.</strong> Podés utilizar argenmap.jquery encadenando llamadas, como cualquier plugin de jQuery <code>$('#mapa').show().argenmap()</code></li>
+                  <li><strong>Es multi instancia.</strong> Podés usar varios mapas en la misma página.</li>
+                  <li><strong>Es un plugin de jQuery encadenable.</strong> Podés utilizar argenmap.jquery encadenando llamadas, como cualquier plugin de jQuery <code>$('#mapa').show().argenmap()</code>.</li>
 
                   <li><strong>argenmap.jquery usa el servicio WMS del Instituto Geográfico Nacional.</strong> Acerca el servicio WMS del
                     <a href="http://www.ign.gob.ar" target="_blank">Instituto Geográfico
@@ -141,7 +144,121 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
             <li>Ofrece la interfaz básica de un plugin de jQuery permitiendo crear un mapa rápidamente a partir de <a href="http://es.wikipedia.org/wiki/JQuery#Funci.C3.B3n_.24.28.29" target="_blank">selectores</a> de jQuery.</li>
           </ul>
         </section>
+        <section id="estructuraDelMapa">
+            <div class="page-header">
+                  <h2>Estructura de un mapa de Argenmap</h2>
+            </div> <!--page-header-->
+            <h3>Comparación entre una mapa de Google Maps regular y un mapa de argenmap.jquery</h3>
+            <h4>Imagen Institucional del IGN</h4>
 
+            <p>  <strong>No hay duda del origen de los datos</strong>.
+              El pie de cada mapa de argenmap muestra que este mapa  <strong>tiene origen en el IGN</strong>.
+              <br/>Asegura al observador que los <em>topónimos y datos vectoriales</em> son
+              datos del Instituto Geográfico Nacional de la República Argentina.</p>
+            <div
+            class="row-fluid">
+                <div class="span6">
+                  <div id="mapaA1" style="height:300px;border:1px dashed black"></div>
+                  <p><strong>Mapa vectorial del IGN</strong></p>
+                </div>
+                <!--span -->
+                <div class="span6">
+                    <div id="mapaA2" style="height:300px;border:1px dashed black"></div>
+                    <p><strong>Mapa vectorial de Google Maps</strong>. Capa base <em>ROADMAP</em> de Google Maps.
+                </div>
+                          <!--span -->
+              </div>
+              <!--row -->
+              <h4>Datos aprobados por el Instituto Geográfico Nacional</h4>
+
+              <p><strong>Google tiene una base de datos con nombres no aprobados
+                  por el IGN.</strong> Por lo tanto, el origen de la nomenclatura de calles, partidos, localidades
+                  y accidentes geográficos es dudoso con respecto a la cartografía oficial.
+                  <strong>Argenmap superpone <em>de manera predeterminada</em> nuestros topónimos
+                  sobre la imágenes de Google.</strong></p>
+              <div class="row-fluid">
+                  <!--span -->
+                  <div class="span6">
+                      <div id="mapaB1" style="height:300px;border:1px dashed black"></div>
+                      <strong>Topónimos del IGN</strong>
+                  </div>
+                  <!--span -->
+                  <div class="span6">
+                      <div id="mapaB2" style="height:300px;border:1px dashed black"></div>
+                      <strong>Topónimos de Google Maps</strong>
+                  </div>
+                  <!--span -->
+              </div>
+              <!--row -->
+                <h4>Simple acceso a datos ya publicados bajo estándares</h4>
+
+              <div class="row-fluid">
+                  <div class="span12">
+                        <h3>programación simple</h3>
+
+                      <p>Así de fácil es con argenmap, usar un mapa de Argentina con datos de otro organismo</p>
+                      <div>
+<pre class="prettyprint linenums">
+$('#mapaC1').argenmap.agregarCapaKML({
+url:'http://sarmientoba.buenosaires.gob.ar/wp-content/themes/plansarmiento/infografia/xml/escuelas.kml'
+});
+</pre>
+
+                      </div>
+                  </div>
+              </div>
+              <div class="row-fluid">
+                  <!--span -->
+                  <div class="span12">
+                      <div id="mapaC1" style="height:300px;border:1px dashed black"></div>
+                        <strong>Escuelas de la Ciudad de Buenos Aires según el proyecto SarmientoBA</strong>
+
+                  </div>
+                  <!--span -->
+              </div>
+              <!--row -->
+              </section>
+                <script type="text/javascript">
+                  $(function () {
+                      goMapaA();
+                      goMapaB();
+                      goMapaC();
+                  });
+
+                  function goMapaA() {
+                     $('#mapaA1').argenmap().centro(-28.267428002034045, -64.73662569531251).zoom(8);
+
+            
+                    var gmapOptions = {
+                        center: new google.maps.LatLng(-28.267428002034045, -64.73662569531251),
+                        zoom: 8,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    gmap1 = new google.maps.Map(document.getElementById('mapaA2'), gmapOptions);
+
+
+                  }
+
+                  function goMapaB() {
+
+                      $('#mapaB1').argenmap().centro(-51.796253, -59.52361300000001).zoom(8).capaBase('satellite');
+                      var gmapOptions = {
+                          center: new google.maps.LatLng(-51.796253, -59.52361300000001),
+                          zoom: 6,
+                          mapTypeId: google.maps.MapTypeId.HYBRID
+                      };
+                      gmap1 = new google.maps.Map(document.getElementById('mapaB2'), gmapOptions);
+
+
+                  }
+
+                  function goMapaC() {
+                      $('#mapaC1').argenmap().agregarCapaKML({
+                          url: 'http://sarmientoba.buenosaires.gob.ar/wp-content/themes/plansarmiento/infografia/xml/escuelas.kml'
+                      }).centro(-34.61451084659615, -58.411059379577644).zoom(14);
+
+                  }
+                </script>
 
       <footer class="footer">
         <p>&copy; Instituto Geográfico Nacional 2013</p>
