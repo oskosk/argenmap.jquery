@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>argenmap.jquery - Mapas de Argentina con jQuery </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Mapas del IGN para la web" name="description">
+    <meta content="" name="author">
+     
+    <!-- Le styles -->
+    <link href="css/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="css/todc-bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="google-code-prettify/prettify.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top:30px;
+      }
+      .ejemplo {
+        position: relative;
+        margin: 15px 0;
+        padding: 39px 19px 14px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+      } 
+
+      .ejemplo::after {
+        content: "Ejemplo";
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        padding: 3px 7px;
+        font-size: 12px;
+        font-weight: bold;
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        color: #9da0a4;
+        -webkit-border-radius: 4px 0 4px 0;
+        -moz-border-radius: 4px 0 4px 0;
+        border-radius: 4px 0 4px 0;
+      }
+
+      .ejemplo + .prettyprint {
+        margin-top: -20px;
+        padding-top: 15px;
+      }
+
+      #mapa {
+        border: 1px dashed gray;
+        height: 350px;
+        margin: 20px auto;
+      }
+
+    </style>
+       
+      <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+      <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+      <!-- Le fav and touch icons -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+      <div class="container">
+        <div class="row-fluid">
+          <span class="span2 lead" style="border-right:1px solid #ccc">
+             <h2><a class="brand " href="http://www.ign.gob.ar/argenmap">Argenmap</a></h2>
+          </span><!--span6-->
+          <span class="span4 lead" >
+              <p>Un plugin de
+              <a href="http://es.wikipedia.org/wiki/JQuery" target="_blank">jQuery</a>
+              para poner un mapa de Argentina en tu web.
+              </p>                
+          </span><!--span4-->
+          <span class="span3 offset3">
+          <a target="_blank" href="http://www.ign.gob.ar" ><img src="img/icon-ign-48x48.png"></a>
+          <a target="_blank" href="http://www.twitter.com/argenmap" ><img src="img/socialicons/48x48-02/twitter-icon.png"></a>
+          <a target="_blank" href="http://jquery.com/" ><img src="img/socialicons/48x48-02/jquery-icon.png"></a>
+          <a target="_blank" href="http://es.wikipedia.org/wiki/HTML5" ><img src="img/socialicons/48x48-02/html5-icon.png"></a>
+          </span><!--span2-->
+        </div><!--row-->
+      </div>
+      <div class="container">
+        <div class="navbar navbar-googlenav">
+          <div class="navbar-inner">
+            <a class="brand" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/">argenmap.jquery v1</a>
+            <ul class="nav">
+              <li><a href="index.html#mapaBasico">Cómo usar un mapa en tu sitio</a></li>
+              <li><a href="caracteristicas.html" >Características</a><li>
+              <li class="active"><a href="api.html" >API</a><li>
+              <li><a href="ejemplos.html" >Ejemplos</a><li>
+              <li><a href="http://jsbin.com/ekigit/7/edit" target="_blank">Practicá !</a></li>
+              <li><a href="index.html#datosvectoriales" >Acerca de los datos</a><li>              
+            </ul>
+          </div>
+        </div>   
+  
+        <section id="api">
+          <h2>API
+              <small>versión 1.2
+              </small>
+          </h2>
+          <div class="row-fluid">
+            <h4>Lista rápida de los métodos del plugin</h4>            
+            <div class="span3">
+              <h5>Crear el mapa</h5>
+              <p>
+                <ul>
+                    <li><a href="#argenmap">argenmap()</a></li>
+                </ul>
+              </p>
+            </div><!--span3-->
+            <div class="span2">
+              <h5>Cambiar la vista actual</h5>
+              <p>
+                <ul>
+                    <li><a href="#centro">centro()</a></li>
+                    <li><a href="#zoom">zoom()</a></li>
+                </ul>
+              </p>
+            </div><!--span2-->
+            <div class="span2">
+              <h5>Superponer tus datos</h5>
+              <p>
+                <ul>
+                    <li><a href="#agregarCapaWMS">agregarCapaWMS()</a></li>
+                    <li><a href="#agregarCapaKML">agregarCapaKML()</a></li>
+                </ul>
+              </p>
+            </div><!--span2-->
+            <div class="span2">
+              <h5>Agregar marcadores</h5>
+              <p>
+                <ul>
+                    <li><a href="#agregarMarcador">agregarMarcador()</a></li>
+                    <li><a href="#agregarMarcadores">agregarMarcadores()</a></li>
+                </ul>
+              </p>
+            </div><!--span2-->
+            <div class="span2">
+              <h5>Capas Base</h5>
+              <p>
+                <ul>
+                    <li><a href="#agregarCapaBaseWMS">agregarCapaBaseWMS()</a></li>
+                    <li><a href="#capaBase">capaBase()</a></li>                    
+                </ul>
+              </p>
+            </div><!--span-->
+          </div><!--row-->
+        </section>
+        <h4>Descripción de los métodos</h4>
+        <section id="argenmap">
+          <h5 id="argenmap">$(selector).argenmap()</h5>
+          <p>Crea un mapa simple sobre un elemento HTML.
+              <em>Preferentemente divs con un alto definido en píxels.</em>
+          </p>
+        </section>
+        <hr/>
+        <section id="centro">
+          <h5 id="centro">$(selector).centro( lat, lng )</h5>
+          <p>Luego de instanciar un mapa, puede usarse
+              <code>.centro(lat,lng)</code>
+              para cambiar el centro del mapa.</p>
+          <p><code>lat</code>
+              (requerido): número indicando los grados decimales de latitud</p>
+          <p><code>lng</code>
+              (requerido): número indicando los grados decimales de longitud</p>
+          <p>Si llamás a centro() sin parámetros, devuelve el centro actual. Una
+              array del tipo [lat,lng].</p>
+        </section>
+        <hr/>
+        <section id="zoom">
+            <h5>$(selector).zoom(zoom)</h5>
+            <p>Aumenta o disminuye la escala del mapa.</p>
+            <p><code>zoom</code>
+                (requerido): 1 - 22 número indicando el nivel de zoom al que se quiere
+            visualizar el mapa.</p>
+            <p>Si llamás a zoom() sin parámetros, devuelve el nivel de zoom
+                actual</p>
+        </section>
+        <hr/>
+ 
+        <section id="agregarCapaWMS">
+
+          <h5>$(selector).agregarCapaWMS(opciones)</h5>
+          <p>
+              <a class="pull-right" href="ejemplos.html#agregarCapaWMS">Ver ejemplo &raquo;</a>
+          </p>
+
+          <p>Superpone una capa WMS sobre las capas base.</p>
+          <p>Las opciones que pueden pasarse son los parámetros que pueden pasarse
+              a cualquier WMS:</p>
+          <p>
+            <dl class="dl-horizontal">
+              <dt><code>url</code></dt>
+              <dd>cadena de texto indicando la url del servidor WMS. Ejemplo:
+                <em>http://mapa.ign.gob.ar/wms?</em>.
+                <br/>
+                <strong>La URL debe finalizar con el signo ? o con el signo &</strong>.</dd>
+              <dt><code>capas</code></dt>
+              <dd>cadena de texto con los
+                <em>nombres (el parámetro LAYERS de WMS)</em>
+                de las capas que se quieren pedir al servidor WMS, separadas por coma.
+                Ejemplo:
+                <em>"departamentos,rios,ciudades"</em>
+              </dd>
+              <br/>
+              <dt>Opcionales</dt>
+              <dd>&nbsp;</dd>
+              <dt><code>nombre</code></dt>
+              <dd>cadena de texto indicando el nombre internoque tendrá la capa.
+                Recordá que es importante definir el nombre y que sea único para todas
+                las capas que superpongas.</dd>
+              <dt><code>formato</code></dt>
+              <dd>valor por defecto:
+                <code>"image/png"</code>
+                Cadena de texto indicando un formato MIME de archivo: "image/jpeg",
+                "image/jpg", "image/png", "image/png8", "image/gif".</dd>
+            </dl>
+          </p>
+          <p class="alert alert-info">El servicio WMS tiene que estar configurado
+              para poder generar las imágenes con el sistema de referencia
+              <code>EPSG:3857</code>
+              que es el código que define la proyección de OpenStreetMap, Google Maps,
+              Bing Maps, ESRI WEB Maps y demás mapas web populares.</p>
+
+        </section>
+        <hr />
+
+        <section id="agregarCapaBaseWMS">
+          <h5>$(selector).agregarCapaBaseWMS(opciones)</h5>
+          <p>
+              <a class="pull-right" href="ejemplos.html#agregarCapaBaseWMS">Ver
+                  ejemplo &raquo;</a>
+          </p>
+          <p>Esta función te permite agregar una capa base al mapa que salga de un
+              servicio WMS.</p>
+          <p>Las opciones que pueden pasarse son los parámetros que pueden pasarse
+              a cualquier WMS:</p>
+          <p>
+            <dl class="dl-horizontal">
+              <dt><code>url</code></dt>
+              <dd>cadena de texto indicando la url del servidor WMS. Ejemplo:
+                  <em>http://mapa.ign.gob.ar/wms?</em>.
+                  <br/>
+                  <strong>La URL debe finalizar con el signo ? o con el signo &</strong>.
+              </dd>
+              <dt><code>capas</code></dt>
+              <dd>cadena de texto con los
+                  <em>nombres (el parámetro LAYERS de WMS)</em>
+                  de las capas que se quieren pedir al servidor WMS, separadas por coma.
+                  Ejemplo:
+                  <em>"departamentos,rios,ciudades"</em>
+              </dd>
+              <br/>
+              <dt>Opcionales</dt>
+              <dd>&nbsp;</dd>
+              <dt><code>nombre</code></dt>
+              <dd>cadena de texto indicando el nombre internoque tendrá la capa.
+                  Recordá que es importante definir el nombre y que sea único para todas
+                  las capas que superpongas.
+              </dd>
+              <dt><code>formato</code></dt>
+              <dd>valor por defecto:
+                  <code>"image/png"</code>
+                  Cadena de texto indicando un formato MIME de archivo: "image/jpeg",
+                  "image/jpg", "image/png", "image/png8", "image/gif".
+              </dd>
+            </dl>
+          </p>
+          <p class="alert alert-info">El servicio WMS tiene que estar configurado
+              para poder generar las imágenes con el sistema de referencia
+              <code>EPSG:3857</code>
+              que es el código que define la proyección de OpenStreetMap, Google Maps,
+              Bing Maps, ESRI WEB Maps y demás mapas web populares.
+          </p>
+
+        </section>
+        <hr/>
+        <section id="capaBase">
+            <h5>$(selector).capaBase(nombre)</h5>
+            <p>
+                Cambia la capa base actualmente visible en el mapa por la capa
+                especificada por el parámetro nombre. Si no se le pasan parámetros
+                devuelve el nombre de la capa base actualmente visible.
+            </p>
+            <dl class="dl-horizontal">
+              <dt><code>nombre</code></dt>
+              <dd>
+                El nombre de una de las capas estándar (<code>satellite</code>
+                o 
+                <code>IGN</code>) o el nombre de una capa superpuesta previamente con
+                <code>agregarCapaBaseWMS()</code>.
+              </dd>
+            </dl>
+        </section>
+        <hr/>                
+        <section id="agregarCapaKML">
+          <h5>$(selector).agregarCapaKML(opciones)</h5>
+          <p>
+            <a class="pull-right" target="_blank" href="ejemplos.html#agregarCapaKML">Ver ejemplo &raquo;</a>
+          </p>
+          <p>Superpone una capa que se importa desde un archivo
+            <code>.kml</code>
+            que esté online accesible por URL.</p>Sus opciones son:
+          <dl class="dl-horizontal">
+            <dt><code>url</code></dt>
+            <dd>cadena de texto con la URL del KML.
+            </dd>
+            <br/>
+            <dt>Opcionales</dt>
+            <dd>&nbsp;</dd>
+            <dt><code>nombre</code></dt>
+            <dd>cadena de texto indicando el nombre que tendrá la capa. Recordá que
+                es importante definir el nombre e intentar que sea único.
+            </dd>
+          </dl>
+        </p>
+        <p class="alert alert-info">El archivo KML tiene que estar accesible
+            públicamente. Este requerimiento de argenmap.jquery va a cambiar en la
+            versión 2.0.
+        </p>
+
+    </section>
+    <hr/>
+    <section id="agregarMarcador">
+      <h5>$(selector).agregarMarcador(marcador)</h5>
+      <p>
+        <a class="pull-right" href="ejemplos.html#agregarMarcador">Ver ejemplo &raquo;</a>
+      </p>
+      <p>
+        Trabajar con marcadores debería ser simple, esa es la idea con ArgenMap.
+      </p>
+      <p>
+        Para crear un marcador se puede suministrar un objeto con opciones o
+        simplemente 
+      </p>
+      <p>hacer la llamada <code>$(selector).agregarMarcador()</code>
+        y por defecto el marcador se agregará en el centro del mapa.</p>
+      <p>Para personalizar el comportamiento del marcador pueden utilizarse
+        estas opciones
+      </p>
+      <dl class="dl-horizontal">
+        <dt>Opcionales</dt>
+        <dd>&nbsp;</dd>
+        <dt><code>nombre</code></dt>
+        <dd>cadena de texto indicando el nombre que tendrá el marcador. Recordá
+            que si bien es opcional, es importante definir el nombre e intentar que
+            sea único para luego poder accederlo si necesitaras modificarlo.</dd>
+        <dt><code>lat</code></dt>
+        <dd>La latitud para el marcador (Coordenadas geográficas).</dd>
+        <dt><code>lng</code></dt>
+        <dd>La longitud para el marcador (Coordenadas geográficas).</dd>
+        <dt><code>contenido</code></dt>
+        <dd>cadena de texto con contenido HTML que se mostrará al hacer click
+            sobre el marcador en un globo de texto.</dd>
+      </dl>
+    </section>
+    <hr />
+    <section id="agregarMarcadores">
+        <h5>$(selector).agregarMarcadores([marcador1, marcador2,...,
+            marcadorN])</h5>
+        <p>
+          <a class="pull-right" href="ejemplos.html#agregarMarcadores">Ver
+              ejemplo &raquo;</a>
+        </p>
+        <p>
+          Crea varios marcadores sobre el mapa a partir de una array de objetos que
+          definen marcadores.
+        </p>
+        <p>
+          Cada objeto es igual al que recibe
+          <code>agregarMarcador()</code>
+        </p>
+
+    <div class="fb-comments" data-href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs#api" data-width="600" data-num-posts="10"></div>
+    </section>
+
+      <footer class="footer">
+        <p>&copy; Instituto Geográfico Nacional 2013</p>
+      </footer>
+
+    </div><!--/.-container-->
+
+<!-- Le javascript==================================================-->
+<!-- Al final del html para que las páginas carguen más rápido -->
+        <!--google maps api -->
+    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+     
+    <!--argenmap.jquery online -->
+    <script type="text/javascript" src="http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push([
+            '_setAccount', 'UA-31718537-2'
+        ]);
+        _gaq.push(['_trackPageview']);
+        
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+             
+    <!--Para poner lindo el código fuente-->
+    <script src="google-code-prettify/prettify.js"></script>
+     
+    <!--Utilidad de bootstrap-->
+    <script src="css/bootstrap/js/bootstrap.min.js"></script>
+     
+    <!--User echo-->
+    <script type='text/javascript'>
+        var _ues = {
+                host: 'argenmap.userecho.com',
+                forum: '14204',
+                lang: 'es',
+                tab_corner_radius: 10,
+                tab_font_size: 20,
+                tab_image_hash: 'RmVlZGJhY2s%3D',
+                tab_alignment: 'right',
+                tab_text_color: '#FFFFFF',
+                tab_bg_color: '#000000',
+                tab_hover_color: '#F45C5C'
+            };
+        
+        (function () {
+            var _ue = document.createElement('script');
+            _ue.type = 'text/javascript';
+            _ue.async = true;
+            _ue.src = ('https:' == document.location.protocol ? 'https://s3.amazonaws.com/' : 'http://') + 'cdn.userecho.com/js/widget-1.4.gz.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(_ue, s);
+        })();
+    </script>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1&appId=349894675076658";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+  </body>
+</html>
