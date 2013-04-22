@@ -2624,3 +2624,9 @@ a.thumbnail:hover {
     border-bottom-color: #444444;
   }
 }
+
+
+.footer {
+  margin-top:40px;
+  border-top:3px solid #bbb;
+}
