@@ -9,17 +9,20 @@
 $(function() {
 	//El div tiene id="mapa"
 	$('#mapa').argenmap();
-
+	$('#mapa').centro(-32.5642, -68.6540);
+  $('#mapa').agregarMarcador();
+	$('#mapa').zoom(8);
 });
 </script>
 </head>
 <body>
-<h3>Un mapa básico</h3>
+<h3>Un mapa con un marcador en el centro</h3>
 
 <div id="mapa" style="height:400px"></div>
 
 <p>
-  En este ejemplo se crea un mapa básico sobre el div con <code>id=mapa</code> utilizando la configuración predeterminada de argenmap.
+  En este ejemplo se crea un mapa y se lo centra en la  ubicación con coordenadas
+  latitud: -32.5642 y longitud -68.6540. Luego se llama a agregarMarcador() que crear un marcador en el centro del mapa.
 </p>
 
 <p>

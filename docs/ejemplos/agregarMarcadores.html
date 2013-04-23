@@ -9,17 +9,26 @@
 $(function() {
 	//El div tiene id="mapa"
 	$('#mapa').argenmap();
+  $('#mapa').centro(-30, -59)
 
+  var marcadores = [
+    {lat: -25.695278, lng: -54.436667, contenido:'Cataratas del Iguazú!'},
+    {lat: -34.05, lng: -59.2, contenido:'Atucha: central eléctrica'},
+    {lat: -27.31,  lng: -66.608617, contenido:'Minera Lumbrera: buena mina'}
+  ];
+
+  $('#mapa').agregarMarcadores( marcadores );
 });
 </script>
 </head>
 <body>
-<h3>Un mapa básico</h3>
+<h3>Un mapa con varios marcadores</h3>
 
 <div id="mapa" style="height:400px"></div>
 
 <p>
-  En este ejemplo se crea un mapa básico sobre el div con <code>id=mapa</code> utilizando la configuración predeterminada de argenmap.
+  En este ejemplo se crea un mapa y luego se llama a <code>agregarMarcadores()</code> pasándole una array de objetos
+  similares a los que recibe <code>.agregarMarcador()</code>.
 </p>
 
 <p>
