@@ -2,369 +2,178 @@
 <html lang="es">
   <head>
     <meta charset="utf-8">
-    <title>IGN - Argenmap </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mapas del IGN para la web">
-    <meta name="author" content="">
-
+    <title>argenmap.jquery - Mapas de Argentina con jQuery </title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Mapas del IGN para la web" name="description">
+    <meta content="" name="author">
+     
     <!-- Le styles -->
     <link href="argenmap.jquery/docs/css/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<link href="argenmap.jquery/docs/css/bootstrap/css/docs.css" rel="stylesheet">
+    <link href="argenmap.jquery/docs/css/todc-bootstrap.css" rel="stylesheet">
+    <link href="argenmap.jquery/docs/css/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="argenmap.jquery/docs/google-code-prettify/prettify.css" rel="stylesheet">
     <style type="text/css">
-
-
-
-	#mapa{
-		position:fixed;
-		top:40px;
-		left:0;
-		right:0;
-		bottom:0
-	}
+      body {
+        padding-top:30px;
+      }
+  
     </style>
-	<link href="argenmap.jquery/docs/css/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <!-- Le fav and touch icons -->
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>           
+  
+      <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+      <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+      <!-- Le fav and touch icons -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   </head>
- 	
-  <body style="background:url(images/body.jpg) 0 0 no-repeat;">
+  <body onload="prettyPrint()">
 
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="brand"  href="/argenmap/#a">argenmap</a>
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <div class="nav-collapse ">
-	  
-            <a href="argenmap.jquery/docs" class="btn  btn-primary">Usá un mapa del IGN en tu sitio &raquo;</a>
-	   
-            <ul class="nav">
-              <li class="active"><a href="/argenmap/">Inicio</a></li>
-              <li><a href="#contacto" onclick="UE.Popin.show(); return false;">Contacto</a></li>
-            </ul>
-            
-          </div><!--/.nav-collapse -->
-        </div>
+      <div class="container">
+        <div class="row-fluid">
+          <span class="span2 lead" style="border-right:1px solid #ccc">
+             <h2><a class="brand " href="http://www.ign.gob.ar/argenmap">Argenmap</a></h2>
+          </span><!--span6-->
+          <span class="span4 lead" >
+              <p>Un plugin de
+              <a href="http://es.wikipedia.org/wiki/JQuery" target="_blank">jQuery</a>
+              para poner un mapa de Argentina en tu web.
+              </p>                
+          </span><!--span4-->
+          <span class="span3 offset3">
+          <a target="_blank" href="http://www.ign.gob.ar" ><img src="argenmap.jquery/docs/img/icon-ign-48x48.png"></a>
+          <a target="_blank" href="http://www.twitter.com/argenmap" ><img src="argenmap.jquery/docs/img/socialicons/48x48-02/twitter-icon.png"></a>
+          <a target="_blank" href="http://jquery.com/" ><img src="argenmap.jquery/docs/img/socialicons/48x48-02/jquery-icon.png"></a>
+          <a target="_blank" href="http://es.wikipedia.org/wiki/HTML5" ><img src="argenmap.jquery/docs/img/socialicons/48x48-02/html5-icon.png"></a>
+          </span><!--span2-->
+        </div><!--row-->
       </div>
-    </div>
+      <div class="container">
+        
+        <div class="row-fluid">
+          <div class="span4">
+            <p class="lead pagination-centered">
+              <img alt="Logo de Argenmap" src="img/argenmap.png" style="max-width:100%">
+            </p>            
+            <p class="lead">
+              <strong>argenmap-jquery</strong> te permite usar un mapa de Argentina en tu sitio, con los datos del <a href="http://www.ign.gob.ar" target="_blank">Instituto Geográfico Nacional de Argentina</a>.
+            </p> 
+            <ul>
+              <li>Indicá una ubicación con un marcador simple</li>
+              <li>Superponé tus propios datos</li>
+              <li>Visualizá servicios WMS sobre un mapa del IGN</li>
+            </ul>
+            <p>
+              <a class="btn btn-large btn-success" href="argenmap.jquery/docs">Empezá a usar argenmap.jquery &raquo;</a>
+            </p>
+          </div>          
+          <div id="myCarousel" class="span8 carousel ">
+            <ol class="carousel-indicators">
+              <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+              <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+              <li data-target="#myCarousel" data-slide-to="2" class="active"></li>
+            </ol>
+            <div class="carousel-inner">
+              <div class="item active">
+                <img src="img/slider1.jpg" alt="">
+                <div class="carousel-caption">
+                  <h4>Visualizá tus datos sobre una mapa del IGN</h4>
+                </div>
+              </div>
+              <div class="item">
+                <img src="img/slider2.jpg" alt="">
+                <div class="carousel-caption">
+                  <h4>Usá imágenes satelitales pero con topónimos nacionales</h4>
+                </div>
+              </div>
+              <div class="item ">
+                <img src="img/slider3.jpg" alt="">
+                <div class="carousel-caption">
+                  <h4>Publicá tus servicios WMS sobre los mapas del IGN</h4>
+                </div>
+              </div>
+            </div>
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+          </div> <!--carousel span8-->
 
-    <div id="presentacion" class="container">
-	
-	<!-- Masthead
-	================================================== -->
-	<header class="jumbotron ">
-	  <div class="inner">
-		<div class="pagination-centered"><img alt="Logo de Argenmap" src="images/argenmap.png"></div>
-	    <p>Mapas web de la República Argentina.</p>
+        </div><!--row-fluid-->
+        <div class="row-fluid" style="display:None">
+          <p class="lead pagination-centered">
+            <img alt="Logo de Argenmap" src="img/argenmap.png">
+          </p>
+          <p class="lead pagination-centered">
+              <strong>Argenmap jQuery</strong> es un plugin de jQuery que te permite usar un mapa de Argentina en tu sitio, con los datos del <a href="http://www.ign.gob.ar" target="_blank">Instituto Geográfico Nacional de Argentina</a>.
+            </p>             
+        </div> <!--row-->
+  
+			<footer class="footer">
+				<p>&copy; Instituto Geográfico Nacional 2013</p>
+			</footer>
 
-	    <p class="download-info">
-	      <a href="argenmap.jquery/docs/index.html" class="btn btn-primary btn-large">Usá argenmap en tu sitio &raquo;</a>
-	    </p>
-	  <p  id="a"><strong>Argenmap jQuery</strong> es un plugin de jQuery que te permite usar un mapa de Argentina en tu sitio, con los datos del <a href="http://www.ign.gob.ar" target="_blank">Instituto Geográfico Nacional de Argentina</a>. </p>
-	  <p>
-	  <img src="http://ign.gob.ar/sites/default/files/logo.png" style="" />
-	  </p>
-	  </div> <!--inner-->
+    </div><!--/.-container-->
 
-	  
-	  
-	</header>
-	
-	<!--hr class="soften"-->
-	<div class="">
-		<!--
-		<div class="row">
-			<div class="span6 pagination-right">
-				<iframe src="https://docs.google.com/presentation/embed?id=1fcoDRkm1v0s_xHwQVpv3Iwi1N03xoJf5xb3kvLsxhjY&start=false&loop=false&delayms=3000" frameborder="0" width="400" height="312" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-			</div>
-			<div class="span6">
-				<div class="prezi-player"><style type="text/css" media="screen">.prezi-player { width: 400px; } .prezi-player-links { text-align: center; }</style><object id="prezi_fusibmqxrzfh" name="prezi_fusibmqxrzfh" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="400" height="312"><param name="movie" value="http://prezi.com/bin/preziloader.swf"/><param name="allowfullscreen" value="true"/><param name="allowFullScreenInteractive" value="true"/><param name="allowscriptaccess" value="always"/><param name="wmode" value="direct"/><param name="bgcolor" value="#ffffff"/><param name="flashvars" value="prezi_id=fusibmqxrzfh&amp;lock_to_path=1&amp;color=ffffff&amp;autoplay=no&amp;autohide_ctrls=0"/><embed id="preziEmbed_fusibmqxrzfh" name="preziEmbed_fusibmqxrzfh" src="http://prezi.com/bin/preziloader.swf" type="application/x-shockwave-flash" allowfullscreen="true" allowFullScreenInteractive="true" allowscriptaccess="always" width="400" height="312" bgcolor="#ffffff" flashvars="prezi_id=fusibmqxrzfh&amp;lock_to_path=1&amp;color=ffffff&amp;autoplay=no&amp;autohide_ctrls=0"></embed></object><div class="prezi-player-links"></div></div>
-			</div>
-		</div>
-		-->
-
-	  <div class="row ">
-	    <div class="span6">
-		
-	      <h2 style="text-align:center">argenmap.jquery v1</h2>
-
-	  	  <h3 style="text-align:center;color:#999">Google Maps API + IGN + OpenStreetMap</h3>
-	      <p>
-		  <strong>argenmap v1</strong> configura Google Maps API para que sólo muestro nombres y vectores reconocidos por el IGN. A partir de 
-		  la escala 1:250.000, se muestran <a href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/#datosvectoriales">algunos datos del proyecto OpenStreetMap</a>.
-		  </p>
-		  <ul>
-			<li>Desactiva la capa vectorial de Google Maps.</li>
-			<li>Presenta la capa vectorial del IGN.</li>
-			<li>Superpone vectores y topónimos del IGN sobre la capa satelital de Google, ocultando los topónimos de Google Maps.</li>
-		  </ul>
-
-		  <p>
-	      </p>
-
-	    </div>
-	    <div class="span6">
-	      <h2 style="text-align:center">argenmap.jquery v2</h2>
-	  	  <h3 style="text-align:center;color:#999">OpenLayers + IGN + Google satellite + OSM</h3>
-  	      <h3></h3>
-	      <p><strong>argenmap v2</strong> es similar a argenmap v1 pero no usa Google Maps API como base. Usa OpenLayers con la capa base satelital de Google Maps y el servicio TMS del Instituto Geográfico Nacional. Si te gusta jQuery
-		  y querés acceder al poder de OpenLayers, esta es tu elección.
-		  </p>
-		  <p>
-	      <a class="btn disabled">No disponible públicamente aún</a>.
-	      </p>
-		  <p class="lead">
-		      <a href="#mapascomparados" onclick="empezar()" class="btn btn-success btn-large">Vista previa de la v2 &raquo;</a>
-		  </p>
-	    </div>
-	  </div><!--/row-->	  
-	  </div>
-	  <!--marketing-->
-
-	  <section id="mapascomparados" style="display:none">
-		  <div class="row" id="mapas" >
-			<div class="span6">
-				<h2>argenmap.jquery v1</h2>
-				<h3 style="text-align:center;color:#999">Google Maps API + IGN + OpenStreetMap</h3>
-				<div id="mapa1" style="border:1px dashed black;height:400px">
-				</div>
-				<p>
-				<ul>
-					<li>Librería base: Google Maps API</li>
-					<li>Capas disponibles:
-						<ul>
-							<li>Capa Base IGN.</li>
-							<li>Satélite de Google Maps con topónimos oficiales superpuestos.</li>
-						</ul>
-					<li>Vectores de caminos de OpenStreetMap a partir de escala 1:250.000.</li>
-					</li>
-				</ul>
-				</p>
-			</div>
-			<div class="span6">
-				<h2>argenmap.jquery v2</h2>
-				<h3 style="text-align:center;color:#999">OpenLayers + IGN + Google satellite + OSM</h3>
-				<div id="mapa2" style="border:1px dashed black;height:400px">
-				</div>
-				<p>
-				<ul>
-					<li>Librería base: OpenLayers 2.12</li>
-					<li>Capas disponibles:
-						<ul>
-							<li>Capa Base IGN.</li>
-							<li>Satélite de Google Maps con topónimos oficiales superpuestos.</li>
-						</ul>
-					<li>Vectores de caminos de OpenStreetMap a partir de escala 1:250.000.</li>
-					</li>
-				</ul>
-				</p>
-			</div>		
-		  </div>
-		  <!--row-->
-	  </section>
-	<div class="marketing">
-	  <h1 style="text-align:center">¿Por qué hicimos Argenmap?</h1>
-	  <div class="row">
-
-	    <div class="span4">
-			
-	      <img alt="ícono de un podio" class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_079_podium.png">
-	      <h3>Un diseño para todos los niveles</h3>
-			  <ul>
-			  <li>Argenmap está diseñado para ayudar a desarrolladores web de todos los niveles. Diseñadores y programadores que busquen usar mapas en la web.</li>
-			  <li>Argenmap nos gusta y estamos decidios a ayudar a gente como nosotros a meterse en el mundo de los mapas
-			  sin el camino complejo aprendizaje que esto implica.</li>
-			  </ul>
-	    </div>
-	    <div class="span4">
-	      <img alt="ícono de grupo de gente" class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_042_group.png">
-	      <h3>Organismos del Estado y usuarios novatos en SIG</h3>
-		  <ul>
-		  <li>Al igual que vos, hacemos productos para la web y siempre buscamos las herramientas que nos faciliten lo mejor de la web y que nos
-	      quiten la mayor cantidad posible de problemas de encima.
-		  </li>
-		  <li>
-			Si trabajás en un organismo del Estado, podés actualizar los mapas de la web que administrás para que tenga mapas con nombres y límites
-			oficiales muy fácilmente.
-		  </li>
-		  </ul>
-	    </div>
-		<div class="span4">
-	      <img alt="ícono de dos flechas en sentidos opuestos" class="bs-icon" src="argenmap.jquery/docs/img/glyphicons_214_resize_small.png">
-				<h3>El IGN frente a Google Maps</h3>
-					<ul>
-						<li>
-							<strong>El uso masivo de Google Maps es un hecho</strong>. Muchos sitios del gobierno lo utilizan porque siempre está disponible y es fácil de
-							incrustar en sus sitios. El problema son <strong>los nombres y límites que Google muestra. <em>No son los oficiales.</em></strong>
-						</li>
-						<li><strong>argenmap.jquery</strong> te permite, con unas leves modificaciones, que el mapa de Google Maps que usás en el sitio que administrás,
-						deje de mostrar <em>Falkland Islands</em>.</li>
-
-					</ul>
-			</div> <!--span -->
-	  </div><!--/row-->
-	</div>
-	<!--marketing--> 
-
-	  
-	  <div class="row">
-	    <div class="span3">
-	      <img alt="ícono de html5" class="small-bs-icon" src="argenmap.jquery/docs/img/icon-html5.png">
-	      <h3>HTML5</h3>
-	      <p>Hecho para soportar HTML5.</p>
-	    </div>
-	    <div class="span3">
-	      <img alt="ícono de CSS3" class="small-bs-icon" src="argenmap.jquery/docs/img/icon-css3.png">
-	      <h3>CSS3</h3>
-	      <p>La estilización de argenmap es CSS3.</p>
-	    </div>
-	    <div class="span3">
-	      <img alt="ícono de github" class="small-bs-icon" src="argenmap.jquery/docs/img/icon-github.png">
-	      <h3>Open-source</h3>
-	      <p>Hecho y mantenido en <a href="https://github.com">GitHub</a>.</p>
-	    </div>
-	    <div class="span3">
-	      <img alt="logotipo del instituto geográfico nacional de la república argentina" class="small-bs-icon" src="argenmap.jquery/docs/img/logoignsintexto-40px.png">
-	      <h3>Hecho en el IGN</h3>
-	      <p>Traído a ustedes por desarrolladores del Instituto Geográfico Nacional.</p>
-	    </div>
-	  </div><!--/row-->
-	  <div class="bs-links">
-	    <ul class="quick-links">
-	      <li><a target="_blank" href="argenmap.jquery/docs/presentacion.html">Presentación de Argenmap para javascript</a></li>
-	      <li><a target="_blank" href="http://www.ign.gob.ar/comunidad/">Estado de los mapas de Argentina en la web.</a></li>
-	      <li><a target="_blank" href="https://github.com/argenmap">argenmap en Github</a></li>
-	    </ul>
-
-	  </div><!--bs-links-->			
-	  <hr class="soften">
-	
-	     <!-- Footer
-	      ================================================== -->
-		<footer class="footer">
-	        <p class="pull-left"><a href="http://www.ign.gob.ar">Instituto Geográfico Nacional de la República Argentina</a></p>
-	        <p class="pull-right"><a href="#">Ir arriba</a></p>
-	      </footer>
-    </div><!-- /container -->
-
-
-
-
-	    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    
-    <!--google maps api -->
+<!-- Le javascript==================================================-->
+<!-- Al final del html para que las páginas carguen más rápido -->
+        <!--google maps api -->
     <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+     
     <!--argenmap.jquery online -->
     <script type="text/javascript" src="http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js"></script>
     <script type="text/javascript">
-		/**
-		 * Esta renombrada del objeto es innecesaria salvo
-		 * en esta página de demo en la que uso ambas versiones
-		 * del plugin porque tanto argenmap v1 como argenmap v2
-		 * se instancian igual con $().argenmap
-		 *
-		 */
-		jQuery.fn.argenmap1 = jQuery.fn.argenmap;
-		jQuery.fn.centro1 = jQuery.fn.centro;
-		jQuery.fn.zoom1 = jQuery.fn.zoom;
-	</script>
-	<script type="text/javascript" src="http://www.ign.gob.ar/argenmap2/argenmap.jquery/argenmap.jquery.min.js"></script>	
-    <script type="text/javascript">
-    function goMapa() {
-		$('#mapa1').argenmap1().centro1(-51.320861909179236, -63.91335978933077).zoom1(5);
-
-	   	$('#mapa2').argenmap().centro(-51.320861909179236, -63.91335978933077).zoom(5);
-
-		var gmap = $('#mapa1').data('gmap');
-		google.maps.event.addListener(gmap, 'center_changed', function() {
-			sync();
-		});
-
-		google.maps.event.addListener(gmap, 'zoom_changed', function() {
-			sync();
-		});
-		 function sync()
-		 {
-			var lat = gmap.getCenter().lat();
-			var lng = gmap.getCenter().lng();
-
-			$('#mapa2').centro(lat,lng);
-			var z = gmap.getZoom();
-
-			$('#mapa2').zoom(z);
-		 }
-
-    }
-    function wipeMarketing()
-    {
-    	$('#presentacion').fadeOut('slow', function() {
-   			$('#presentacion').remove();
-  		});
-    }
-    
-    function empezar()
-    {
-    	//wipeMarketing();
-	if ( ! $('#mapascomparados').is(':visible') ) {
-    		$('#mapascomparados').fadeIn();
-    		goMapa();
-    		return void(0);
-	} else {
-		$('#mapascomparados').toggle();
-		return
-	}	
-    }
+        var _gaq = _gaq || [];
+        _gaq.push([
+            '_setAccount', 'UA-31718537-2'
+        ]);
+        _gaq.push(['_trackPageview']);
+        
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
     </script>
-	
-	<script type="text/javascript">
-	
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-31718537-2']);
-	  _gaq.push(['_trackPageview']);
-	
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-	
-	</script>
-	
+             
+    <!--Para poner lindo el código fuente-->
+    <script src="argenmap.jquery/docs/google-code-prettify/prettify.js"></script>
+     
     <!--Utilidad de bootstrap-->
     <script src="argenmap.jquery/docs/css/bootstrap/js/bootstrap.min.js"></script>
+     
     <!--User echo-->
     <script type='text/javascript'>
-		var _ues = {
-		host:'argenmap.userecho.com',
-		forum:'14204',
-		lang:'es',
-		tab_corner_radius:10,
-		tab_font_size:20,
-		tab_image_hash:'RmVlZGJhY2s%3D',
-		tab_alignment:'right',
-		tab_text_color:'#FFFFFF',
-		tab_bg_color:'#000000',
-		tab_hover_color:'#F45C5C'
-		};
-		
-		(function() {
-		    var _ue = document.createElement('script'); _ue.type = 'text/javascript'; _ue.async = true;
-		    _ue.src = ('https:' == document.location.protocol ? 'https://s3.amazonaws.com/' : 'http://') + 'cdn.userecho.com/js/widget-1.4.gz.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(_ue, s);
-		  })();
-		
-		</script>    
+        var _ues = {
+                host: 'argenmap.userecho.com',
+                forum: '14204',
+                lang: 'es',
+                tab_corner_radius: 10,
+                tab_font_size: 20,
+                tab_image_hash: 'RmVlZGJhY2s%3D',
+                tab_alignment: 'right',
+                tab_text_color: '#FFFFFF',
+                tab_bg_color: '#000000',
+                tab_hover_color: '#F45C5C'
+            };
+        
+        (function () {
+            var _ue = document.createElement('script');
+            _ue.type = 'text/javascript';
+            _ue.async = true;
+            _ue.src = ('https:' == document.location.protocol ? 'https://s3.amazonaws.com/' : 'http://') + 'cdn.userecho.com/js/widget-1.4.gz.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(_ue, s);
+        })();
+    </script>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        	var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+    	js = d.createElement(s); js.id = id;
+    	js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1&appId=349894675076658";
+    	fjs.parentNode.insertBefore(js, fjs);
+    	}(document, 'script', 'facebook-jssdk'));
+    </script>
   </body>
 </html>
