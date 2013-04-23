@@ -133,14 +133,18 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
         </section>
         <section id="comofunciona">
           <h3>Cómo funciona argenmap.jquery v1</h3>
+          <p>
+            Para los programadores que ya conocen Google Maps, éste es un listado simple de lo que hace
+            argenmap.jquery <em>automágicamente</em>.
+          </p>
           <ul>
             <li>Crea un objeto <code>google.maps.Map</code>.</li>
             <li>Habilita como única capa el <a href="https://developers.google.com/maps/documentation/javascript/maptypes#BasicMapTypes" target="_blank">tipo de mapa</a> <code>satellite</code> nativo de Google Maps v3.</li>
             <li>Define un par de funciones para crear <code>MapType</code>s que son capaces de obtener las tiles de servicios WMS y TMS acorde a la interfaz <code>MapType.getTile()</code> </li>
-            <li>Agrega una capa base (<em>MapType</em>) que usa estas funciones para superponer la capa <code>capabaseargenmap</code> del servicio WMS del IGN.
-            <li>Agrega una capa transparente (otro <em>MapType</em>) para superponer la capa <code>capabasesigign</code> del servicio WMS del IGN.
+            <li>Agrega al mapa, una capa base (<em>MapType</em>) que usa estas funciones para superponer la capa <code>capabaseargenmap</code> del servicio WMS del IGN.
+            <li>Agrega al mapa, una capa transparente (otro <em>MapType</em>) para superponer la capa <code>capabasesigign</code> del servicio WMS del IGN.
             <li>Se encarga de que cada vez que el usuario cambie al mapa satélite, se superpongan sobre el los vectores del IGN.
-            <li>Ofrece la interfaz básica de un plugin de jQuery permitiendo crear un mapa rápidamente a partir de <a href="http://es.wikipedia.org/wiki/JQuery#Funci.C3.B3n_.24.28.29" target="_blank">selectores</a> de jQuery.</li>
+            <li>Ofrece la interfaz estándar de un plugin de jQuery permitiendo crear un mapa rápidamente a partir de <a href="http://es.wikipedia.org/wiki/JQuery#Funci.C3.B3n_.24.28.29" target="_blank">selectores</a> de jQuery.</li>
           </ul>
         </section>
         <section id="estructuradelmapa">
@@ -189,37 +193,12 @@ map.setCenter( new google.maps.LatLng(-34,-59) );
                   <!--span -->
               </div>
               <!--row -->
-              <h4>Simple acceso a datos ya publicados bajo estándares</h4>
-
-              <div class="row-fluid">
-                  <div class="span12">
-                      <p>Así de fácil es con argenmap, usar un mapa de Argentina con datos de otro organismo</p>
-                      <div>
-<pre class="prettyprint linenums">
-$('#mapaC1').argenmap.agregarCapaKML({
-url:'http://sarmientoba.buenosaires.gob.ar/wp-content/themes/plansarmiento/infografia/xml/escuelas.kml'
-});
-</pre>
-
-                      </div>
-                  </div>
-              </div>
-              <div class="row-fluid">
-                  <!--span -->
-                  <div class="span12">
-                      <div id="mapaC1" style="height:300px;border:1px dashed black"></div>
-                        <strong>Escuelas de la Ciudad de Buenos Aires según el proyecto SarmientoBA</strong>
-
-                  </div>
-                  <!--span -->
-              </div>
-              <!--row -->
               </section>
                 <script type="text/javascript">
                   $(function () {
                       goMapaA();
                       goMapaB();
-                      goMapaC();
+   
                   });
 
                   function goMapaA() {
@@ -249,12 +228,6 @@ url:'http://sarmientoba.buenosaires.gob.ar/wp-content/themes/plansarmiento/infog
 
                   }
 
-                  function goMapaC() {
-                      $('#mapaC1').argenmap().agregarCapaKML({
-                          url: 'http://sarmientoba.buenosaires.gob.ar/wp-content/themes/plansarmiento/infografia/xml/escuelas.kml'
-                      }).centro(-34.61451084659615, -58.411059379577644).zoom(14);
-
-                  }
                 </script>
 
       <footer class="footer">
