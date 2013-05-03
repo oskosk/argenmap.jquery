@@ -12,7 +12,7 @@
  *
  */
 (function ($) {
-  var IGN_CACHES = ['http://www.ign.gob.ar/tms', 'http://sig.ign.gob.ar/tms', 'http://190.220.8.216/tms', 'http://mapaabierto.aws.af.cm/tms'];
+  var IGN_CACHES = ['http://cg.aws.af.cm/tms','http://robomap2.herokuapp.com/tms', 'http://sig.ign.gob.ar/tms', 'http://190.220.8.216/tms', 'http://mapaabierto.aws.af.cm/tms'];
 
   /** 
    * Constant: URL_HASH_FACTOR
