@@ -2547,8 +2547,22 @@
       if (_arguments.length == 0) {
         o.lat = $this.data('gmap').getCenter().lat();
         o.lng = $this.data('gmap').getCenter().lng();
+      }else if(_arguments.length == 2 && $.isNumeric(_arguments[0]) && $.isNumeric(_arguments[1])) {
+        //llamada simple con 2 argumentos lat y lon
+        o.lat = _arguments[0];
+        o.lng = _arguments[1];
       }
-
+      //compatibilidad entre lng, lon y long
+      if(o.hasOwnProperty("long")) {
+        o.lng = o.long;
+      }else if(o.hasOwnProperty("lon")) {
+        o.lng = o.lon;
+      }else if(o.hasOwnProperty("lat") && typeof(o.lat) == "function"){
+        //el argument es un google.maps.LatLng
+        o.lat = o.lat();
+        o.lng = o.lng();
+      }
+      //if(!l) return;
       $this.argenmap({
         accion: 'agregarMarcador',
         latLng: [o.lat, o.lng],
