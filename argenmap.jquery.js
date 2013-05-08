@@ -2554,7 +2554,8 @@
       }
       //compatibilidad entre lng, lon y long
       if(o.hasOwnProperty("long")) {
-        o.lng = o.long;
+        //long es un reserved de JS, closure no puede manejarlo
+        o.lng = o["long"];
       }else if(o.hasOwnProperty("lon")) {
         o.lng = o.lon;
       }else if(o.hasOwnProperty("lat") && typeof(o.lat) == "function"){
