@@ -1,6 +1,6 @@
 /*
  *  Argenmap Plugin para JQuery 
- *  Version   : 0.1
+ *  Version   : 1.0
  *  Date      : 2011-11-18
  *  Licence   : GPL v3 : http://www.gnu.org/licenses/gpl.html  
  *  Author    : Oscar López
