@@ -13,7 +13,7 @@
  */
 (function ($) {
   var IGN_CACHES = ['http://cg.aws.af.cm/tms','http://robomap2.herokuapp.com/tms', 'http://sig.ign.gob.ar/tms', 'http://190.220.8.216/tms', 'http://mapaabierto.aws.af.cm/tms'];
-
+console.log('version de desarrollo');
   /** 
    * Constant: URL_HASH_FACTOR
    * {Float} Used to hash URL param strings for multi-WMS server selection.
