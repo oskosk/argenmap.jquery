@@ -13,7 +13,7 @@
  */
 (function ($) {
   var IGN_CACHES = ['http://cg.aws.af.cm/tms','http://robomap2.herokuapp.com/tms', 'http://sig.ign.gob.ar/tms', 'http://190.220.8.216/tms', 'http://mapaabierto.aws.af.cm/tms'];
-console.log('version de desarrollo');
+
   /** 
    * Constant: URL_HASH_FACTOR
    * {Float} Used to hash URL param strings for multi-WMS server selection.
@@ -676,6 +676,7 @@ console.log('version de desarrollo');
         k = ikey(todo, _properties[i]);
         result[_properties[i]] = k ? todo[k] : {};
       }
+
       if (include && include.length) {
         for (i = 0; i < include.length; i++) {
           if (k = ikey(todo, include[i])) {
@@ -683,6 +684,7 @@ console.log('version de desarrollo');
           }
         }
       }
+
       return result;
     } else { // #2 objeto simplificado (todo excepto "accion" son opciones)
       result.opciones = {};
@@ -706,17 +708,21 @@ console.log('version de desarrollo');
     result['callback'] = ival(todo, 'callback');
     include = array(include);
     exclude = array(exclude);
+
     if (iname) {
       return extractObject(todo[iname], include, result);
     }
+    
     if (exclude && exclude.length) {
       for (i = 0; i < exclude.length; i++) {
         keys.push(exclude[i]);
       }
     }
+    
     if (!hasKey(todo, keys)) {
       result = extractObject(todo, include, result);
     }
+    
     // inicio las properties q faltan
     for (i = 0; i < _properties.length; i++) {
       if (_properties[i] in result) {
@@ -1437,15 +1443,15 @@ console.log('version de desarrollo');
     }
 
     this._addMarker = function (todo, latLng, internal) {
-      //agrego el marker predeterminado de argenmap
-
 
       var result, oi, to,
-        o = getObject('marker', todo, 'to');
+        o = getObject('marker', todo, ['to','icon']);
 
-      // Le meto desprolijamente acá e ícono de marcador default de argenmap
-      if (!o.opciones.icon) {
-        o.opciones.icon = argenmap.BASEURL + 'img/marcadores/punto.png';
+      //agrego el marker predeterminado de argenmap
+      o.opciones.icon = argenmap.BASEURL + 'img/marcadores/punto.png';
+      
+      if (todo.icon) {
+        o.opciones.icon = todo.icon;
       }
 
       if (!internal) {
@@ -2521,26 +2527,9 @@ console.log('version de desarrollo');
    */
   $.fn.agregarMarcador = function (opciones, lon) {
     var _arguments = arguments;
-    //si llega con un par de numeros como args...
-    /*
-    if(undefined != lon && $.isNumeric(opciones) && $.isNumeric(lon))
-    {
-      opciones = [opciones,lon];
-    }else if(typeof(opciones) == "string") {
-      //si llega con un string estilo "-34.218,-56.813"...
-      var arsplit = opciones.split(",");
-      arsplit[0] = parseFloat(arsplit[0]);
-      arsplit[1] = parseFloat(arsplit[1]);
-      if(isNaN(arsplit[0]) || isNaN(arsplit[1]))
-      {
-        opciones = null;
-      }else{
-        opciones = arsplit;
-      }
-    }
-    */
+
     return this.each(function () {
-      var o = $.extend({}, opciones);
+      var o = $.extend({icono:null}, opciones);
       var $this = $(this);
       var a = $this.data('argenmap');
       if (!a) return;
@@ -2563,14 +2552,14 @@ console.log('version de desarrollo');
         o.lat = o.lat();
         o.lng = o.lng();
       }
-      //if(!l) return;
       $this.argenmap({
         accion: 'agregarMarcador',
         latLng: [o.lat, o.lng],
         data: o.contenido,
+        icon: o.icono ? o.icono : null,
         events: {
           click: function (marker, event, data) {
-            if (o.contenido == undefined) {
+            if (!o.contenido) {
               return;
             }
             var map = $this.data('gmap'),
