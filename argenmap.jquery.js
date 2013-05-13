@@ -2628,7 +2628,7 @@
    */
   argenmap.cacheDeCliente = function()
   {
-    this.MAX_TILES = 20;
+    this.MAX_TILES = 150;
     this.cache = [];
     this.cacheRef = {};
   }
