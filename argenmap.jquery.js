@@ -2623,7 +2623,61 @@
 
 
 
+  /**
+   * Clase de cache interna de urls
+   */
+  argenmap.cacheDeCliente = function()
+  {
+    this.MAX_TILES = 150;
+    this.cache = [];
+    this.cacheRef = {};
+  }
+  
+  /**
+   * Metodos de cache interna
+   */
+  argenmap.cacheDeCliente.prototype = {
+    /**
+     * Recupera un tile de la cache.
+     * Si no existe, devuelve false
+     */
+    recuperar: function(x, y, z)
+    {
+      var tilecode = x + '-' + y + '-' + z;
 
+      if(this.cache.indexOf(tilecode) != -1) 
+      {
+        return this.cacheRef[tilecode];
+      }
+
+      return false;
+    },
+    /**
+     * Guarda una entrada en la cache interna
+     * Si detecta baseURL como un string, anula el proceso,
+     * no hace falta cachear si es un solo servidor de tiles
+     */
+    guardar: function(x, y, z, url)
+    {
+      if (typeof this.baseURL == 'string') {
+        //si no tengo cache servers esto no sirve y no guardo nada
+        return;
+      }
+      var tilecode = x + '-' + y + '-' + z;
+      this.cache.push(tilecode);
+      this.cacheRef[tilecode] = url;
+      var sale;
+      if(this.cache.length > this.MAX_TILES)
+      {
+         sale = this.cache.shift();
+         // console.log('cache limit exceeded: ' + sale + ' borrado; url: ' + this.cacheRef[sale]);
+         delete this.cacheRef[sale];
+      }
+      // console.log('cache set: ' + tilecode + ' guardada, ' + this.cache.length + ' tiles cacheadas');
+    }
+  }
+
+  argenmap.miniCache = new argenmap.cacheDeCliente();
   /**
    * @class Representa una capa WMS opaca que puede ser utilizada como capa base de los mapas
    * @constructor
@@ -2792,6 +2846,12 @@
     var baseURL = this.baseURL;
     if (typeof baseURL != 'string') {
       baseURL = selectURL(tile.x + '' + tile.y, baseURL);
+      var cached = argenmap.miniCache.recuperar(tile.x,tile.y,zoom);
+      if(cached)
+      {
+        // console.log('en cache: ' + cached);
+        return cached;
+      }
     }
     var layers = this.layers;
     /*
@@ -2800,7 +2860,7 @@
      */
     var ytms = (1 << zoom) - tile.y - 1;
     var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + '/' + ytms + ".png";
-
+    argenmap.miniCache.guardar(tile.x,tile.y,zoom,url);
     return url;
   };
 
@@ -2902,9 +2962,16 @@
   };
 
   argenmap.CapaTMS.prototype.getTileUrl = function (tile, zoom) {
+
     var baseURL = this.baseURL;
     if (typeof baseURL != 'string') {
       baseURL = selectURL(tile.x + '' + tile.y, baseURL);
+      var cached = argenmap.miniCache.recuperar(tile.x,tile.y,zoom);
+      if(cached)
+      {
+        // console.log('en cache: ' + cached);
+        return cached;
+      }
     }
     var layers = this.layers;
     /*
@@ -2913,7 +2980,7 @@
      */
     var ytms = (1 << zoom) - tile.y - 1;
     var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + '/' + ytms + ".png";
-
+    argenmap.miniCache.guardar(tile.x,tile.y,zoom,url);
     return url;
   };
 
