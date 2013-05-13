@@ -2624,7 +2624,7 @@
 
 
   /**
-   * Clase de cache interna
+   * Clase de cache interna de urls
    */
   argenmap.cacheDeCliente = function()
   {
@@ -2640,7 +2640,6 @@
     /**
      * Recupera un tile de la cache.
      * Si no existe, devuelve false
-     * @
      */
     recuperar: function(x, y, z)
     {
@@ -2653,9 +2652,14 @@
 
       return false;
     },
+    /**
+     * Guarda una entrada en la cache interna
+     * Si detecta baseURL como un string, anula el proceso,
+     * no hace falta cachear si es un solo servidor de tiles
+     */
     guardar: function(x, y, z, url)
     {
-      if (typeof baseURL == 'string') {
+      if (typeof this.baseURL == 'string') {
         //si no tengo cache servers esto no sirve y no guardo nada
         return;
       }
