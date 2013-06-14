@@ -11,6 +11,7 @@
  *  Todos los derechos reservados.
  *
  */
+
 (function ($) {
   var IGN_CACHES = ['http://cg.aws.af.cm/tms','http://robomap2.herokuapp.com/tms', 'http://sig.ign.gob.ar/tms', 'http://190.220.8.216/tms', 'http://mapaabierto.aws.af.cm/tms'];
 
@@ -1445,11 +1446,12 @@
     this._addMarker = function (todo, latLng, internal) {
 
       var result, oi, to,
-        o = getObject('marker', todo, ['to','icon']);
+        o = getObject('marker', todo, ['to','icon','nombre','data']);
 
       //agrego el marker predeterminado de argenmap
       o.opciones.icon = argenmap.BASEURL + 'img/marcadores/punto.png';
-      
+      o.opciones.nombre = o.nombre;
+      o.opciones.contenido = o.data;
       if (todo.icon) {
         o.opciones.icon = todo.icon;
       }
@@ -1504,6 +1506,63 @@
         }
       }
       return result;
+    }
+
+    /**
+     * Quita un marcador del mapa basado en el nombre
+     **/
+    this.quitarMarcador = function(nombre){
+      store.rm('marker',[nombre]);
+    }
+
+    /**
+     * Modifica un marcador basado en el nombre
+     * Las opciones son las mismas que al momento de crear un marcador
+     **/
+    this.modificarMarcador = function(nombre,opciones) {
+      var m = store.get('marker',false,[nombre]);
+      if(!m) return;
+      var ll = toLatLng(opciones,false,true);
+      if(opciones.hasOwnProperty('contenido') && !opciones.contenido)
+      {
+          delete m.contenido;
+      }else{
+        m.contenido = opciones.contenido;
+      }
+
+      var o = {
+        nombre: opciones.nombre ? opciones.nombre : m.nombre,
+        tag: opciones.nombre ? opciones.nombre : m.nombre,
+        latLng: ll || m.getPosition(),
+        data: opciones.contenido ? opciones.contenido : m.contenido,
+        icon: opciones.icono ? opciones.icono : m.icon,
+        events: {
+          click: function (marker, event, data) {
+            if (!m.contenido) {
+              return;
+            }
+            var map = $this.data('gmap'),
+              infowindow = $this.argenmap({
+                accion: 'get',
+                name: 'infowindow'
+              });
+            if (infowindow) {
+              infowindow.open(map, marker);
+              infowindow.setContent(data);
+            } else {
+              $this.argenmap({
+                accion: 'addinfowindow',
+                anchor: marker,
+                opciones: {
+                  content: data
+                }
+              });
+            }
+          }
+        }
+      };
+      store.rm('marker',[nombre]);
+      this.addmarker(o);
     }
 
     /**
@@ -2529,7 +2588,7 @@
     var _arguments = arguments;
 
     return this.each(function () {
-      var o = $.extend({icono:null}, opciones);
+      var o = $.extend({icono:null,nombre:'Marcador'}, opciones);
       var $this = $(this);
       var a = $this.data('argenmap');
       if (!a) return;
@@ -2553,6 +2612,8 @@
         o.lng = o.lng();
       }
       $this.argenmap({
+        nombre: o.nombre,
+        tag: o.nombre,
         accion: 'agregarMarcador',
         latLng: [o.lat, o.lng],
         data: o.contenido,
@@ -2582,7 +2643,6 @@
             }
           }
         }
-
       });
     });
   }
@@ -2615,7 +2675,28 @@
     });
 
   }
-
+  $.fn.quitarMarcador = function(nombre) {
+    var _nombre = nombre;
+    return this.each(function(i,e){
+      if(typeof(_nombre) !== 'string') return;
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) return;
+      a.quitarMarcador(_nombre);
+    });
+  }
+  $.fn.modificarMarcador = function(nombre, opciones) {
+    var _nombre = nombre;
+    var _opciones = opciones;
+    return this.each(function(i,e){
+      if(typeof(_nombre) !== 'string') return;
+      if(_opciones === undefined || typeof(_opciones) !== 'object') return;
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) return;
+      a.modificarMarcador(_nombre,_opciones);
+    });
+  }
   var argenmap = argenmap || {};
 
   argenmap.BASEURL = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
