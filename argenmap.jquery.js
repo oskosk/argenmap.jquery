@@ -13,7 +13,7 @@
  */
 
 (function ($) {
-  var IGN_CACHES = ['http://cg.aws.af.cm/tms','http://robomap2.herokuapp.com/tms', 'http://sig.ign.gob.ar/tms', 'http://190.220.8.216/tms', 'http://mapaabierto.aws.af.cm/tms'];
+  var IGN_CACHES = ['http://cg.aws.af.cm/tms','http://robomap-cgastrell.rhcloud.com/tms', 'http://sig.ign.gob.ar/tms', 'http://190.220.8.216/tms', 'http://mapaabierto.aws.af.cm/tms'];
 
   /** 
    * Constant: URL_HASH_FACTOR
@@ -2869,7 +2869,11 @@
    * @export
    */
   argenmap.CapaBaseTMS = function (opts) {
-
+    /**
+     * Mantiene cache de tiles requeridas para no volver a pedir a distintos
+     * servidores del array
+     */
+    this.cache = new argenmap.cacheDeCliente();
     /**
      * El objeto ImageMapType q representa a esta capa en para la api de gmaps.
      * @public 
@@ -2927,7 +2931,7 @@
     var baseURL = this.baseURL;
     if (typeof baseURL != 'string') {
       baseURL = selectURL(tile.x + '' + tile.y, baseURL);
-      var cached = argenmap.miniCache.recuperar(tile.x,tile.y,zoom);
+      var cached = this.cache.recuperar(tile.x,tile.y,zoom);
       if(cached)
       {
         // console.log('en cache: ' + cached);
@@ -2941,7 +2945,7 @@
      */
     var ytms = (1 << zoom) - tile.y - 1;
     var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + '/' + ytms + ".png";
-    argenmap.miniCache.guardar(tile.x,tile.y,zoom,url);
+    this.cache.guardar(tile.x,tile.y,zoom,url);
     return url;
   };
 
@@ -3012,6 +3016,11 @@
   };
 
   argenmap.CapaTMS = function (opts) {
+    /**
+     * Mantiene cache de tiles requeridas para no volver a pedir a distintos
+     * servidores del array
+     */
+    this.cache = new argenmap.cacheDeCliente();
     // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
     this.imageMapType = null;
     // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
@@ -3047,7 +3056,7 @@
     var baseURL = this.baseURL;
     if (typeof baseURL != 'string') {
       baseURL = selectURL(tile.x + '' + tile.y, baseURL);
-      var cached = argenmap.miniCache.recuperar(tile.x,tile.y,zoom);
+      var cached = this.cache.recuperar(tile.x,tile.y,zoom);
       if(cached)
       {
         // console.log('en cache: ' + cached);
@@ -3061,7 +3070,7 @@
      */
     var ytms = (1 << zoom) - tile.y - 1;
     var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + '/' + ytms + ".png";
-    argenmap.miniCache.guardar(tile.x,tile.y,zoom,url);
+    this.cache.guardar(tile.x,tile.y,zoom,url);
     return url;
   };
 
@@ -3186,16 +3195,18 @@
 
     var mapFooter_ = $('<div class="argenmapMapFooter" />').css({
       'font-family': 'Arial',
-      'color': '#444',
       'background-color': '#003964',
       'font-size': '10px',
       'text-align': 'right',
       'height': '30px',
-      'line-height': '30px',
       'vertical-align': 'middle',
       'color': 'white',
-      'padding': '2px 5px'
-
+          'min-height': '25px',
+          'line-height': '13px',
+          'vertical-align':'middle',
+          'padding': '5px',
+          'margin':0,
+          'border':0
     });
     var mapLogo_ = $('<img />');
     var mapLogoAnchor_ = $('<a style="float:left" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs"></a>').append(
