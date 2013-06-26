@@ -136,6 +136,8 @@
               <p>
                 <ul>
                     <li><a href="#agregarMarcador">agregarMarcador()</a></li>
+                    <li><a href="#modificarMarcador">modificarMarcador()</a></li>
+                    <li><a href="#quitarMarcador">quitarMarcador()</a></li>
                     <li><a href="#agregarMarcadores">agregarMarcadores()</a></li>
                 </ul>
               </p>
@@ -374,6 +376,39 @@
         </dd>
       </dl>      
 
+    </section>
+    <hr />
+    <section id="modificarMarcador">
+      <h5>$(selector).modificarMarcador(nombre, opciones)</h5>
+      <p>
+        Modifica un marcador previamente creado. Las opciones para modificar
+        el marcador son las mismas que al momento de <a href="#agregarMarcador">crear uno</a>.
+      </p>
+      <p>La referencia del marcador a modificar es el <code>nombre</code> asignado al marcador
+        y es el primer parámetro de este método:
+      </p>
+      <dl>
+        <dt>nombre</dt>
+        <dd>(<em>string</em>). El nombre asignado al marcador cuando fue creado.</dd>
+        <dt>opciones</dt>
+        <dd>
+          (<em>objeto simple</em>): set de pares de key/valor que el usado para <a href="#agregarMarcador">crear un marcador</a>.
+        </dd>
+      </dl>      
+
+    </section>
+    <hr />
+    <section id="quitarMarcador">
+      <h5>$(selector).quitarMarcador(nombre)</h5>
+      <p>
+        Quita un marcador del mapa.
+      </p>
+      <p>La referencia del marcador a modificar es a través del <code>nombre</code> asignado al marcador.
+      </p>
+      <dl>
+        <dt>nombre</dt>
+        <dd>(<em>string</em>). El nombre asignado al marcador cuando fue creado.</dd>
+      </dl>      
     </section>
     <hr />
     <section id="agregarMarcadores">
