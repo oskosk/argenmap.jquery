@@ -1359,75 +1359,7 @@
       this.addmarker(o);
     }
 
-    /**
-     * add markers (without address resolution)
-     **/
-    this.addmarkers = function (todo) {
-      if (ival(todo, 'clusters')) {
-        this._resolveAllLatLng(todo, 'markers', '_addclusteredmarkers');
-      } else {
-        this._resolveAllLatLng(todo, 'markers', '_addmarkers');
-      }
-    }
-
-    this._addmarkers = function (todo) {
-      //agrego el marker predeterminado de argenmap
-
-      var result, o, i, latLng, marker, opciones = {}, tmp, to,
-        markers = ival(todo, 'markers');
-      this._subcall(todo);
-      if (typeof (markers) !== 'object') {
-        return this._end();
-      }
-      o = getObject('marker', todo, ['to', 'markers']);
-
-      // Le meto desprolijamente acá e ícono de marcador default de argenmap
-      if (!o.opciones.icon) {
-        o.opciones.icon = argenmap.BASEURL + 'img/marcadores/punto.png';
-      }
-
-      if (o.to) {
-        to = store.refToObj(o.to);
-        result = to && (typeof (to.add) === 'function');
-        if (result) {
-          for (i = 0; i < markers.length; i++) {
-            if (latLng = toLatLng(markers[i])) {
-              to.add(latLng, markers[i]);
-            }
-          }
-          if (typeof (to.redraw) === 'function') {
-            to.redraw();
-          }
-        }
-        this._manageEnd(result, o);
-      } else {
-        $.extend(true, opciones, o.opciones);
-        opciones.map = map;
-        result = [];
-        for (i = 0; i < markers.length; i++) {
-          if (latLng = toLatLng(markers[i])) {
-            if (markers[i].opciones) {
-              tmp = {};
-              $.extend(true, tmp, opciones, markers[i].opciones);
-              o.opciones = tmp;
-            } else {
-              o.opciones = opciones;
-            }
-            o.opciones.position = latLng;
-            marker = new _default.classes.Marker(o.opciones);
-            result.push(marker);
-            o.data = markers[i].data;
-            o.tag = markers[i].tag;
-            store.add('marker', marker, o);
-            this._manageEnd(marker, o, true);
-          }
-        }
-        o.opciones = opciones; // restaurar la anterior para uso futuro
-        this._callback(result, todo);
-        this._end();
-      }
-    }
-
+ 
     this._addclusteredmarkers = function (todo) {
       var clusterer, i, latLng, storeId,
         that = this,
