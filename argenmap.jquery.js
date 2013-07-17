@@ -1640,29 +1640,6 @@
     }
 
     /**
-     * add a circle   
-     **/
-    this.addcircle = function (todo) {
-      this._resolveLatLng(todo, '_addCircle');
-    }
-
-    this._addCircle = function (todo, latLng) {
-      var c, o = getObject('circle', todo);
-      if (!latLng) {
-        latLng = toLatLng(o.opciones.center);
-      }
-      if (!latLng) {
-        return this._manageEnd(false, o);
-      }
-      this._subcall(todo, latLng);
-      o.opciones.center = latLng;
-      o.opciones.map = map;
-      c = new _default.classes.Circle(o.opciones);
-      store.add('circle', c, o);
-      this._manageEnd(c, o);
-    }
-
-    /**
      * add a rectangle   
      **/
     this.addrectangle = function (todo) {
