@@ -109,191 +109,6 @@
   }
 
   /***************************************************************************/
-  /*                                STORE                                    */
-  /***************************************************************************/
-  function Store() {
-    var store = {};
-
-    /**
-     * add a mixed to the store
-     **/
-    this.add = function (name, obj, todo) {
-      name = name.toLowerCase();
-      if (!store[name]) {
-        store[name] = [];
-      }
-      store[name].push({
-        obj: obj,
-        tag: ival(todo, 'tag')
-      });
-      return name + '-' + (store[name].length - 1);
-    };
-
-    /**
-     * return a stored mixed
-     **/
-    this.get = function (name, last, tag) {
-      var i, idx, add;
-      name = name.toLowerCase();
-      if (!store[name] || !store[name].length) {
-        return null;
-      }
-      idx = last ? store[name].length : -1;
-      add = last ? -1 : 1;
-      for (i = 0; i < store[name].length; i++) {
-        idx += add;
-        if (store[name][idx]) {
-          if (tag !== undefined) {
-            if ((store[name][idx].tag === undefined) || ($.inArray(store[name][idx].tag, tag) < 0)) {
-              continue;
-            }
-          }
-          return store[name][idx].obj;
-        }
-      }
-      return null;
-    };
-
-    /**
-     * return all stored mixed
-     **/
-    this.all = function (name, tag) {
-      var i, result = [];
-      name = name.toLowerCase();
-      if (!store[name] || !store[name].length) {
-        return result;
-      }
-      for (i = 0; i < store[name].length; i++) {
-        if (!store[name][i]) {
-          continue;
-        }
-        if ((tag !== undefined) && ((store[name][i].tag === undefined) || ($.inArray(store[name][i].tag, tag) < 0))) {
-          continue;
-        }
-        result.push(store[name][i].obj);
-      }
-      return result;
-    };
-
-    /**
-     * return all storation groups
-     **/
-    this.names = function () {
-      var name, result = [];
-      for (name in store) {
-        result.push(name);
-      }
-      return result;
-    };
-
-    /**
-     * return an object from its reference
-     **/
-    this.refToObj = function (ref) {
-      ref = ref.split('-'); // nombre - índice
-      if ((ref.length === 2) && store[ref[0]] && store[ref[0]][ref[1]]) {
-        return store[ref[0]][ref[1]].obj;
-      }
-      return null;
-    };
-
-    /**
-     * remove one object from the store
-     **/
-    this.rm = function (name, tag, pop) {
-      var idx, i, tmp;
-      name = name.toLowerCase();
-      if (!store[name]) {
-        return false;
-      }
-      if (tag !== undefined) {
-        if (pop) {
-          for (idx = store[name].length - 1; idx >= 0; idx--) {
-            if ((store[name][idx] !== undefined) && (store[name][idx].tag !== undefined) && ($.inArray(store[name][idx].tag, tag) >= 0)) {
-              break;
-            }
-          }
-        } else {
-          for (idx = 0; idx < store[name].length; idx++) {
-            if ((store[name][idx] !== undefined) && (store[name][idx].tag !== undefined) && ($.inArray(store[name][idx].tag, tag) >= 0)) {
-              break;
-            }
-          }
-        }
-      } else {
-        idx = pop ? store[name].length - 1 : 0;
-      }
-      if ((store[name][idx] === undefined)) {
-        return false;
-      }
-      // Elemento de Google maps
-      if (typeof (store[name][idx].obj.setMap) === 'function') {
-        store[name][idx].obj.setMap(null);
-      }
-      // jQuery
-      if (typeof (store[name][idx].obj.remove) === 'function') {
-        store[name][idx].obj.remove();
-      }
-      // interno (cluster)
-      if (typeof (store[name][idx].obj.free) === 'function') {
-        store[name][idx].obj.free();
-      }
-      delete store[name][idx].obj;
-      if (tag !== undefined) {
-        tmp = [];
-        for (i = 0; i < store[name].length; i++) {
-          if (i !== idx) {
-            tmp.push(store[name][i]);
-          }
-        }
-        store[name] = tmp;
-      } else {
-        if (pop) {
-          store[name].pop();
-        } else {
-          store[name].shift();
-        }
-      }
-      return true;
-    };
-
-    /**
-     * remove objects from the store
-     **/
-    this.clear = function (list, last, first, tag) {
-      var k, i, name;
-      if (!list || !list.length) {
-        list = [];
-        for (k in store) {
-          list.push(k);
-        }
-      } else {
-        list = array(list);
-      }
-      for (i = 0; i < list.length; i++) {
-        if (list[i]) {
-          name = list[i].toLowerCase();
-          if (!store[name]) {
-            continue;
-          }
-          if (last) {
-            this.rm(name, tag, true);
-          } else if (first) {
-            this.rm(name, tag, false);
-          } else {
-            // todos
-            while (true) {
-              if (!this.rm(name, tag, false)) {
-                break;
-              }
-            }
-          }
-        }
-      }
-    };
-  }
-
-  /***************************************************************************/
   /*                              CLUSTERER                                  */
   /***************************************************************************/
 
@@ -877,7 +692,6 @@
   function Argenmap($this) {
 
     var stack = new Stack(),
-      store = new Store(),
       map = null,
       styles = {},
       running = false;
@@ -1501,7 +1315,6 @@
           this._planNext(oi);
         }
         if (!internal) {
-          store.add('marker', result, o);
           this._manageEnd(result, o);
         }
       }
@@ -2100,7 +1913,6 @@
       if (typeof (o.url) === 'string') {
         kml = new _default.classes.KmlLayer(o.url, o.opciones);
       }
-      store.add('kmllayer', kml, o);
       this._manageEnd(kml, o);
     }
 
