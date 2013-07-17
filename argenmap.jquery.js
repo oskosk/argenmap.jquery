@@ -1249,76 +1249,46 @@
       }
     }
 
-    /**
-     * Add a marker to a map after address resolution
-     * if [infowindow] add an infowindow attached to the marker   
-     **/
-    this.addmarker = function (todo) {
-      this._resolveLatLng(todo, '_addMarker');
-    }
+    this.infoWindow = function()
+    {
 
-    this._addMarker = function (todo, latLng, internal) {
-
-      var result, oi, to,
-        o = getObject('marker', todo, ['to','icon','nombre','data']);
-
-      //agrego el marker predeterminado de argenmap
-      o.opciones.icon = argenmap.BASEURL + 'img/marcadores/punto.png';
-      o.opciones.nombre = o.nombre;
-      o.opciones.contenido = o.data;
-      if (todo.icon) {
-        o.opciones.icon = todo.icon;
+      if (this._infoWindow === undefined) {
+        this._infoWindow = new google.maps.InfoWindow();
       }
+      return this._infoWindow;
+    },
 
-      if (!internal) {
-        if (!latLng) {
-          this._manageEnd(false, o);
+    this.agregarMarcador = function( opciones )
+    {
+      var _this = this,
+        defaults = {
+          icon: argenmap.BASEURL + 'img/marcadores/punto.png',
+          title: 'Marcador'
+        };
+
+      opciones.icon= opciones.icono ? opciones.icono : undefined;
+      opciones.data= opciones.contenido;
+      opciones.position = new google.maps.LatLng(opciones.lat, opciones.lng);
+      opciones.title = opciones.nombre;
+      
+
+      opciones = $.extend(defaults, opciones);
+
+      opciones.map = $this.data('gmap');
+
+      var m = new google.maps.Marker(opciones);
+
+      google.maps.event.addListener(m, 'click', function() {
+        if (! opciones.contenido) {
+          console.log('tutuca');
           return;
-        }
-        this._subcall(todo, latLng);
-      } else if (!latLng) {
-        return;
-      }
-      if (o.to) {
-        to = store.refToObj(o.to);
-        result = to && (typeof (to.add) === 'function');
-        if (result) {
-          to.add(latLng, todo);
-          if (typeof (to.redraw) === 'function') {
-            to.redraw();
-          }
-        }
-        if (!internal) {
-          this._manageEnd(result, o);
-        }
-      } else {
+        } 
+        _this.infoWindow().open( $this.data('gmap'), m);
+        _this.infoWindow().setContent(opciones.contenido);
+      });
 
-        o.opciones.position = latLng;
-        o.opciones.map = map;
-
-        result = new _default.classes.Marker(o.opciones);
-
-        if (hasKey(todo, 'infowindow')) {
-
-          oi = getObject('infowindow', todo['infowindow'], 'open');
-
-          // si  "open" no está definido, lo agrego en la primera posición
-          if ((oi.open === undefined) || oi.open) {
-            oi.apply = array(oi.apply);
-            oi.apply.unshift({
-              action: 'open',
-              args: [map, result]
-            });
-          }
-          oi.action = 'addinfowindow';
-
-          this._planNext(oi);
-        }
-        if (!internal) {
-          this._manageEnd(result, o);
-        }
-      }
-      return result;
+      return;
+ 
     }
 
     /**
@@ -2423,39 +2393,9 @@
         o.lat = o.lat();
         o.lng = o.lng();
       }
-      $this.argenmap({
-        nombre: o.nombre,
-        tag: o.nombre,
-        accion: 'agregarMarcador',
-        latLng: [o.lat, o.lng],
-        data: o.contenido,
-        icon: o.icono ? o.icono : null,
-        events: {
-          click: function (marker, event, data) {
-            if (!o.contenido) {
-              return;
-            }
-            var map = $this.data('gmap'),
-              infowindow = $this.argenmap({
-                accion: 'get',
-                name: 'infowindow'
-              });
+      a.agregarMarcador(o);
 
-            if (infowindow) {
-              infowindow.open(map, marker);
-              infowindow.setContent(data);
-            } else {
-              $(this).argenmap({
-                accion: 'addinfowindow',
-                anchor: marker,
-                opciones: {
-                  content: data
-                }
-              });
-            }
-          }
-        }
-      });
+
     });
   }
 
