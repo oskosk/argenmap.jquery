@@ -1611,35 +1611,6 @@
 
 
     /**
-     * add a polygone / polylin on a map
-     **/
-    this.addpolyline = function (todo) {
-      this._addPoly(todo, 'Polyline', 'path');
-    }
-
-    this.addpolygon = function (todo) {
-      this._addPoly(todo, 'Polygon', 'paths');
-    }
-
-    this._addPoly = function (todo, poly, path) {
-      var i,
-        obj, latLng,
-        o = getObject(poly.toLowerCase(), todo, path);
-      if (o[path]) {
-        o.opciones[path] = [];
-        for (i = 0; i < o[path].length; i++) {
-          if (latLng = toLatLng(o[path][i])) {
-            o.opciones[path].push(latLng);
-          }
-        }
-      }
-      obj = new google.maps[poly](o.opciones);
-      obj.setMap(map);
-      store.add(poly.toLowerCase(), obj, o);
-      this._manageEnd(obj, o);
-    }
-
-    /**
      * add an overlay to a map after address resolution
      **/
     this.addoverlay = function (todo) {
