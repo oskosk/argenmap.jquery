@@ -1249,6 +1249,17 @@
       }
     }
 
+    this.agregarCapaKML = function( opciones ) 
+    {
+      var defaults = {
+        preserveViewport: true,
+        map: $this.data('gmap')
+      }
+      console.log('asd');
+      opciones = $.extend(defaults, opciones);
+      var kml = new google.maps.KmlLayer(opciones);
+    }
+
     this.infoWindow = function()
     {
 
@@ -1873,19 +1884,7 @@
       this._manageEnd(panorama, o);
     }
 
-    /**
-     * add a kml layer to a map
-     **/
-    this.addkmllayer = function (todo) {
-      var kml,
-        o = getObject('kmllayer', todo, 'url');
-      o.opciones.map = map;
-      if (typeof (o.url) === 'string') {
-        kml = new _default.classes.KmlLayer(o.url, o.opciones);
-      }
-      this._manageEnd(kml, o);
-    }
-
+    
     /**
      * add a traffic layer to a map
      **/
@@ -2290,14 +2289,7 @@
       var $this = $(this);
       var a = $this.data('argenmap');
       if (!a) return;
-      $this.argenmap({
-        accion: 'agregarCapaKml',
-        opciones: {
-          preserveViewport: true
-        },
-        url: opciones.url
-      });
-
+      a.agregarCapaKML( opciones );
     });
   }
 
