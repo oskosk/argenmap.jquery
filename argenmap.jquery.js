@@ -1640,26 +1640,6 @@
     }
 
     /**
-     * add a rectangle   
-     **/
-    this.addrectangle = function (todo) {
-      this._resolveLatLng(todo, '_addRectangle');
-    }
-
-    this._addRectangle = function (todo, latLng) {
-      var r, o = getObject('rectangle', todo);
-      o.opciones.bounds = toLatLngBounds(o.opciones.bounds, true);
-      if (!o.opciones.bounds) {
-        return this._manageEnd(false, o);
-      }
-      this._subcall(todo, o.opciones.bounds.getCenter());
-      o.opciones.map = map;
-      r = new _default.classes.Rectangle(o.opciones);
-      store.add('rectangle', r, o);
-      this._manageEnd(r, o);
-    }
-
-    /**
      * add an overlay to a map after address resolution
      **/
     this.addoverlay = function (todo) {
