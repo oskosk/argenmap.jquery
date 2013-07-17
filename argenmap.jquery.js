@@ -1359,41 +1359,6 @@
       this.addmarker(o);
     }
 
- 
-    this._addclusteredmarkers = function (todo) {
-      var clusterer, i, latLng, storeId,
-        that = this,
-        radius = ival(todo, 'radius'),
-        maxZoom = ival(todo, 'maxZoom'),
-        markers = ival(todo, 'markers'),
-        styles = ival(todo, 'clusters');
-
-      if (!map.getBounds()) { // mapa no iniciado -> los límites no están disponibles
-        // esperar al mapa
-        google.maps.event.addListenerOnce(
-          map,
-          'bounds_changed',
-
-        function () {
-          that._addclusteredmarkers(todo);
-        });
-        return;
-      }
-
-      if (typeof (radius) === 'number') {
-        clusterer = new Clusterer();
-        for (i = 0; i < markers.length; i++) {
-          latLng = toLatLng(markers[i]);
-          clusterer.add(latLng, markers[i]);
-        }
-        storeId = this._initClusters(todo, clusterer, radius, maxZoom, styles);
-      }
-
-      this._callback(storeId, todo);
-      this._end();
-    }
-
-
     this._initClusters = function (todo, clusterer, radius, maxZoom, styles) {
       var that = this;
 
