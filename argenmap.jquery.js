@@ -589,48 +589,6 @@
     }
 
      /**
-     * add a fix panel to a map
-     **/
-    this.addfixpanel = function (todo) {
-      var o = getObject('fixpanel', todo),
-        x = y = 0,
-        $c, $div;
-      if (o.opciones.content) {
-        $c = $(o.opciones.content);
-
-        if (o.opciones.left !== undefined) {
-          x = o.opciones.left;
-        } else if (o.opciones.right !== undefined) {
-          x = $this.width() - $c.width() - o.opciones.right;
-        } else if (o.opciones.center) {
-          x = ($this.width() - $c.width()) / 2;
-        }
-
-        if (o.opciones.top !== undefined) {
-          y = o.opciones.top;
-        } else if (o.opciones.bottom !== undefined) {
-          y = $this.height() - $c.height() - o.opciones.bottom;
-        } else if (o.opciones.middle) {
-          y = ($this.height() - $c.height()) / 2
-        }
-
-        $div = $('<div></div>')
-          .css('position', 'absolute')
-          .css('top', y + 'px')
-          .css('left', x + 'px')
-          .css('z-index', '1000')
-          .append($c);
-
-        $this.first().prepend($div);
-        this._attachEvents(map, o);
-        store.add('fixpanel', $div, o);
-        this._callback($div, o);
-      }
-      this._end();
-    }
-
-
-    /**
      * modify default values
      **/
     this.setdefault = function (todo) {
