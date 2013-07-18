@@ -114,17 +114,6 @@
       return true;
     }
 
-    /**
-     * returns the geographical coordinates from an address
-     **/
-    this.getlatlng = function (todo) {
-      this._resolveLatLng(todo, '_getLatLng', true);
-    },
-
-    this._getLatLng = function (todo, results) {
-      this._manageEnd(results, todo);
-    },
-
     this.agregarCapaKML = function( opciones ) 
     {
       var defaults = {
