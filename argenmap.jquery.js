@@ -246,11 +246,7 @@
 
     if ($.isEmptyObject(_default)) {
       _default = {
-        queryLimit: {
-          attempt: 5,
-          delay: 250,
-          random: 250
-        },
+        
         unit: 'km',
         init: {
           mapTypeId: 'Mapa IGN',
