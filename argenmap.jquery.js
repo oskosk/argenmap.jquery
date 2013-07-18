@@ -1065,10 +1065,6 @@
       // por un header y un footer
       var mapCanvas = argenmap._prepararContenedor($this);
 
-      //var mapCanvas = $($this.get(0)).find('.argenmapMapCanvas').get(0);
-
-      // var mapCanvas= $this.children('.argenmapMapCanvas');
-      // console.log($('#prueba .argenmapMapCanvas').children().length);
       map = new _default.classes.Map(mapCanvas, opts);
 
       $this.data('gmap', map);
@@ -1255,7 +1251,6 @@
         preserveViewport: true,
         map: $this.data('gmap')
       }
-      console.log('asd');
       opciones = $.extend(defaults, opciones);
       var kml = new google.maps.KmlLayer(opciones);
     }
@@ -1291,7 +1286,6 @@
 
       google.maps.event.addListener(m, 'click', function() {
         if (! opciones.contenido) {
-          console.log('tutuca');
           return;
         } 
         _this.infoWindow().open( $this.data('gmap'), m);
@@ -2073,10 +2067,8 @@
       if(this.cache.length > this.MAX_TILES)
       {
          sale = this.cache.shift();
-         // console.log('cache limit exceeded: ' + sale + ' borrado; url: ' + this.cacheRef[sale]);
          delete this.cacheRef[sale];
       }
-      // console.log('cache set: ' + tilecode + ' guardada, ' + this.cache.length + ' tiles cacheadas');
     }
   }
 
@@ -2256,7 +2248,6 @@
       var cached = this.cache.recuperar(tile.x,tile.y,zoom);
       if(cached)
       {
-        // console.log('en cache: ' + cached);
         return cached;
       }
     }
@@ -2381,7 +2372,6 @@
       var cached = this.cache.recuperar(tile.x,tile.y,zoom);
       if(cached)
       {
-        // console.log('en cache: ' + cached);
         return cached;
       }
     }
