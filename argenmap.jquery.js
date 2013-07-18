@@ -559,19 +559,6 @@
     return url;
   };
 
-  argenmap.CapaBaseIGN = function () {
-    var opts = {
-      name: 'Mapa IGN',
-      baseURL: 'http://www.ign.gob.ar/wms/?',
-      layers: 'capabaseargenmap'
-    };
-    
-    argenmap.CapaBaseWMS.apply(this, [opts]);
-  };
-  argenmap.CapaBaseIGN.prototype.getTileUrl = function () {
-    return argenmap.CapaBaseWMS.prototype.getTileUrl.apply(this, arguments);
-  };
-
   argenmap.CapaBaseArgenmap = function () {
     var opts = {
       name: 'Mapa IGN',
