@@ -975,20 +975,6 @@
 
 
     /**
-     * add a bicycling layer to a map
-     **/
-    this.addbicyclinglayer = function (todo) {
-      var o = getObject('bicyclinglayer', todo),
-        bl = store.get('bicyclinglayer');
-      if (!bl) {
-        bl = new _default.classes.BicyclingLayer();
-        bl.setMap(map);
-        store.add('bicyclinglayer', bl, o);
-      }
-      this._manageEnd(bl, o);
-    }
-
-    /**
      * add a ground overlay to a map
      **/
     this.addgroundoverlay = function (todo) {
