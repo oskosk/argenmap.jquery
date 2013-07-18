@@ -570,7 +570,6 @@
     }
   }
 
-  argenmap.miniCache = new argenmap.cacheDeCliente();
   /**
    * @class Representa una capa WMS opaca que puede ser utilizada como capa base de los mapas
    * @constructor
