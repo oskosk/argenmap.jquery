@@ -974,33 +974,6 @@
     }
 
     /**
-     * add a direction renderer to a map
-     **/
-    this.adddirectionsrenderer = function (todo, internal) {
-      var dr, o = getObject('directionrenderer', todo, 'panelId');
-      o.opciones.map = map;
-      dr = new google.maps.DirectionsRenderer(o.opciones);
-      if (o.panelId) {
-        dr.setPanel(document.getElementById(o.panelId));
-      }
-      store.add('directionrenderer', dr, o);
-      this._manageEnd(dr, o, internal);
-      return dr;
-    }
-
-    /**
-     * set a direction panel to a dom element from its ID
-     **/
-    this.setdirectionspanel = function (todo) {
-      var dr = store.get('directionrenderer'),
-        o = getObject('directionpanel', todo, 'id');
-      if (dr && o.id) {
-        dr.setPanel(document.getElementById(o.id));
-      }
-      this._manageEnd(dr, o);
-    }
-
-    /**
      * set directions on a map (create Direction Renderer if needed)
      **/
     this.setdirections = function (todo) {
