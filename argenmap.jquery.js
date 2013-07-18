@@ -86,23 +86,23 @@
         opts.center = [_default.init.center.lat, _default.init.center.lng];
       }
       opts.center = new google.maps.LatLng(opts.center.lat,opts.center.lng);
-      //Kludge pa que no muestre el tipito de streetView
+        //Kludge pa que no muestre el tipito de streetView
       opts.streetViewControl = false;
-      //Kludge pa que muestre escala gráfica
-      // Las escalas cartográficas en la web son BULLSHIT!
+        //Kludge pa que muestre escala gráfica
+        // Las escalas cartográficas en la web son BULLSHIT!
       opts.scaleControl = true;
-      //Preparo el div para que chapee el IGN
-      // El div q aloja el mapa está rodeado
-      // por un header y un footer
+        //Preparo el div para que chapee el IGN
+        // El div q aloja el mapa está rodeado
+        // por un header y un footer
       var mapCanvas = argenmap._prepararContenedor($this);
 
       map = new google.maps.Map(mapCanvas, opts);
       
       $this.data('gmap', map);
 
-      //Agrego la capa base del IGN a los tipos de mapas
-      //Esto es para que se cargue la capa de topónimos IGN
-      //sobre satellite
+        //Agrego la capa base del IGN a los tipos de mapas
+        //Esto es para que se cargue la capa de topónimos IGN
+        //sobre satellite
       google.maps.event.addListener(map, "maptypeid_changed", function () {
         map.setZoom(map.getZoom() + 1);
         map.setZoom(map.getZoom() - 1)
