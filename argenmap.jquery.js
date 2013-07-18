@@ -824,38 +824,6 @@
       this._manageEnd(results, todo);
     },
 
-    /**
-     * return the distance between an origin and a destination
-     *      
-     **/
-    this.getdistance = function (todo) {
-      var i,
-        callback = ival(todo, 'callback'),
-        that = this;
-      if ((typeof (callback) === 'function') && todo.opciones && todo.opciones.origins && todo.opciones.destinations) {
-        // los orígenes y destinos son una array con una o más cadenas de texto
-        // con direcciones y/o objetos google.maps.LatLng
-        todo.opciones.origins = array(todo.opciones.origins);
-        for (i = 0; i < todo.opciones.origins.length; i++) {
-          todo.opciones.origins[i] = toLatLng(todo.opciones.origins[i], true);
-        }
-        todo.opciones.destinations = array(todo.opciones.destinations);
-        for (i = 0; i < todo.opciones.destinations.length; i++) {
-          todo.opciones.destinations[i] = toLatLng(todo.opciones.destinations[i], true);
-        }
-        getDistanceMatrixService().getDistanceMatrix(
-          todo.opciones,
-
-        function (results, status) {
-          var out = status == google.maps.DistanceMatrixStatus.OK ? results : false;
-          callback.apply($this, [out, status]);
-          that._end();
-        });
-      } else {
-        this._end();
-      }
-    }
-
     this.agregarCapaKML = function( opciones ) 
     {
       var defaults = {
