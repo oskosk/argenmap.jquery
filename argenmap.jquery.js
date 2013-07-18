@@ -825,29 +825,6 @@
     },
 
 
-
-    /**
-     * return a route
-     **/
-    this.getroute = function (todo) {
-      var callback = ival(todo, 'callback'),
-        that = this;
-      if ((typeof (callback) === 'function') && todo.opciones) {
-        todo.opciones.origin = toLatLng(todo.opciones.origin, true);
-        todo.opciones.destination = toLatLng(todo.opciones.destination, true);
-        getDirectionsService().route(
-          todo.opciones,
-
-        function (results, status) {
-          var out = status == google.maps.DirectionsStatus.OK ? results : false;
-          callback.apply($this, [out, status]);
-          that._end();
-        });
-      } else {
-        this._end();
-      }
-    }
-
     /**
      * return the elevation of a location
      **/
