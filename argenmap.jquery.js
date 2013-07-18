@@ -64,55 +64,7 @@
 
 
 
-  //-----------------------------------------------------------------------//
-  // herramientas de Objetos
-  //-----------------------------------------------------------------------//
-
-  /**
-   * return the real key by an insensitive seach
-   **/
-  function ikey(object, key) {
-    if (key.toLowerCase) {
-      key = key.toLowerCase();
-      for (var k in object) {
-        if (k.toLowerCase && (k.toLowerCase() == key)) {
-          return k;
-        }
-      }
-    }
-    return false;
-  }
-
-  /**
-   * return the value of real key by an insensitive seach
-   **/
-  function ival(object, key, def) {
-    var k = ikey(object, key);
-    return k ? object[k] : def;
-  }
-
-  /**
-   * return true if at least one key is set in object
-   * nb: keys in lowercase
-   **/
-  function hasKey(object, keys) {
-    var n, k;
-    if (!object || !keys) {
-      return false;
-    }
-    keys = array(keys);
-    for (n in object) {
-      if (n.toLowerCase) {
-        n = n.toLowerCase();
-        for (k in keys) {
-          if (n == keys[k]) {
-            return true;
-          }
-        }
-      }
-    }
-    return false;
-  }
+  
 
   //-----------------------------------------------------------------------//
   // herramientas de unidades
