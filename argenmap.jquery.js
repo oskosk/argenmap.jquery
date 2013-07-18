@@ -141,7 +141,7 @@
         defaults = {
           icon: argenmap.BASEURL + 'img/marcadores/punto.png',
           title: 'Marcador',
-          nombre: 'Marcador_' + Math.floor(Math.random()*101)
+          nombre: 'Marcador_' + Math.floor(Math.random()*10100)
         };
 
       opciones.icon= opciones.icono ? opciones.icono : undefined;
@@ -151,7 +151,7 @@
       
 
       opciones = $.extend(defaults, opciones);
-
+console.log(opciones);
       opciones.map = $this.data('gmap');
 
       var m = new google.maps.Marker(opciones);
@@ -186,50 +186,18 @@
      * Modifica un marcador basado en el nombre
      * Las opciones son las mismas que al momento de crear un marcador
      **/
-    this.modificarMarcador = function(nombre,opciones) {
-      var m = store.get('marker',false,[nombre]);
-      if(!m) return;
-      var ll = toLatLng(opciones,false,true);
-      if(opciones.hasOwnProperty('contenido') && !opciones.contenido)
-      {
-          delete m.contenido;
-      }else{
-        m.contenido = opciones.contenido;
-      }
+    this.modificarMarcador = function(nombre, opciones) {
+      if (this._marcadores[nombre] === undefined ) {
+        return
+      }      
+      var m = this._marcadores[nombre];
 
-      var o = {
-        nombre: opciones.nombre ? opciones.nombre : m.nombre,
-        tag: opciones.nombre ? opciones.nombre : m.nombre,
-        latLng: ll || m.getPosition(),
-        data: opciones.contenido ? opciones.contenido : m.contenido,
-        icon: opciones.icono ? opciones.icono : m.icon,
-        events: {
-          click: function (marker, event, data) {
-            if (!m.contenido) {
-              return;
-            }
-            var map = $this.data('gmap'),
-              infowindow = $this.argenmap({
-                accion: 'get',
-                name: 'infowindow'
-              });
-            if (infowindow) {
-              infowindow.open(map, marker);
-              infowindow.setContent(data);
-            } else {
-              $this.argenmap({
-                accion: 'addinfowindow',
-                anchor: marker,
-                opciones: {
-                  content: data
-                }
-              });
-            }
-          }
-        }
-      };
-      store.rm('marker',[nombre]);
-      this.addmarker(o);
+      this.quitarMarcador(nombre);
+      opciones = $.extend(m, opciones);
+      //para evitar comportamiento raro
+      // si se pasa nombre en opciones.
+      opciones.nombre = nombre;      
+      this.agregarMarcador(opciones);
     }
 
   };
@@ -1042,7 +1010,7 @@
     var _arguments = arguments;
 
     return this.each(function () {
-      var o = $.extend({icono:null,nombre:'Marcador'}, opciones);
+      var o = $.extend({}, opciones);
       var $this = $(this);
       var a = $this.data('argenmap');
       if (!a) return;
