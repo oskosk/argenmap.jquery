@@ -109,7 +109,6 @@
   }
 
  
-
   /***************************************************************************/
   /*                           GLOBALS de Argenmap                                 */
   /***************************************************************************/
@@ -826,45 +825,6 @@
     },
 
 
-    /**
-     * returns address from latlng        
-     **/
-    this.getaddress = function (todo, attempt) {
-      var latLng = toLatLng(todo, false, true),
-        address = ival(todo, 'direccion'),
-        params = latLng ? {
-          latLng: latLng
-        } : (address ? (typeof (address) === 'string' ? {
-          address: address
-        } : address) : null),
-        callback = ival(todo, 'callback'),
-        that = this;
-      if (!attempt) { // convertir el  undefined a int
-        attempt = 0;
-      }
-      if (params && typeof (callback) === 'function') {
-        getGeocoder().geocode(
-          params,
-
-        function (results, status) {
-          if ((status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) && (attempt < _default.queryLimit.attempt)) {
-            setTimeout(function () {
-              that.getaddress(todo, attempt + 1);
-            },
-              _default.queryLimit.delay + Math.floor(Math.random() * _default.queryLimit.random));
-          } else {
-            var out = status === google.maps.GeocoderStatus.OK ? results : false;
-            callback.apply($this, [out, status]);
-            if (!out && _default.verbose) {
-              alert('Geocode error : ' + status);
-            }
-            that._end();
-          }
-        });
-      } else {
-        this._end();
-      }
-    }
 
     /**
      * return a route
