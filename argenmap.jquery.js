@@ -65,39 +65,6 @@
 
 
   
-
-  //-----------------------------------------------------------------------//
-  // herramientas de unidades
-  //-----------------------------------------------------------------------//
-
-  /**
-   * return true if mixed is usable as number
-   **/
-  function numeric(mixed) {
-    return (typeof (mixed) === 'number' || typeof (mixed) === 'string') && mixed !== '' && !isNaN(mixed);
-  }
-
-  /**
-   * convert data to array
-   **/
-  function array(mixed) {
-    var k, a = [];
-    if (mixed !== undefined) {
-      if (typeof (mixed) === 'object') {
-        if (typeof (mixed.length) === 'number') {
-          a = mixed;
-        } else {
-          for (k in mixed) {
-            a.push(mixed[k]);
-          }
-        }
-      } else {
-        a.push(mixed);
-      }
-    }
-    return a;
-  }
-
  
 
   /***************************************************************************/
