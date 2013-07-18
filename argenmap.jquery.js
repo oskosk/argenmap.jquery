@@ -1015,30 +1015,6 @@
     }
 
     /**
-     * return the max zoom of a location
-     **/
-    this.getmaxzoom = function (todo) {
-      this._resolveLatLng(todo, '_getMaxZoom');
-    }
-
-    this._getMaxZoom = function (todo, latLng) {
-      var callback = ival(todo, 'callback'),
-        that = this;
-      if (callback && typeof (callback) === 'function') {
-        getMaxZoomService().getMaxZoomAtLatLng(
-          latLng,
-
-        function (result) {
-          var zoom = result.status === google.maps.MaxZoomStatus.OK ? result.zoom : false;
-          callback.apply($this, [zoom, result.status]);
-          that._end();
-        });
-      } else {
-        this._end();
-      }
-    }
-
-    /**
      * modify default values
      **/
     this.setdefault = function (todo) {
