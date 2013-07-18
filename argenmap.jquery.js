@@ -1593,7 +1593,7 @@
     contenedor_.bind('resized', function (e) {
       var dif = contenedor_.innerHeight() - mapFooter_.outerHeight();
       mapCanvas_.height(dif);
-      google.maps.event.trigger(contenedor_.argenmap('get'), "resize");
+      google.maps.event.trigger(contenedor_.data().gmap, "resize");
     });
 
   }
