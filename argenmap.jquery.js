@@ -62,41 +62,7 @@
     _directs = ['get'],
     geocoder = directionsService = elevationService = maxZoomService = distanceMatrixService = null;
 
-  function setDefault(values) {
-    for (var k in values) {
-      if (typeof (_default[k]) === 'object') {
-        _default[k] = $.extend({}, _default[k], values[k]);
-      } else {
-        _default[k] = values[k];
-      }
-    }
-  }
 
-  function autoInit(iname) {
-    if (!iname) {
-      return true;
-    }
-    for (var i = 0; i < _noInit.length; i++) {
-      if (_noInit[i] === iname) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-
-  /**
-   * return true if action has to be executed directly
-   **/
-  function isDirect(todo) {
-    var action = ival(todo, 'accion');
-    for (var i = 0; i < _directs.length; i++) {
-      if (_directs[i] === action) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   //-----------------------------------------------------------------------//
   // herramientas de Objetos
