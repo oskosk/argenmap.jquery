@@ -824,58 +824,6 @@
       this._manageEnd(results, todo);
     },
 
-
-    /**
-     * return the elevation of a location
-     **/
-    this.getelevation = function (todo) {
-      var fnc, path, samples, i,
-        locations = [],
-        callback = ival(todo, 'callback'),
-        latLng = ival(todo, 'latlng'),
-        that = this;
-
-      if (typeof (callback) === 'function') {
-        fnc = function (results, status) {
-          var out = status === google.maps.ElevationStatus.OK ? results : false;
-          callback.apply($this, [out, status]);
-          that._end();
-        };
-        if (latLng) {
-          locations.push(toLatLng(latLng));
-        } else {
-          locations = ival(todo, 'locations') || [];
-          if (locations) {
-            locations = array(locations);
-            for (i = 0; i < locations.length; i++) {
-              locations[i] = toLatLng(locations[i]);
-            }
-          }
-        }
-        if (locations.length) {
-          getElevationService().getElevationForLocations({
-            locations: locations
-          }, fnc);
-        } else {
-          path = ival(todo, 'path');
-          samples = ival(todo, 'samples');
-          if (path && samples) {
-            for (i = 0; i < path.length; i++) {
-              locations.push(toLatLng(path[i]));
-            }
-            if (locations.length) {
-              getElevationService().getElevationAlongPath({
-                path: locations,
-                samples: samples
-              }, fnc);
-            }
-          }
-        }
-      } else {
-        this._end();
-      }
-    }
-
     /**
      * return the distance between an origin and a destination
      *      
