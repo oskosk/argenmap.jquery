@@ -572,25 +572,6 @@
     return argenmap.CapaBaseTMS.prototype.getTileUrl.apply(this, arguments);
   };
 
-  argenmap.CapaWMSIGN = function () {
-    var opts = {
-      name: 'IGN',
-      baseURL: 'http://www.ign.gob.ar/wms/?',
-      //baseURL: 'http://wms.ign.gob.ar/geoserver/wms?',
-      layers: 'capabasesigign'
-    };
-    argenmap.CapaWMS.apply(this, [opts]);
-  };
-  argenmap.CapaWMSIGN.prototype.getTileUrl = function (a, b) {
-    // Solo cargo tiles para este overlay
-    // si estoy en la capa satelite
-    if (this.gmap.getMapTypeId() !== 'satellite') {
-      return false;
-    }
-    return argenmap.CapaWMS.prototype.getTileUrl.apply(this, arguments);
-
-  };
-
   argenmap.CapaTMSArgenmap = function () {
     var opts = {
       name: 'IGN',
