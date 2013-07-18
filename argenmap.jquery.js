@@ -975,31 +975,6 @@
 
 
     /**
-     * return objects previously created
-     **/
-    this.get = function (todo) {
-
-      var name = ival(todo, 'name') || 'map',
-        first = ival(todo, 'first'),
-        all = ival(todo, 'all'),
-        tag = ival(todo, 'tag');
-      name = name.toLowerCase();
-      if (name === 'map') {
-        return map;
-      }
-      if (tag !== undefined) {
-        tag = array(tag);
-      }
-      if (first) {
-        return store.get(name, false, tag);
-      } else if (all) {
-        return store.all(name, tag);
-      } else {
-        return store.get(name, true, tag);
-      }
-    }
-
-    /**
      * modify default values
      **/
     this.setdefault = function (todo) {
