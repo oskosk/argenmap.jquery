@@ -973,20 +973,6 @@
       this._end();
     }
 
-    /**
-     * set a style to a map (add it if needed)
-     **/
-    this.setstyledmap = function (todo) {
-      var o = getObject('styledmap', todo, ['id', 'style']);
-      if (o.id) {
-        this.addstyledmap(o, true);
-        if (styles[o.id]) {
-          map.setMapTypeId(o.id);
-          this._callback(styles[o.id], todo);
-        }
-      }
-      this._manageEnd(styles[o.id], o);
-    }
 
     /**
      * remove objects from a map
