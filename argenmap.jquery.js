@@ -222,16 +222,6 @@
       this.addmarker(o);
     }
 
-     /**
-     * modify default values
-     **/
-    this.setdefault = function (todo) {
-      setDefault(todo);
-      this._end();
-    }
-
-    
-
   };
 
   //-----------------------------------------------------------------------//
@@ -291,10 +281,7 @@
         return results;
       }
     }
-    // manage setDefault call
-    if (empty && (arguments.length == 2) && (typeof (arguments[0]) === 'string') && (arguments[0].toLowerCase() === 'setdefault')) {
-      setDefault(arguments[1]);
-    }
+
     return this;
   }
 
