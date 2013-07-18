@@ -258,20 +258,6 @@
           center: [-34, -59],
           zoom: 5
         },
-        classes: {
-          Map: google.maps.Map,
-          Marker: google.maps.Marker,
-          InfoWindow: google.maps.InfoWindow,
-          Circle: google.maps.Circle,
-          Rectangle: google.maps.Rectangle,
-          OverlayView: google.maps.OverlayView,
-          StreetViewPanorama: google.maps.StreetViewPanorama,
-          KmlLayer: google.maps.KmlLayer,
-          TrafficLayer: google.maps.TrafficLayer,
-          BicyclingLayer: google.maps.BicyclingLayer,
-          GroundOverlay: google.maps.GroundOverlay,
-          StyledMapType: google.maps.StyledMapType
-        }
       };
     }
 
