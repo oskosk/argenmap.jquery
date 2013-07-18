@@ -973,21 +973,6 @@
       this._end();
     }
 
-
-    /**
-     * add a style to a map
-     **/
-    this.addstyledmap = function (todo, internal) {
-      var o = getObject('styledmap', todo, ['id', 'style']);
-      if (o.style && o.id && !styles[o.id]) {
-        styles[o.id] = new _default.classes.StyledMapType(o.style, o.opciones);
-        if (map) {
-          map.mapTypes.set(o.id, styles[o.id]);
-        }
-      }
-      this._manageEnd(styles[o.id], o, internal);
-    }
-
     /**
      * set a style to a map (add it if needed)
      **/
