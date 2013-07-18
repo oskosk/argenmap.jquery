@@ -1046,65 +1046,7 @@
       this._end();
     }
 
-    /**
-     * autofit a map using its overlays (markers, rectangles ...)
-     **/
-    this.autofit = function (todo, internal) {
-      var names, list, obj, i, j,
-        empty = true,
-        bounds = new google.maps.LatLngBounds(),
-        maxZoom = ival(todo, 'maxZoom', null);
-
-      names = store.names();
-      for (i = 0; i < names.length; i++) {
-        list = store.all(names[i]);
-        for (j = 0; j < list.length; j++) {
-          obj = list[j];
-          if (obj.getPosition) {
-            bounds.extend(obj.getPosition());
-            empty = false;
-          } else if (obj.getBounds) {
-            bounds.extend(obj.getBounds().getNorthEast());
-            bounds.extend(obj.getBounds().getSouthWest());
-            empty = false;
-          } else if (obj.getPaths) {
-            obj.getPaths().forEach(function (path) {
-              path.forEach(function (latLng) {
-                bounds.extend(latLng);
-                empty = false;
-              });
-            });
-          } else if (obj.getPath) {
-            obj.getPath().forEach(function (latLng) {
-              bounds.extend(latLng);
-              empty = false;
-            });
-          } else if (obj.getCenter) {
-            bounds.extend(obj.getCenter());
-            empty = false;
-          }
-        }
-      }
-
-      if (!empty && (!map.getBounds() || !map.getBounds().equals(bounds))) {
-        if (maxZoom !== null) {
-          // fitBouds Callback event => detect zoom level and check maxZoom
-          google.maps.event.addListenerOnce(
-            map,
-            'bounds_changed',
-
-          function () {
-            if (this.getZoom() > maxZoom) {
-              this.setZoom(maxZoom);
-            }
-          });
-        }
-        map.fitBounds(bounds);
-      }
-      if (!internal) {
-        this._manageEnd(empty ? false : bounds, todo, internal);
-      }
-    }
+    
 
   };
 
