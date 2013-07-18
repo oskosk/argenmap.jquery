@@ -77,56 +77,7 @@
       styles = {},
       running = false;
 
-    //-----------------------------------------------------------------------//
-    // herramientas para la pila
-    //-----------------------------------------------------------------------//
-
-    /**
-     * store one action to execute in a stack manager after the current
-     **/
-    this._planNext = function (todo) {
-      stack.addNext(todo);
-    }
-
-    /**
-     * execute action directly
-     **/
-    this._direct = function (todo) {
-      var action = ival(todo, 'accion');
-      var aux2 = {};
-      var aux3 = todo;
-      if (action in _default) {
-        aux2 = _default[action];
-      }
-      if (todo.args) {
-        aux3 = todo.args;
-      }
-      aux = $.extend({}, aux2, aux3);
-      return this[action](aux);
-    }
-
-    /**
-     * called when action in finished, to acknoledge the current in stack and start next one
-     **/
-    this._end = function () {
-      running = false;
-      stack.ack();
-      this._run();
-    },
-    /**
-     * if not running, start next action in stack
-     **/
-    this._run = function () {
-      if (running) {
-        return;
-      }
-      var todo = stack.get();
-      if (!todo) {
-        return;
-      }
-      running = true;
-      this._proceed(todo);
-    }
+  
 
     //-----------------------------------------------------------------------//
     // herramientas de las llamadas a función de argenmap.jquery
