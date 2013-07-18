@@ -973,42 +973,6 @@
       this._end();
     }
 
-    /**
-     * geolocalise the user and return a LatLng
-     **/
-    this.geolatlng = function (todo) {
-      var callback = ival(todo, 'callback');
-      if (typeof (callback) === 'function') {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-
-          function (position) {
-            var out = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            callback.apply($this, [out]);
-          },
-
-          function () {
-            var out = false;
-            callback.apply($this, [out]);
-          });
-        } else if (google.gears) {
-          google.gears.factory.create('beta.geolocation').getCurrentPosition(
-
-          function (position) {
-            var out = new google.maps.LatLng(position.latitude, position.longitude);
-            callback.apply($this, [out]);
-          },
-
-          function () {
-            out = false;
-            callback.apply($this, [out]);
-          });
-        } else {
-          callback.apply($this, [false]);
-        }
-      }
-      this._end();
-    }
 
     /**
      * add a style to a map
