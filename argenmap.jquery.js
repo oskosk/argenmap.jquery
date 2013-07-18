@@ -306,70 +306,7 @@
     return a;
   }
 
-  /**
-   * convert mixed [ lat, lng ] objet to google.maps.LatLng
-   **/
-  function toLatLng(mixed, emptyReturnMixed, noFlat) {
-    var empty = emptyReturnMixed ? mixed : null;
-    if (!mixed || (typeof (mixed) === 'string')) {
-      return empty;
-    }
-    // latLng definida
-    if (mixed.latLng) {
-      return toLatLng(mixed.latLng);
-    }
-    // objeto google.maps.LatLng
-    if (typeof (mixed.lat) === 'function') {
-      return mixed;
-    }
-    // objeto {lat:Y, lng:X}  
-    else if (numeric(mixed.lat)) {
-      return new google.maps.LatLng(mixed.lat, mixed.lng);
-    }
-    // objeto [X, Y]  
-    else if (!noFlat && mixed.length) { // y objeto "no chato" permitido
-      if (!numeric(mixed[0]) || !numeric(mixed[1])) {
-        return empty;
-      }
-      return new google.maps.LatLng(mixed[0], mixed[1]);
-    }
-    return empty;
-  }
-
-  /**
-   * convert mixed [ sw, ne ] object by google.maps.LatLngBounds
-   **/
-  function toLatLngBounds(mixed, flatAllowed, emptyReturnMixed) {
-    var ne, sw, empty;
-    if (!mixed) {
-      return null;
-    }
-    empty = emptyReturnMixed ? mixed : null;
-    if (typeof (mixed.getCenter) === 'function') {
-      return mixed;
-    }
-    if (mixed.length) {
-      if (mixed.length == 2) {
-        ne = toLatLng(mixed[0]);
-        sw = toLatLng(mixed[1]);
-      } else if (mixed.length == 4) {
-        ne = toLatLng([mixed[0], mixed[1]]);
-        sw = toLatLng([mixed[2], mixed[3]]);
-      }
-    } else {
-      if (('ne' in mixed) && ('sw' in mixed)) {
-        ne = toLatLng(mixed.ne);
-        sw = toLatLng(mixed.sw);
-      } else if (('n' in mixed) && ('e' in mixed) && ('s' in mixed) && ('w' in mixed)) {
-        ne = toLatLng([mixed.n, mixed.e]);
-        sw = toLatLng([mixed.s, mixed.w]);
-      }
-    }
-    if (ne && sw) {
-      return new google.maps.LatLngBounds(sw, ne);
-    }
-    return empty;
-  }
+ 
 
   /***************************************************************************/
   /*                                Argenmap                                    */
@@ -503,75 +440,6 @@
         this._callback(out, todo);
         this._end();
       }
-    }
-
-    /**
-     * returns the geographical coordinates from an address and call internal or given method
-     **/
-    this._resolveLatLng = function (todo, method, all, attempt) {
-      var address = ival(todo, 'direccion'),
-        params,
-        that = this,
-        fnc = typeof (method) === 'function' ? method : that[method];
-      if (address) {
-        if (!attempt) { // convertir undefined a int
-          attempt = 0;
-        }
-        if (typeof (address) === 'object') {
-          params = address;
-        } else {
-          params = {
-            'address': address
-          };
-        }
-        getGeocoder().geocode(
-          params,
-
-        function (results, status) {
-          if (status === google.maps.GeocoderStatus.OK) {
-            fnc.apply(that, [todo, all ? results : results[0].geometry.location]);
-          } else if ((status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) && (attempt < _default.queryLimit.attempt)) {
-            setTimeout(function () {
-              that._resolveLatLng(todo, method, all, attempt + 1);
-            },
-              _default.queryLimit.delay + Math.floor(Math.random() * _default.queryLimit.random));
-          } else {
-            if (_default.verbose) {
-              alert('Geocode error : ' + status);
-            }
-            fnc.apply(that, [todo, false]);;
-          }
-        });
-      } else {
-        fnc.apply(that, [todo, toLatLng(todo, false, true)]);
-      }
-    }
-
-    /**
-     * returns the geographical coordinates from an array of object using "address" and call internal method
-     **/
-    this._resolveAllLatLng = function (todo, property, method) {
-      var that = this,
-        i = -1,
-        solveNext = function () {
-          do {
-            i++;
-          } while ((i < todo[property].length) && !('direccion' in todo[property][i]));
-          if (i < todo[property].length) {
-            (function (todo) {
-              that._resolveLatLng(
-                todo,
-
-              function (todo, latLng) {
-                todo.latLng = latLng;
-                solveNext.apply(that, []); // resolver la siguiente o ejecutar el método de finalización
-              });
-            })(todo[property][i]);
-          } else {
-            that[method](todo);
-          }
-        };
-      solveNext();
     }
 
     /**
@@ -740,7 +608,7 @@
       if (!opts.center) {
         opts.center = [_default.init.center.lat, _default.init.center.lng];
       }
-      opts.center = toLatLng(opts.center);
+      opts.center = new google.maps.LatLng(opts.center.lat,opts.center.lng);
       //Kludge pa que no muestre el tipito de streetView
       opts.streetViewControl = false;
       //Kludge pa que muestre escala gráfica
