@@ -596,15 +596,9 @@
      **/
     this.init = function (todo, internal) {
       var o, k, opts;
-      if (map) { // mapa ya iniciado
-        return this._end();
-      }
 
-      o = getObject('map', todo);
-      if ((typeof (o.opciones.center) === 'boolean') && o.opciones.center) {
-        return false; // esperar la resolución de direcciones
-      }
       opts = $.extend({}, _default.init, o.opciones);
+
       if (!opts.center) {
         opts.center = [_default.init.center.lat, _default.init.center.lng];
       }
@@ -619,26 +613,21 @@
       // por un header y un footer
       var mapCanvas = argenmap._prepararContenedor($this);
 
-      map = new _default.classes.Map(mapCanvas, opts);
-
+      map = new google.maps.Map(mapCanvas, opts);
+      
       $this.data('gmap', map);
+
       //Agrego la capa base del IGN a los tipos de mapas
+      //Esto es para que se cargue la capa de topónimos IGN
+      //sobre satellite
       google.maps.event.addListener(map, "maptypeid_changed", function () {
         map.setZoom(map.getZoom() + 1);
         map.setZoom(map.getZoom() - 1)
       });
-      //argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseIGN());
-      //argenmap.GmapAgregarCapa(map, new argenmap.CapaWMSIGN());
+
       argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseArgenmap());
       argenmap.GmapAgregarCapa(map, new argenmap.CapaTMSArgenmap());
 
-
-      // y los estilos previamente agregados
-      for (k in styles) {
-        map.mapTypes.set(k, styles[k]);
-      }
-
-      this._manageEnd(map, o, internal);
       return true;
     }
 
