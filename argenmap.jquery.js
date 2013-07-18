@@ -114,39 +114,6 @@
     return false;
   }
 
-  /**
-   * return a standard object
-   * nb: include in lowercase
-   **/
-  function extractObject(todo, include, result /* = {} */ ) {
-    if (hasKey(todo, _properties) || hasKey(todo, include)) { // #1 definición clásico de objetos
-      var i, k;
-      // valores de propiedades definidos en todo
-      for (i = 0; i < _properties.length; i++) {
-        k = ikey(todo, _properties[i]);
-        result[_properties[i]] = k ? todo[k] : {};
-      }
-
-      if (include && include.length) {
-        for (i = 0; i < include.length; i++) {
-          if (k = ikey(todo, include[i])) {
-            result[include[i]] = todo[k];
-          }
-        }
-      }
-
-      return result;
-    } else { // #2 objeto simplificado (todo excepto "accion" son opciones)
-      result.opciones = {};
-      for (k in todo) {
-        if (k !== 'accion') {
-          result.opciones[k] = todo[k];
-        }
-      }
-      return result;
-    }
-  }
-
   //-----------------------------------------------------------------------//
   // herramientas de unidades
   //-----------------------------------------------------------------------//
