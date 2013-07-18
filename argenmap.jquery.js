@@ -594,10 +594,10 @@
     /**
      * Initialize google.maps.Map object
      **/
-    this.init = function (todo, internal) {
+    this.init = function (opciones) {
       var o, k, opts;
 
-      opts = $.extend({}, _default.init, o.opciones);
+      opts = $.extend({}, _default.init, opciones);
 
       if (!opts.center) {
         opts.center = [_default.init.center.lat, _default.init.center.lng];
