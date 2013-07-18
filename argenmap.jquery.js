@@ -49,64 +49,7 @@
     }
     return urls[Math.floor(product * urls.length)];
   }
-  /***************************************************************************/
-  /*                                STACK                                    */
-  /***************************************************************************/
-  function Stack() {
-    var st = [];
-    this.empty = function () {
-      var i;
-      for (i = 0; i < st.length; i++) {
-        if (st[i]) {
-          return false;
-        }
-      }
-      return true;
-    };
-    this.add = function (v) {
-      st.push(v);
-    };
-    this.addNext = function (v) {
-      var t = [],
-        i,
-        k = 0;
-      for (i = 0; i < st.length; i++) {
-        if (!st[i]) {
-          continue;
-        }
-        if (k === 1) {
-          t.push(v);
-        }
-        t.push(st[i]);
-        k++;
-      }
-      if (k < 2) {
-        t.push(v);
-      }
-      st = t;
-    };
-    this.get = function () {
-      var i;
-      for (i = 0; i < st.length; i++) {
-        if (st[i]) {
-          return st[i];
-        }
-      }
-      return false;
-    };
-    this.ack = function () {
-      var i;
-      for (i = 0; i < st.length; i++) {
-        if (st[i]) {
-          delete st[i];
-          break;
-        }
-      }
-      if (this.empty()) {
-        st = [];
-      }
-    };
-  }
+  
 
  
   /***************************************************************************/
@@ -314,24 +257,13 @@
 
   function Argenmap($this) {
 
-    var stack = new Stack(),
-      map = null,
+    var map = null,
       styles = {},
       running = false;
 
     //-----------------------------------------------------------------------//
     // herramientas para la pila
     //-----------------------------------------------------------------------//
-
-    /**
-     * store actions to execute in a stack manager
-     **/
-    this._plan = function (list) {
-      for (var k = 0; k < list.length; k++) {
-        stack.add(list[k]);
-      }
-      this._run();
-    }
 
     /**
      * store one action to execute in a stack manager after the current
@@ -808,13 +740,9 @@
       if (!_argenmap) {
         _argenmap = new Argenmap($this);
         $this.data('argenmap', _argenmap);
+        _argenmap.init(list);
       }
-      // direct call : bypass jQuery method (not stackable, return mixed)
-      if ((list.length == 1) && (isDirect(list[0]))) {
-        results.push(_argenmap._direct(list[0]));
-      } else {
-        _argenmap._plan(list);
-      }
+
     });
     // return for direct call (only) 
     if (results.length) {
