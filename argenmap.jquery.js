@@ -69,6 +69,8 @@
       styles = {},
       running = false;
 
+    this.gmap;
+    this._marcadores = {};
   
     //-----------------------------------------------------------------------//
     // funciones de Argenmap
@@ -96,7 +98,7 @@
         // por un header y un footer
       var mapCanvas = argenmap._prepararContenedor($this);
 
-      map = new google.maps.Map(mapCanvas, opts);
+      this.gmap = map = new google.maps.Map(mapCanvas, opts);
       
       $this.data('gmap', map);
 
@@ -138,7 +140,8 @@
       var _this = this,
         defaults = {
           icon: argenmap.BASEURL + 'img/marcadores/punto.png',
-          title: 'Marcador'
+          title: 'Marcador',
+          nombre: 'Marcador_' + Math.floor(Math.random()*101)
         };
 
       opciones.icon= opciones.icono ? opciones.icono : undefined;
@@ -152,7 +155,9 @@
       opciones.map = $this.data('gmap');
 
       var m = new google.maps.Marker(opciones);
-
+      
+      this._marcadores[opciones.nombre] = m;
+      
       google.maps.event.addListener(m, 'click', function() {
         if (! opciones.contenido) {
           return;
@@ -169,7 +174,12 @@
      * Quita un marcador del mapa basado en el nombre
      **/
     this.quitarMarcador = function(nombre){
-      store.rm('marker',[nombre]);
+      var _this = this;
+      if (this._marcadores[nombre] !== undefined ) {
+        console.log('b');
+        this._marcadores[nombre].setMap( null );
+        delete this._marcadores[nombre];
+      }
     }
 
     /**
