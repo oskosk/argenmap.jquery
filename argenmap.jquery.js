@@ -147,42 +147,6 @@
     }
   }
 
-  /**
-   * identify object from object list or parameters list : [ objectName:{data} ] or [ otherObject:{}, ] or [ object properties ]
-   * nb: include, exclude in lowercase
-   **/
-  function getObject(name, todo, include, exclude) {
-    var iname = ikey(todo, name),
-      i, result = {}, keys = ['map'];
-    // incluyo la  callback de un nivel más alto
-    result['callback'] = ival(todo, 'callback');
-    include = array(include);
-    exclude = array(exclude);
-
-    if (iname) {
-      return extractObject(todo[iname], include, result);
-    }
-    
-    if (exclude && exclude.length) {
-      for (i = 0; i < exclude.length; i++) {
-        keys.push(exclude[i]);
-      }
-    }
-    
-    if (!hasKey(todo, keys)) {
-      result = extractObject(todo, include, result);
-    }
-    
-    // inicio las properties q faltan
-    for (i = 0; i < _properties.length; i++) {
-      if (_properties[i] in result) {
-        continue;
-      }
-      result[_properties[i]] = {};
-    }
-    return result;
-  }
-
   //-----------------------------------------------------------------------//
   // herramientas de unidades
   //-----------------------------------------------------------------------//
