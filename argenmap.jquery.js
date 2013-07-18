@@ -973,24 +973,6 @@
       this._end();
     }
 
-
-    /**
-     * set a streetview to a map
-     **/
-    this.setstreetview = function (todo) {
-      var panorama,
-        o = getObject('streetview', todo, 'id');
-      if (o.opciones.position) {
-        o.opciones.position = toLatLng(o.opciones.position);
-      }
-      panorama = new _default.classes.StreetViewPanorama(document.getElementById(o.id), o.opciones);
-      if (panorama) {
-        map.setStreetView(panorama);
-      }
-      this._manageEnd(panorama, o);
-    }
-
-    
     /**
      * add a traffic layer to a map
      **/
