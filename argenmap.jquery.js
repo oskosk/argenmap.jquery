@@ -224,294 +224,7 @@
 
   };
 
-  //-----------------------------------------------------------------------//
-  // jQuery plugin
-  //-----------------------------------------------------------------------//
-
-  $.fn.argenmap = function () {
-    var i, args, list = [],
-      empty = true,
-      results = [];
-
-
-    if ($.isEmptyObject(_default)) {
-      _default = {
-        
-        unit: 'km',
-        init: {
-          mapTypeId: 'Mapa IGN',
-          center: [-34, -59],
-          zoom: 5
-        },
-      };
-    }
-
-    // store all arguments in a todo list 
-    for (i = 0; i < arguments.length; i++) {
-      args = arguments[i] || {};
-      // resolve string todo - action without parameters can be simplified as string 
-      if (typeof (args) === 'string') {
-        args = {
-          accion: args
-        };
-      }
-      list.push(args);
-    }
-    // resolve empty call - run init
-    if (!list.length) {
-      list.push({});
-    }
-    // loop on each jQuery object
-    $.each(this, function () {
-      var $this = $(this),
-        _argenmap = $this.data('argenmap');
-      empty = false;
-      if (!_argenmap) {
-        _argenmap = new Argenmap($this);
-        $this.data('argenmap', _argenmap);
-        _argenmap.init(list);
-      }
-
-    });
-    // return for direct call (only) 
-    if (results.length) {
-      if (results.length === 1) { // 1 css selector
-        return results[0];
-      } else {
-        return results;
-      }
-    }
-
-    return this;
-  }
-
-  $.fn.agregarCapaBaseWMS = function (opciones) {
-    //chainability
-    return this.each(function () {
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) return;
-
-      var map = $this.data('gmap');
-
-      argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseWMS({
-        name: opciones.nombre,
-        baseURL: opciones.url,
-        layers: opciones.capas
-      }));
-    });
-  }
-
-  $.fn.agregarCapaBaseTMS = function (opciones) {
-    //chainability
-    return this.each(function () {
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) return;
-
-      var map = $this.data('gmap');
-
-      argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseTMS({
-        name: opciones.nombre,
-        baseURL: opciones.url,
-        layers: opciones.capas
-      }));
-    });
-  }
-
-  $.fn.agregarCapaWMS = function (opciones) {
-    //chainability
-    return this.each(function () {
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) return;
-
-      var map = $this.data('gmap');
-
-      argenmap.GmapAgregarCapa(map, new argenmap.CapaWMS({
-        name: opciones.nombre,
-        baseURL: opciones.url,
-        layers: opciones.capas
-      }));
-    });
-  }
-
-  $.fn.agregarCapaTMS = function (opciones) {
-    //chainability
-    return this.each(function () {
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) return;
-
-      var map = $this.data('gmap');
-
-      argenmap.GmapAgregarCapaTMS(map, new argenmap.CapaTMS({
-        name: opciones.nombre,
-        baseURL: opciones.url,
-        layers: opciones.capas
-      }));
-    });
-  }
-
-  $.fn.agregarCapaKML = function (opciones) {
-    //chainability
-    return this.each(function () {
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) return;
-      a.agregarCapaKML( opciones );
-    });
-  }
-
-  $.fn.centro = function (lat, lng) {
-    //getter
-    //el getter/lector solo devuelve la primer coincidencia de selector
-    if (arguments.length === 0) {
-      if (!this.data('argenmap')) return [];
-
-      var ctro = this.data('gmap').getCenter();
-      return ctro ? [ctro.lat(), ctro.lng()] : [];
-    }
-    //setter
-    return this.each(function () {
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) return;
-
-      $this.data('gmap').setCenter(new google.maps.LatLng(lat, lng));
-    });
-  }
-
-  $.fn.zoom = function (zoom) {
-    if (undefined == zoom) {
-      if (!this.data('argenmap')) return null;
-      var z = this.data('gmap').getZoom();
-      return z ? z : null;
-    }
-    return this.each(function () {
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a || !$.isNumeric(zoom)) return;
-
-      $this.data('gmap').setZoom(zoom);
-    });
-  }
-
-  $.fn.capaBase = function (nombre) {
-    if (undefined == nombre) {
-      if (!this.data('argenmap')) {
-        return null;
-      }
-      var z = this.data('gmap').mapTypeId;
-      return z ? z : null;
-    }
-    return this.each(function () {
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) {
-        return;
-      }
-
-      $this.data('gmap').setMapTypeId(nombre);
-    });
-  }
-
-  /**
-   * Agrega un marcador al mapa instanciado en el selector
-   * agregarMarcador(float,float)
-   * agregarMarcador(objeto): {lonlat:OpenLayers.LonLat} ó {lon:float,lat:float}
-   * agregarMarcador(string): "-35,-57"
-   * Opciones:
-   *   capa: string, nombre de la capa donde colocar el marcador
-   *   contenido: string/HTML, contenido descriptivo del marcador
-   *   nombre: string
-   *   eventos: TO DO
-   *   cuadro: objeto con opciones de cuadro (ver agregarCuadro)
-   */
-  $.fn.agregarMarcador = function (opciones, lon) {
-    var _arguments = arguments;
-
-    return this.each(function () {
-      var o = $.extend({icono:null,nombre:'Marcador'}, opciones);
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) return;
-      if (_arguments.length == 0) {
-        o.lat = $this.data('gmap').getCenter().lat();
-        o.lng = $this.data('gmap').getCenter().lng();
-      }else if(_arguments.length == 2 && $.isNumeric(_arguments[0]) && $.isNumeric(_arguments[1])) {
-        //llamada simple con 2 argumentos lat y lon
-        o.lat = _arguments[0];
-        o.lng = _arguments[1];
-      }
-      //compatibilidad entre lng, lon y long
-      if(o.hasOwnProperty("long")) {
-        //long es un reserved de JS, closure no puede manejarlo
-        o.lng = o["long"];
-      }else if(o.hasOwnProperty("lon")) {
-        o.lng = o.lon;
-      }else if(o.hasOwnProperty("lat") && typeof(o.lat) == "function"){
-        //el argument es un google.maps.LatLng
-        o.lat = o.lat();
-        o.lng = o.lng();
-      }
-      a.agregarMarcador(o);
-
-
-    });
-  }
-
-  $.fn.agregarMarcadores = function (marcadores) {
-    return this.each(function () {
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) {
-        return;
-      }
-      $.each(marcadores, function (i, v) {
-        $this.agregarMarcador(v);
-      });
-    });
-  }
-
-  $.fn.limpiarMapa = function (marcadores) {
-
-    return this.each(function () {
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) {
-        return;
-      }
-      $this.argenmap({
-        accion: 'limpiar'
-      });
-
-    });
-
-  }
-  $.fn.quitarMarcador = function(nombre) {
-    var _nombre = nombre;
-    return this.each(function(i,e){
-      if(typeof(_nombre) !== 'string') return;
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) return;
-      a.quitarMarcador(_nombre);
-    });
-  }
-  $.fn.modificarMarcador = function(nombre, opciones) {
-    var _nombre = nombre;
-    var _opciones = opciones;
-    return this.each(function(i,e){
-      if(typeof(_nombre) !== 'string') return;
-      if(_opciones === undefined || typeof(_opciones) !== 'object') return;
-      var $this = $(this);
-      var a = $this.data('argenmap');
-      if (!a) return;
-      a.modificarMarcador(_nombre,_opciones);
-    });
-  }
-  var argenmap = argenmap || {};
+ var argenmap = argenmap || {};
 
   argenmap.BASEURL = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
 
@@ -1109,5 +822,295 @@
       clearInterval(interval);
     }
   };
+
+
+  //-----------------------------------------------------------------------//
+  // jQuery plugin
+  //-----------------------------------------------------------------------//
+
+  $.fn.argenmap = function () {
+    var i, args, list = [],
+      empty = true,
+      results = [];
+
+
+    if ($.isEmptyObject(_default)) {
+      _default = {
+        
+        unit: 'km',
+        init: {
+          mapTypeId: 'Mapa IGN',
+          center: [-34, -59],
+          zoom: 5
+        },
+      };
+    }
+
+    // store all arguments in a todo list 
+    for (i = 0; i < arguments.length; i++) {
+      args = arguments[i] || {};
+      // resolve string todo - action without parameters can be simplified as string 
+      if (typeof (args) === 'string') {
+        args = {
+          accion: args
+        };
+      }
+      list.push(args);
+    }
+    // resolve empty call - run init
+    if (!list.length) {
+      list.push({});
+    }
+    // loop on each jQuery object
+    $.each(this, function () {
+      var $this = $(this),
+        _argenmap = $this.data('argenmap');
+      empty = false;
+      if (!_argenmap) {
+        _argenmap = new Argenmap($this);
+        $this.data('argenmap', _argenmap);
+        _argenmap.init(list);
+      }
+
+    });
+    // return for direct call (only) 
+    if (results.length) {
+      if (results.length === 1) { // 1 css selector
+        return results[0];
+      } else {
+        return results;
+      }
+    }
+
+    return this;
+  }
+
+  $.fn.agregarCapaBaseWMS = function (opciones) {
+    //chainability
+    return this.each(function () {
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) return;
+
+      var map = $this.data('gmap');
+
+      argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseWMS({
+        name: opciones.nombre,
+        baseURL: opciones.url,
+        layers: opciones.capas
+      }));
+    });
+  }
+
+  $.fn.agregarCapaBaseTMS = function (opciones) {
+    //chainability
+    return this.each(function () {
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) return;
+
+      var map = $this.data('gmap');
+
+      argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseTMS({
+        name: opciones.nombre,
+        baseURL: opciones.url,
+        layers: opciones.capas
+      }));
+    });
+  }
+
+  $.fn.agregarCapaWMS = function (opciones) {
+    //chainability
+    return this.each(function () {
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) return;
+
+      var map = $this.data('gmap');
+
+      argenmap.GmapAgregarCapa(map, new argenmap.CapaWMS({
+        name: opciones.nombre,
+        baseURL: opciones.url,
+        layers: opciones.capas
+      }));
+    });
+  }
+
+  $.fn.agregarCapaTMS = function (opciones) {
+    //chainability
+    return this.each(function () {
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) return;
+
+      var map = $this.data('gmap');
+
+      argenmap.GmapAgregarCapaTMS(map, new argenmap.CapaTMS({
+        name: opciones.nombre,
+        baseURL: opciones.url,
+        layers: opciones.capas
+      }));
+    });
+  }
+
+  $.fn.agregarCapaKML = function (opciones) {
+    //chainability
+    return this.each(function () {
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) return;
+      a.agregarCapaKML( opciones );
+    });
+  }
+
+  $.fn.centro = function (lat, lng) {
+    //getter
+    //el getter/lector solo devuelve la primer coincidencia de selector
+    if (arguments.length === 0) {
+      if (!this.data('argenmap')) return [];
+
+      var ctro = this.data('gmap').getCenter();
+      return ctro ? [ctro.lat(), ctro.lng()] : [];
+    }
+    //setter
+    return this.each(function () {
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) return;
+
+      $this.data('gmap').setCenter(new google.maps.LatLng(lat, lng));
+    });
+  }
+
+  $.fn.zoom = function (zoom) {
+    if (undefined == zoom) {
+      if (!this.data('argenmap')) return null;
+      var z = this.data('gmap').getZoom();
+      return z ? z : null;
+    }
+    return this.each(function () {
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a || !$.isNumeric(zoom)) return;
+
+      $this.data('gmap').setZoom(zoom);
+    });
+  }
+
+  $.fn.capaBase = function (nombre) {
+    if (undefined == nombre) {
+      if (!this.data('argenmap')) {
+        return null;
+      }
+      var z = this.data('gmap').mapTypeId;
+      return z ? z : null;
+    }
+    return this.each(function () {
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) {
+        return;
+      }
+
+      $this.data('gmap').setMapTypeId(nombre);
+    });
+  }
+
+  /**
+   * Agrega un marcador al mapa instanciado en el selector
+   * agregarMarcador(float,float)
+   * agregarMarcador(objeto): {lonlat:OpenLayers.LonLat} ó {lon:float,lat:float}
+   * agregarMarcador(string): "-35,-57"
+   * Opciones:
+   *   capa: string, nombre de la capa donde colocar el marcador
+   *   contenido: string/HTML, contenido descriptivo del marcador
+   *   nombre: string
+   *   eventos: TO DO
+   *   cuadro: objeto con opciones de cuadro (ver agregarCuadro)
+   */
+  $.fn.agregarMarcador = function (opciones, lon) {
+    var _arguments = arguments;
+
+    return this.each(function () {
+      var o = $.extend({icono:null,nombre:'Marcador'}, opciones);
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) return;
+      if (_arguments.length == 0) {
+        o.lat = $this.data('gmap').getCenter().lat();
+        o.lng = $this.data('gmap').getCenter().lng();
+      }else if(_arguments.length == 2 && $.isNumeric(_arguments[0]) && $.isNumeric(_arguments[1])) {
+        //llamada simple con 2 argumentos lat y lon
+        o.lat = _arguments[0];
+        o.lng = _arguments[1];
+      }
+      //compatibilidad entre lng, lon y long
+      if(o.hasOwnProperty("long")) {
+        //long es un reserved de JS, closure no puede manejarlo
+        o.lng = o["long"];
+      }else if(o.hasOwnProperty("lon")) {
+        o.lng = o.lon;
+      }else if(o.hasOwnProperty("lat") && typeof(o.lat) == "function"){
+        //el argument es un google.maps.LatLng
+        o.lat = o.lat();
+        o.lng = o.lng();
+      }
+      a.agregarMarcador(o);
+
+
+    });
+  }
+
+  $.fn.agregarMarcadores = function (marcadores) {
+    return this.each(function () {
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) {
+        return;
+      }
+      $.each(marcadores, function (i, v) {
+        $this.agregarMarcador(v);
+      });
+    });
+  }
+
+  $.fn.limpiarMapa = function (marcadores) {
+
+    return this.each(function () {
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) {
+        return;
+      }
+      $this.argenmap({
+        accion: 'limpiar'
+      });
+
+    });
+
+  }
+  $.fn.quitarMarcador = function(nombre) {
+    var _nombre = nombre;
+    return this.each(function(i,e){
+      if(typeof(_nombre) !== 'string') return;
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) return;
+      a.quitarMarcador(_nombre);
+    });
+  }
+  $.fn.modificarMarcador = function(nombre, opciones) {
+    var _nombre = nombre;
+    var _opciones = opciones;
+    return this.each(function(i,e){
+      if(typeof(_nombre) !== 'string') return;
+      if(_opciones === undefined || typeof(_opciones) !== 'object') return;
+      var $this = $(this);
+      var a = $this.data('argenmap');
+      if (!a) return;
+      a.modificarMarcador(_nombre,_opciones);
+    });
+  }
+ 
 
 })(jQuery);
