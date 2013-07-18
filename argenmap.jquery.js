@@ -649,7 +649,8 @@
 
     var mapFooter_ = $('<div class="argenmapMapFooter" />').css({
       'font-family': 'Arial',
-      'background-color': '#003964',
+      'background-color': '#1C74A5',
+      'box-shadow': '0 0 11px rgb(5, 66, 100) inset',
       'font-size': '10px',
       'text-align': 'right',
       'height': '30px',
