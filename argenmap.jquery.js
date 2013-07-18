@@ -768,13 +768,13 @@
 
     if ($.isEmptyObject(_default)) {
       _default = {
-        
+
         unit: 'km',
         init: {
           mapTypeId: 'Mapa IGN',
           center: [-34, -59],
           zoom: 5
-        },
+        }
       };
     }
 
@@ -998,7 +998,7 @@
       //compatibilidad entre lng, lon y long
       if(o.hasOwnProperty("long")) {
         //long es un reserved de JS, closure no puede manejarlo
-        o.lng = o.long;
+        o.lng = o['long'];
       }else if(o.hasOwnProperty("lon")) {
         o.lng = o.lon;
       }else if(o.hasOwnProperty("lat") && typeof(o.lat) === "function"){
