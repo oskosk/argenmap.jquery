@@ -56,11 +56,7 @@
   /*                           GLOBALS de Argenmap                                 */
   /***************************************************************************/
 
-  var _default = {},
-    _properties = ['events', 'onces', 'opciones', 'apply', 'callback', 'data', 'tag'],
-    _noInit = ['init', 'geolatlng', 'getlatlng', 'getroute', 'getelevation', 'getdistance', 'addstyledmap', 'setdefault', 'destroy'],
-    _directs = ['get'],
-    geocoder = directionsService = elevationService = maxZoomService = distanceMatrixService = null;
+  var _default = {};
 
 
 
@@ -78,48 +74,6 @@
       running = false;
 
   
-
-    /**
-     * attach an event to a sender 
-     **/
-    this._attachEvent = function (sender, name, fnc, data, once) {
-      google.maps.event['addListener' + (once ? 'Once' : '')](sender, name, function (event) {
-        fnc.apply($this, [sender, event, data]);
-      });
-    }
-
-    /**
-     * attach events from a container to a sender 
-     * todo[
-     *  events => { eventName => function, }
-     *  onces  => { eventName => function, }  
-     *  data   => mixed data         
-     * ]
-     **/
-    this._attachEvents = function (sender, todo) {
-      var name;
-      if (!todo) {
-        return
-      }
-      if (todo.events) {
-        for (name in todo.events) {
-          if (typeof (todo.events[name]) === 'function') {
-            this._attachEvent(sender, name, todo.events[name], todo.data, false);
-          }
-        }
-      }
-      if (todo.onces) {
-        for (name in todo.onces) {
-          if (typeof (todo.onces[name]) === 'function') {
-            this._attachEvent(sender, name, todo.onces[name], todo.data, true);
-          }
-        }
-      }
-    }
-
-
-
-
     //-----------------------------------------------------------------------//
     // funciones de Argenmap
     //-----------------------------------------------------------------------//
