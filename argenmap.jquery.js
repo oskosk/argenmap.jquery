@@ -973,19 +973,6 @@
       this._end();
     }
 
-    /**
-     * add a traffic layer to a map
-     **/
-    this.addtrafficlayer = function (todo) {
-      var o = getObject('trafficlayer', todo),
-        tl = store.get('trafficlayer');
-      if (!tl) {
-        tl = new _default.classes.TrafficLayer();
-        tl.setMap(map);
-        store.add('trafficlayer', tl, o);
-      }
-      this._manageEnd(tl, o);
-    }
 
     /**
      * add a bicycling layer to a map
