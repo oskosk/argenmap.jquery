@@ -246,7 +246,6 @@
 
     if ($.isEmptyObject(_default)) {
       _default = {
-        verbose: true,
         queryLimit: {
           attempt: 5,
           delay: 250,
