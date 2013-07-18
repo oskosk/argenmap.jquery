@@ -539,35 +539,7 @@
       }
     }
 
-    /**
-     * execute ending functions 
-     **/
-    this._manageEnd = function (result, todo, internal) {
-      var i, apply;
-      if (result && (typeof (result) === 'object')) {
-        // colgar eventos
-        this._attachEvents(result, todo);
-        // ejecutar "apply"
-        if (todo.apply && todo.apply.length) {
-          for (i = 0; i < todo.apply.length; i++) {
-            apply = todo.apply[i];
-            // necesita una función de "accion" en el objeto resultante
-            if (!apply.action || (typeof (result[apply.action]) !== 'function')) {
-              continue;
-            }
-            if (apply.args) {
-              result[apply.action].apply(result, apply.args);
-            } else {
-              result[apply.action]();
-            }
-          }
-        }
-      }
-      if (!internal) {
-        this._callback(result, todo);
-        this._end();
-      }
-    }
+
 
     //-----------------------------------------------------------------------//
     // funciones de Argenmap
