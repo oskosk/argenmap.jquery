@@ -574,24 +574,6 @@
     //-----------------------------------------------------------------------//
 
     /**
-     * destroy an existing instance
-     **/
-    this.destroy = function (todo) {
-      var k;
-      store.clear();
-      $this.empty();
-      for (k in styles) {
-        delete styles[k];
-      }
-      styles = {};
-      if (map) {
-        delete map;
-      }
-      this._callback(null, todo);
-      this._end();
-    }
-
-    /**
      * Initialize google.maps.Map object
      **/
     this.init = function (opciones) {
