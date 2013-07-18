@@ -975,21 +975,6 @@
 
 
     /**
-     * remove objects from a map
-     **/
-    this.clear = function (todo) {
-      var list = array(ival(todo, 'list') || ival(todo, 'name')),
-        last = ival(todo, 'last', false),
-        first = ival(todo, 'first', false),
-        tag = ival(todo, 'tag');
-      if (tag !== undefined) {
-        tag = array(tag);
-      }
-      store.clear(list, last, first, tag);
-      this._end();
-    }
-
-    /**
      * return objects previously created
      **/
     this.get = function (todo) {
