@@ -973,24 +973,6 @@
       this._end();
     }
 
-    /**
-     * set directions on a map (create Direction Renderer if needed)
-     **/
-    this.setdirections = function (todo) {
-      var dr = store.get('directionrenderer'),
-        o = getObject('directions', todo);
-      if (todo) {
-        o.opciones.directions = todo.directions ? todo.directions : (todo.opciones && todo.opciones.directions ? todo.opciones.directions : null);
-      }
-      if (o.opciones.directions) {
-        if (!dr) {
-          dr = this.adddirectionsrenderer(o, true);
-        } else {
-          dr.setDirections(o.opciones.directions);
-        }
-      }
-      this._manageEnd(dr, o);
-    }
 
     /**
      * set a streetview to a map
