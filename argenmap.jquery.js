@@ -275,45 +275,6 @@
   }
 
   //-----------------------------------------------------------------------//
-  // herramientas de Servicios
-  //-----------------------------------------------------------------------//
-
-  function getGeocoder() {
-    if (!geocoder) {
-      geocoder = new google.maps.Geocoder();
-    }
-    return geocoder;
-  }
-
-  function getDirectionsService() {
-    if (!directionsService) {
-      directionsService = new google.maps.DirectionsService();
-    }
-    return directionsService;
-  }
-
-  function getElevationService() {
-    if (!elevationService) {
-      elevationService = new google.maps.ElevationService();
-    }
-    return elevationService;
-  }
-
-  function getMaxZoomService() {
-    if (!maxZoomService) {
-      maxZoomService = new google.maps.MaxZoomService();
-    }
-    return maxZoomService;
-  }
-
-  function getDistanceMatrixService() {
-    if (!distanceMatrixService) {
-      distanceMatrixService = new google.maps.DistanceMatrixService();
-    }
-    return distanceMatrixService;
-  }
-
-  //-----------------------------------------------------------------------//
   // herramientas de unidades
   //-----------------------------------------------------------------------//
 
