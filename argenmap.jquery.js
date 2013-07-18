@@ -973,22 +973,6 @@
       this._end();
     }
 
-
-    /**
-     * add a ground overlay to a map
-     **/
-    this.addgroundoverlay = function (todo) {
-      var ov,
-        o = getObject('groundoverlay', todo, ['bounds', 'url']);
-      o.bounds = toLatLngBounds(o.bounds);
-      if (o.bounds && (typeof (o.url) === 'string')) {
-        ov = new _default.classes.GroundOverlay(o.url, o.bounds);
-        ov.setMap(map);
-        store.add('groundoverlay', ov, o);
-      }
-      this._manageEnd(ov, o);
-    }
-
     /**
      * geolocalise the user and return a LatLng
      **/
