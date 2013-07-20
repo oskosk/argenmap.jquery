@@ -62,8 +62,8 @@
   var _defaults = {
     unit: 'km',
     zoom: 5,
-    mapTypeControl:true,
-  
+    mapTypeControl: true,
+
     center: {
       lat: -34,
       lng: -59
@@ -99,7 +99,8 @@
         //Kludge pa que no muestre el tipito de streetView
       _this.opts.streetViewControl = false;
         //Kludge pa que muestre escala gráfica
-        // Las escalas cartográficas en la web son BULLSHIT!
+        // Las escalas cartográficas en la web son BS!
+        // http://www.youtube.com/watch?v=c4psKYpfnYs
       _this.opts.scaleControl = true;
         //Preparo el div para que chapee el IGN
         // El div q aloja el mapa está rodeado
