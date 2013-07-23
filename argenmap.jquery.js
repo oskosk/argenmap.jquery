@@ -1004,13 +1004,11 @@
 
     return this.each(function () {
       var o = $.extend({}, opciones);
-
       var a = $(this).data('argenmap');
       if (!a) {
         return;
       }
-      console.log(opciones);
-      console.log('wa');
+
       if (_arguments.length === 0) {
         o.lat = $(this).data('gmap').getCenter().lat();
         o.lng = $(this).data('gmap').getCenter().lng();
@@ -1034,12 +1032,13 @@
 
   $.fn.agregarMarcadores = function (marcadores) {
     return this.each(function () {
+      var _this = this;
       var a = $(this).data('argenmap');
       if (!a) {
         return;
       }
       $(marcadores).each( function (i, v) {
-        $(this).agregarMarcador(v);
+        $(_this).agregarMarcador(v);
       });
     });
   };
