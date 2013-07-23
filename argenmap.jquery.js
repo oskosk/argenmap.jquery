@@ -999,22 +999,21 @@
    *   eventos: TO DO
    *   cuadro: objeto con opciones de cuadro (ver agregarCuadro)
    */
-  $.fn.agregarMarcador = function (opciones, lon) {
+  $.fn.agregarMarcador = function (opciones) {
     var _arguments = arguments;
 
     return this.each(function () {
       var o = $.extend({}, opciones);
+
       var a = $(this).data('argenmap');
       if (!a) {
         return;
       }
+      console.log(opciones);
+      console.log('wa');
       if (_arguments.length === 0) {
         o.lat = $(this).data('gmap').getCenter().lat();
         o.lng = $(this).data('gmap').getCenter().lng();
-      }else if(_arguments.length === 2 && $.isNumeric(_arguments[0]) && $.isNumeric(_arguments[1])) {
-        //llamada simple con 2 argumentos lat y lon
-        o.lat = _arguments[0];
-        o.lng = _arguments[1];
       }
       //compatibilidad entre lng, lon y long
       if(o.hasOwnProperty("long")) {
@@ -1039,7 +1038,7 @@
       if (!a) {
         return;
       }
-      $.each(marcadores, function (i, v) {
+      $(marcadores).each( function (i, v) {
         $(this).agregarMarcador(v);
       });
     });
