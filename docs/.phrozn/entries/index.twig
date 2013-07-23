@@ -1,0 +1,160 @@
+layout: default.twig
+---
+<div class="content">
+    <div class="page-header" style="margin-top:-20px">
+        <h1>argenmap <small>Un plugin de
+              <a href="http://es.wikipedia.org/wiki/JQuery" target="_blank">jQuery</a>
+              para poner un mapa de Argentina en tu web.</small>
+        </h1>
+    </div>    
+    <div class="row">
+      <div class="span8">
+            
+        <div id="mapa" style="height:315px;border:1px dashed #222"></div>    
+      </div><!--span8-->
+      <div class="span4">
+        <p class="lead" style="text-align:left;font-size:30px;line-height:31px;font-family:Georgia, serif;letter-spacing:-0.03em">
+          Así se puede ver un mapa de Argentina, con los datos del <a target="_blank" href="http://www.ign.gob.ar">Instituto Geográfico Nacional</a> en tu sitio. 
+        </p>
+        <p>
+            Mirá <a href="ejemplos/mapasimple.html" target="_blank">este ejemplo en una página aparte &raquo;</a> <em>(mapasimple.html)</em>.
+        </p>
+      </div><!--span4-->
+      <script type="text/javascript">
+          $(function () {
+              $('#mapa').argenmap() ;
+          });
+      </script>
+    </div> <!--row-->
+    <div class="row">
+      <div class="span4">
+        <h3>Audiencia</h3>
+        <p>
+          Esta sección está diseñada para gente familiarizada con el lenguaje de programación <a href="" target="_blank">Javascript</a>
+          y con la librería <a href="http://jquery.com/" target="_blank">jQuery</a>.
+
+        </p>
+        <p>
+            <a class="btn btn-success" href="mapabasico.html">Cómo usar un mapa en tu sitio &raquo;</a>.
+        </p>
+      </div><!--span4-->
+      <div class="span4">
+        <h3>Requerimientos</h3>
+        <ul>
+          <li>argenmap.jquery necesita tanto la librería jQuery como la librería de Google Maps API.</li>
+          <li>La versión mínima de jQuery que necesita es 1.7.2 pero se recomienda la última versión.</li>
+        </ul>
+      </div><!--span4-->
+      <div class="span4">
+        <h3>Cómo empezar</h3>
+        <p>
+            La guía para usuarios describe argenmap con ejemplos, detalles y la explicación de sus características tanto para programadores como para diseñadores web y usuarios del mapa.
+        </p>
+        <p>
+                <a class="btn btn-info" href="guia.html">Guía para usuarios »</a>
+        </p>
+      </div><!--span4-->      
+    </div><!--row-->
+    <hr/>
+    <section id="mapaBasico">
+    <h2>Cómo usar un mapa en tu sitio</h2>
+        <div class="row-fluid">
+            <div class="span4">
+            </div><!--span4-->
+            <div class="span8">
+                <ul class="lead">
+                    <li>
+                        Es recomendable seguir el <a href="mapabasico.html">tutorial paso a paso para usar un mapa en tu sitio</a> si ya conocés Google Maps y jQuery.
+                    </li>
+                </ul>
+            </div><!--span12-->
+        </div><!--row-fluid-->
+    </section>        
+    <section id="datosvectoriales">
+    <hr/>        
+        <h2>Datos vectoriales del mapa</h2>        
+        <div class="row-fluid">
+            <div class="span4">
+                <p class="lead"> 
+                Argenmap es un sistema de información geográfica con datos de origen mixto.
+                </p>
+            </div><!--span4-->
+            <div class="span8">
+                <ul class="lead">
+                    <li>Podés leer más acerca de <a href="datosdelmapa.html">los datos que muestra un mapa hecho con argenmap.jquery</a>.</li>
+                </ul>                
+            </div><!--span12-->
+        </div><!--row-fluid-->
+              <div class="row">
+        <div class="span12"> 
+          
+        
+          <ul class="thumbnails">
+            
+            <li class="span4">
+              <div class="thumbnail hover about-profile"><img src="media/img/argenmap.jpg" alt="Pic" class="img-circle" />
+                <h3>IGN  <span>Argentina</span></h3>
+                <h5>Datos oficiales de la República Argentina</h5>
+
+              </div>
+            </li>
+            
+            <li class="span4">
+              <div class="thumbnail hover about-profile"><img src="media/img/osmar.jpg" alt="Pic" class="img-circle" />
+                <h3>OpenStreetMap </h3>
+                <h5>Datos Libres del proyecto OpenStreetMap</h5>
+              </div>
+            </li>
+            
+            <li class="span4">
+              <div class="thumbnail hover about-profile"><img src="media/img/gsatellite.jpg" alt="Pic" class="img-circle" />
+                <h3>Google <span>Satellite</span></h3>
+                <h5>imágenes de satélite provistas por Google</h5>
+              </div>
+            </li>
+            
+          </ul>
+        </div><!--span12-->
+    </div><!--row-->
+    </section>
+    <hr/>
+    <section id="">    
+        <h4>Más acerca de argenmap.jquery</h4>    
+        <div class="row-fluid">
+            <div class="span12">
+              <p class="lead">Si querés saber más acerca de argenmap.jquery, consultá la <a href="guia.html">Guía de argenmap</a>
+              </p>
+              <ul>
+                <li>Podés leer más acerca de <a href="#datosvectoriales">los datos que muestra un mapa hecho con argenmap.jquery</a>.</li>
+                <li>Si no sos programador ni diseñador web, podés ver los <a href="caracteristicas.html#estructuradelmapa">detalles de la estructura del mapa</a>.</li>
+                <li>Y si argenmap.jquery no te sirve, siempre podés contar con el WMS del IGN en <a href="http://wms.ign.gob.ar/geoserver/wms" target="_blank">http://wms.ign.gob.ar/geoserver/wms</a>.</li>
+              </ul>
+            </div><!--span12-->
+            <div class="fb-comments" data-href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs#mapaBasico" data-width="600" data-num-posts="10"></div>        
+        </div><!--row-->
+    
+    </section>
+    <hr/>
+    <section id="contribuyen">
+        <h4>Contribuyen a argenmap</h4>        
+        <div class="row">
+
+          <div class="span4">
+
+            <p>
+              Entre los que hacemos argenmap, algunos programamos, otros damos una mano con la documentación y otros le ponemos el ojo geográfico a la capa base.
+
+            </p>
+          </div><!--span4-->
+          <div class="span8">
+            <a href="https://github.com/oskosk"><img style="height:52px;width:52px;margin:5px" src="https://secure.gravatar.com/avatar/5e1a8fd2bbd05c5cc3dec35e05d888c2?s=420&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" alt="Imagen de Oscar López"/></a>
+            <a href="https://github.com/cgastrell"><img style="height:52px;width:52px;margin:5px" src="https://secure.gravatar.com/avatar/5eeed1a8b1d5aa7e93e3d5333acdf4db?s=420&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" alt="Imagen de Christian Gastrell"/></a>
+            <a href="https://github.com/droson"><img style="height:52px;width:52px;margin:5px" src="https://lh4.googleusercontent.com/-N20DVwx9uBE/AAAAAAAAAAI/AAAAAAAAE60/4lBY6lBZr48/s80-c-k-no/photo.jpg" alt="Imagen de Diego Rosón"/></a>
+            <a href="https://github.com/tmarcote"><img style="height:52px;width:52px;margin:5px" src="https://secure.gravatar.com/avatar/5795003de610d5dfd27fff08b519c716?s=420&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" alt="Imagen de Diego Rosón" alt="Imagen de Tomás Marcote"/></a>
+            <a href="https://github.com/dul"><img style="height:52px;width:52px;margin:5px" src="https://lh6.googleusercontent.com/-PQi7s2D35Pw/AAAAAAAAAAI/AAAAAAAAAAA/F9zh4iZjLcM/s120-c/photo.jpg" alt="Imagen de Diego Rosón" alt="Imagen de Dulce Lauría"/></a>
+          </div><!--span8-->      
+        </div><!--row-->        
+    </section>
+
+
+</div>

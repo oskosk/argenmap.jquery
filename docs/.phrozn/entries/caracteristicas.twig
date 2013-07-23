@@ -1,0 +1,147 @@
+<div class="content">
+<section id="caracteristicas">
+    <div class="row-fluid">
+        <div class="span12">
+            <h3>¿Qué es argenmap?</h3>
+            <p><strong>argenmap</strong> es un servicio web. Es una librería de programación basada en jQuery que permite incluir fácilmente un mapa de Argentina en un sitio web.</p>
+            <p>Este servicio está integrado por un componente javascript (<em>argenmap.jquery</em>) y un backend que sirve los mapas base del IGN. Las tiles del servicio están distribuídas en más de un servidor
+            (<em>nodos</em>) que obtienen las imágenes del servidor OGC del Instituto Geográfico Nacional.</p>
+        </div><!--span12-->
+    </div><!--row-fluid-->
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h3>¿Qué es argenmap.jquery?</h3>            
+            <p><strong>argenmap.jquery</strong> es un plugin para jQuery que permite combinar los
+                mapas web del <a href="http://www.ign.gob.ar" target="_blank">Instituto Geográfico Nacional</a> y <a href="http://www.openstreetmap.org" target="_blank">OpenStreetMap</a> con <a href="http://developers.google.com/maps/documentation/javascript/?hl=es" target="_blank">Google Maps API</a>. De esta manera, podés poner en tu sitio
+                un mapa de Argentina con los datos oficiales del IGN sobre las
+                imágenes satelitales de google.</p>
+        </div><!--span12-->
+    </div><!--row-fluid-->
+    <hr/>
+    
+    <div class="row-fluid">
+        <div class="span12">                
+            <h4>Características<small> de argenmap.jquery</small></h4>
+            <ul>
+              <li><strong>Es multi instancia.</strong> Podés usar varios mapas en la misma página.</li>
+              <li><strong>Es un plugin de jQuery encadenable.</strong> Podés utilizar argenmap.jquery encadenando llamadas, como cualquier plugin de jQuery <code>$('#mapa').show().argenmap()</code>.</li>
+
+              <li><strong>argenmap.jquery usa el servicio WMS del Instituto Geográfico Nacional.</strong> Acerca el servicio WMS del
+                IGN</a>
+                a los diseñadores de páginas de instituciones públicas y permite ampliar
+                la presencia de los mapas nacionales en la web.</li>
+              <li><strong>Acceso completo a la API de Google Maps.</strong> Aunque argenmap simplifica el uso de mapas en web con datos
+                oficiales, también permite el acceso a la API de Google Maps
+                nativamente. <em>Este ejemplo muestra cómo centrar el mapa en la latitud -34 y
+                    longitud -59 accediendo al objeto
+                    <a href="https://developers.google.com/maps/documentation/javascript/reference#Map" target="_blank">google.maps.Map</a>
+                    que utiliza argenmap.jquery internamente.</em>
+                </li>
+            </ul>
+        </div><!--span12-->
+    </div><!--row-->
+        <pre class="prettyprint linenums">
+var map = $('#mapa').data('gmap');
+// Ahora map es el objeto google.maps.Map 
+map.setCenter( new google.maps.LatLng(-34,-59) );
+        </pre>
+  <div class="fb-comments" data-href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs#caracteristicas" data-width="600" data-num-posts="10"></div>
+</section>
+<section id="comofunciona">
+  <h4>Cómo funciona argenmap.jquery v1</h4>
+  <p>
+    Para los programadores que ya conocen Google Maps, éste es un listado simple de lo que hace
+    argenmap.jquery <em>automágicamente</em>.
+  </p>
+  <ul>
+    <li>Crea un objeto <code>google.maps.Map</code>.</li>
+    <li>Habilita como única capa el <a href="https://developers.google.com/maps/documentation/javascript/maptypes#BasicMapTypes" target="_blank">tipo de mapa</a> <code>satellite</code> nativo de Google Maps v3.</li>
+    <li>Define un par de funciones para crear <code>MapType</code>s que son capaces de obtener las tiles de servicios WMS y TMS acorde a la interfaz <code>MapType.getTile()</code> </li>
+    <li>Agrega al mapa, una capa base (<em>MapType</em>) que usa estas funciones para superponer la capa <code>capabaseargenmap</code> del servicio WMS del IGN.
+    <li>Agrega al mapa, una capa transparente (otro <em>MapType</em>) para superponer la capa <code>capabasesigign</code> del servicio WMS del IGN.
+    <li>Se encarga de que cada vez que el usuario cambie al mapa satélite, se superpongan sobre el los vectores del IGN.
+    <li>Ofrece la interfaz estándar de un plugin de jQuery permitiendo crear un mapa rápidamente a partir de <a href="http://es.wikipedia.org/wiki/JQuery#Funci.C3.B3n_.24.28.29" target="_blank">selectores</a> de jQuery.</li>
+  </ul>
+</section>
+<section id="estructuradelmapa">
+    <div class="page-header">
+          <h2>Estructura de un mapa de Argenmap</h2>
+    </div> <!--page-header-->
+    <h3>Comparación entre una mapa de Google Maps regular y un mapa de argenmap.jquery</h3>
+    <h4>Imagen Institucional del IGN</h4>
+
+    <p>  <strong>No hay duda del origen de los datos</strong>.
+      El pie de cada mapa de argenmap muestra que este mapa  <strong>tiene origen en el IGN</strong>.
+      <br/>Asegura al observador que los <em>topónimos y datos vectoriales</em> son
+      datos del Instituto Geográfico Nacional de la República Argentina.</p>
+    <div class="row-fluid">
+        <div class="span6">
+          <div id="mapaA1" style="height:300px;border:1px dashed black"></div>
+          <p><strong>Mapa vectorial del IGN</strong></p>
+        </div>
+        <!--span -->
+        <div class="span6">
+            <div id="mapaA2" style="height:300px;border:1px dashed black"></div>
+                <p><strong>Mapa vectorial de Google Maps</strong>. Capa base <em>ROADMAP</em> de Google Maps.
+            </div><!--span -->
+        </div>  <!--row -->
+        <h4>Datos aprobados por el Instituto Geográfico Nacional</h4>
+
+        <p><strong>Google tiene una base de datos con nombres no aprobados
+          por el IGN.</strong> Por lo tanto, el origen de la nomenclatura de calles, partidos, localidades
+          y accidentes geográficos es dudoso con respecto a la cartografía oficial.
+          <strong>Argenmap superpone <em>de manera predeterminada</em> los topónimos
+          reconocidos por la Argentina sobre la imágenes de Google.</strong></p>
+    <div class="row-fluid">
+        <!--span -->
+        <div class="span6">
+          <div id="mapaB1" style="height:300px;border:1px dashed black"></div>
+          <strong>Topónimos del IGN</strong>
+        </div>
+        <!--span -->
+        <div class="span6">
+          <div id="mapaB2" style="height:300px;border:1px dashed black"></div>
+          <strong>Topónimos de Google Maps</strong>
+        </div>
+        <!--span -->
+        </div>
+    <!--row -->
+      </section>
+        <script type="text/javascript">
+          $(function () {
+              goMapaA();
+              goMapaB();
+
+          });
+
+          function goMapaA() {
+             $('#mapaA1').argenmap().centro(-28.267428002034045, -64.73662569531251).zoom(8);
+
+    
+            var gmapOptions = {
+                center: new google.maps.LatLng(-28.267428002034045, -64.73662569531251),
+                zoom: 8,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            gmap1 = new google.maps.Map(document.getElementById('mapaA2'), gmapOptions);
+
+
+          }
+
+          function goMapaB() {
+
+              $('#mapaB1').argenmap().centro(-51.796253, -59.52361300000001).zoom(6).capaBase('satellite');
+              var gmapOptions = {
+                  center: new google.maps.LatLng(-51.796253, -59.52361300000001),
+                  zoom: 6,
+                  mapTypeId: google.maps.MapTypeId.HYBRID
+              };
+              gmap1 = new google.maps.Map(document.getElementById('mapaB2'), gmapOptions);
+
+
+          }
+
+        </script>
+
+</div>
