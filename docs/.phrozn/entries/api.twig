@@ -1,5 +1,5 @@
 <style type="text/css">
-.content h5 {
+.content h3 {
   text-transform:none;
 }
 </style>
@@ -11,9 +11,9 @@
       </h1>
       <hr/>
         <div class="row-fluid">
-          <h4>Lista rápida de los métodos del plugin</h4>            
+          <h2>Lista rápida de los métodos del plugin</h2>            
           <div class="span3">
-            <h5>Crear el mapa</h5>
+            <h3>Crear el mapa</h3>
             <p>
               <ul>
                   <li><a href="#argenmap">argenmap()</a></li>
@@ -21,7 +21,7 @@
             </p>
           </div><!--span3-->
           <div class="span2">
-            <h5>Cambiar la vista actual</h5>
+            <h3>Cambiar la vista actual</h3>
             <p>
               <ul>
                   <li><a href="#centro">centro()</a></li>
@@ -30,7 +30,7 @@
             </p>
           </div><!--span2-->
           <div class="span2">
-            <h5>Superponer tus datos</h5>
+            <h3>Superponer tus datos</h3>
             <p>
               <ul>
                   <li><a href="#agregarCapaWMS">agregarCapaWMS()</a></li>
@@ -39,7 +39,7 @@
             </p>
           </div><!--span2-->
           <div class="span2">
-            <h5>Agregar marcadores</h5>
+            <h3>Agregar marcadores</h3>
             <p>
               <ul>
                 <li><a href="#agregarMarcador">agregarMarcador()</a></li>
@@ -50,7 +50,7 @@
             </p>
           </div><!--span2-->
           <div class="span2">
-            <h5>Capas Base</h5>
+            <h3>Capas Base</h3>
             <p>
               <ul>
                   <li><a href="#agregarCapaBaseWMS">agregarCapaBaseWMS()</a></li>
@@ -60,17 +60,17 @@
           </div><!--span-->
         </div><!--row-->
       </section>
-      <h4>Descripción de los métodos</h4>
+      <h2>Descripción de los métodos</h2
 
       <section id="argenmap">
-        <h5 id="argenmap">argenmap()</h5>
+        <h3>argenmap()</h3>
         <div class="well well-small">
           <p>Crea un mapa simple sobre un elemento HTML.
             <em>Preferentemente divs con un alto definido en píxels.</em> <strong>Este método inicializa el mapa y se llama una sola vez.</strong> Todos los demás métodos se usan después de usar éste y pueden concatenarse <code>$('#mapa').argenmap().centro(-34,-59)</code></p>
         </div>
       </section>
       <section id="centro">
-        <h5 id="centro">centro( lat:float, lng:float )</h5>
+        <h3>centro( lat:float, lng:float )</h3>
         <div class="well well-small">
           <p>Luego de instanciar un mapa, puede usarse
               <code>.centro(lat,lng)</code>
@@ -86,7 +86,7 @@
         </div>
       </section>
       <section id="zoom">
-        <h5>zoom(zoom:int)</h5>        
+        <h3>zoom(zoom:int)</h3>        
         <div class="well well-small">
           <p>Aumenta o disminuye la escala del mapa.</p>
           <dl>
@@ -99,7 +99,7 @@
       </section>
 
       <section id="agregarCapaWMS">
-        <h5>agregarCapaWMS(opciones:Object)</h5>        
+        <h3>agregarCapaWMS(opciones:Object)</h3>        
         <div class="well well-small">
           <p>
               <a class="pull-right" target="_blank" href="ejemplos/agregarCapaWMS.html">Ver ejemplo de agregarCapaWMS &raquo;</a>
@@ -143,7 +143,7 @@
         </div>
       </section>
       <section id="agregarCapaBaseWMS">
-        <h5>agregarCapaBaseWMS(opciones:Object)</h5>        
+        <h3>agregarCapaBaseWMS(opciones:Object)</h3>        
         <div class="well well-small">
 
           <p class="hidden">
@@ -194,7 +194,7 @@
         </div>
       </section>
       <section id="capaBase">
-        <h5>capaBase(nombre:string)</h5>
+        <h3>capaBase(nombre:string)</h3>
         <div class="well well-small">
           <p>
             <a class="pull-right" target="_blank" href="ejemplos/capaBase.html">Ver
@@ -218,7 +218,7 @@
       </section>
              
       <section id="agregarCapaKML">
-        <h5>agregarCapaKML(opciones:Object)</h5>
+        <h3>agregarCapaKML(opciones:Object)</h3>
         <div class="well well-small">
 
           <p>
@@ -251,7 +251,7 @@
   </section>
   <hr/>
   <section id="agregarMarcador">
-    <h5>agregarMarcador(marcador:Object)</h5>
+    <h3>agregarMarcador(marcador:Object)</h3>
       <div class="well well-small">
 
       <p>
@@ -293,7 +293,7 @@
   </section>
   <hr />
   <section id="modificarMarcador">
-    <h5>$(selector).modificarMarcador(nombre, opciones)</h5>
+    <h3>$(selector).modificarMarcador(nombre, opciones)</h3>
     <p>
       Modifica un marcador previamente creado. Las opciones para modificar
       el marcador son las mismas que al momento de <a href="#agregarMarcador">crear uno</a>.
@@ -313,7 +313,7 @@
   </section>
   <hr />
   <section id="quitarMarcador">
-    <h5>$(selector).quitarMarcador(nombre)</h5>
+    <h3>$(selector).quitarMarcador(nombre)</h3>
     <p>
       Quita un marcador del mapa.
     </p>
@@ -326,8 +326,8 @@
   </section>  
   <hr />
   <section id="agregarMarcadores">
-    <h5>agregarMarcadores([marcador1:Object, marcador2:Object,...,
-        marcadorN:Object])</h5>
+    <h3>agregarMarcadores([marcador1:Object, marcador2:Object,...,
+        marcadorN:Object])</h3>
     <div class="well well-small">
 
       <p>
