@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>argenmap.jquery - Mapas de Argentina con jQuery</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Mapas del IGN para la web" name="description">
+        <meta name="author" content="osk">
+
+        <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- styles -->
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="styles/default.css">
+        <link href="http://www.ign.gob.ar/2013/css/bootstrap-ign.css" rel="stylesheet">
+
+        <!-- scripts -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="scripts/default.js"></script>
+        <!--Para poner lindo el código fuente-->        
+        <link rel="stylesheet" type="text/css" href="scripts/google-code-prettify/prettify.css">        
+        <script type="text/javascript" src="scripts/google-code-prettify/prettify.js"></script>        
+    </head>
+    <body  onload="prettyPrint()">
+        <div class="navbar navbar-inverse navbar-fixed-top" >
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="http://ign.gob.ar/argenmap/argenmap.jquery/docs#intro">IGN - argenmap.jquery</a>
+      <div class="nav-collapse collapse navbar-inverse-collapse">
+        <ul class="nav">
+          <li><a href="guia.html">Documentación</a></li>
+          <li><a href="api.html">API</a></li>
+          <li><a href="ejemplos.html">Ejemplos</a></li>          
+          <li><a href="soporte.html">Ayuda y Soporte</a></li>          
+          <li><a href="http://jsbin.com/ekigit/7/edit" target="_blank" style="color:orange;background:inherit">Practicá !</a></li>
+          <li><a href="datosdelmapa.html" style="color:gold;background:inherit">Acerca de los datos</a></li>
+        </ul>
+        <form class="navbar-form pull-left" action="buscar.html" method=get>
+          <input type="text" class="search-query span2" title="término a buscar" name="q" placeholder="Buscar en las docs">
+          <button type="submit" title="botón de formulario" class="btn">Buscar</button>
+        </form>
+      </div><!-- /.nav-collapse -->
+    </div>
+  </div><!-- /navbar-inner -->
+</div>
+        <div class="container">
+
+            <div class="content">
+  <div class="row">
+    <div class="span12">
+      <div id='cse' style='width: 100%;'>Loading</div>
+      <script src='//www.google.com/jsapi' type='text/javascript'></script>
+      <script type="text/javascript"> 
+        google.load('search', '1', {language : 'en'});
+        google.setOnLoadCallback(function() {
+          var customSearchOptions = {};  var customSearchControl = new 
+      google.search.CustomSearchControl(
+            '009848708189434935750:uz2-pkp--em', customSearchOptions);
+          
+      customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+          var options = new google.search.DrawOptions();
+          options.setAutoComplete(true);
+          options.enableSearchResultsOnly(); 
+          customSearchControl.draw('cse', options);
+          function parseParamsFromUrl() {
+            var params = {};
+            var parts = window.location.search.substr(1).split('&');
+            for (var i = 0; i < parts.length; i++) {
+              var keyValuePair = parts[i].split('=');
+              var key = decodeURIComponent(keyValuePair[0]);
+              params[key] = keyValuePair[1] ?
+                  decodeURIComponent(keyValuePair[1].replace(/\+/g, ' ')) :
+                  keyValuePair[1];
+            }
+            return params;
+          }
+
+          var urlParams = parseParamsFromUrl();
+          var queryParamName = "q";
+          if (urlParams[queryParamName]) {
+            customSearchControl.execute(urlParams[queryParamName], null,
+                {'oq': urlParams['oq'], 'aq': urlParams['aq'],
+                 'aqi': urlParams['aqi'], 'aql': urlParams['aql'],
+                 'gs_sm': urlParams['gs_sm'], 'gs_upl': 
+      urlParams['gs_upl']});
+          }
+        }, true);
+      </script>
+
+      <style type='text/css'>
+        .gsc-control-cse {
+          font-family: Arial, sans-serif;
+          border-color: #FFFFFF;
+          background-color: #FFFFFF;
+        }
+        .gsc-control-cse .gsc-table-result {
+          font-family: Arial, sans-serif;
+        }
+        input.gsc-input, .gsc-input-box, .gsc-input-box-hover, 
+      .gsc-input-box-focus {
+          border-color: #D9D9D9;
+        }
+        input.gsc-search-button, input.gsc-search-button:hover, 
+      input.gsc-search-button:focus {
+          border-color: #666666;
+          background-color: #CECECE;
+          background-image: none;
+          filter: none;
+
+        }
+        .gsc-tabHeader.gsc-tabhInactive {
+          border-color: #FF9900;
+          background-color: #FFFFFF;
+        }
+        .gsc-tabHeader.gsc-tabhActive {
+          border-color: #E9E9E9;
+          background-color: #E9E9E9;
+          border-bottom-color: #FF9900
+        }
+        .gsc-tabsArea {
+          border-color: #FF9900;
+        }
+        .gsc-webResult.gsc-result, .gsc-results .gsc-imageResult {
+          border-color: #FFFFFF;
+          background-color: #FFFFFF;
+        }
+        .gsc-webResult.gsc-result:hover, .gsc-imageResult:hover {
+          border-color: #FFFFFF;
+          background-color: #FFFFFF;
+        }
+        .gs-webResult.gs-result a.gs-title:link, .gs-webResult.gs-result 
+      a.gs-title:link b, .gs-imageResult a.gs-title:link, .gs-imageResult 
+      a.gs-title:link b  {
+          color: #0000CC;
+        }
+        .gs-webResult.gs-result a.gs-title:visited, .gs-webResult.gs-result 
+      a.gs-title:visited b, .gs-imageResult a.gs-title:visited, 
+      .gs-imageResult a.gs-title:visited b {
+          color: #0000CC;
+        }
+        .gs-webResult.gs-result a.gs-title:hover, .gs-webResult.gs-result 
+      a.gs-title:hover b, .gs-imageResult a.gs-title:hover, .gs-imageResult 
+      a.gs-title:hover b {
+          color: #0000CC;
+        }
+        .gs-webResult.gs-result a.gs-title:active, .gs-webResult.gs-result 
+      a.gs-title:active b, .gs-imageResult a.gs-title:active, .gs-imageResult 
+      a.gs-title:active b {
+          color: #0000CC;
+        }
+        .gsc-cursor-page {
+          color: #0000CC;
+        }
+        a.gsc-trailing-more-results:link {
+          color: #0000CC;
+        }
+        .gs-webResult .gs-snippet, .gs-imageResult .gs-snippet, 
+      .gs-fileFormatType {
+          color: #000000;
+        }
+        .gs-webResult div.gs-visibleUrl, .gs-imageResult div.gs-visibleUrl {
+          color: #008000;
+        }
+        .gs-webResult div.gs-visibleUrl-short {
+          color: #008000;
+        }
+        .gs-webResult div.gs-visibleUrl-short  {
+          display: none;
+        }
+        .gs-webResult div.gs-visibleUrl-long {
+          display: block;
+        }
+        .gs-promotion div.gs-visibleUrl-short {
+          display: none;
+        }
+        .gs-promotion div.gs-visibleUrl-long  {
+          display: block;
+        }
+        .gsc-cursor-box {
+          border-color: #FFFFFF;
+        }
+        .gsc-results .gsc-cursor-box .gsc-cursor-page {
+          border-color: #E9E9E9;
+          background-color: #FFFFFF;
+          color: #0000CC;
+        }
+        .gsc-results .gsc-cursor-box .gsc-cursor-current-page {
+          border-color: #FF9900;
+          background-color: #FFFFFF;
+          color: #0000CC;
+        }
+        .gsc-webResult.gsc-result.gsc-promotion {
+          border-color: #336699;
+          background-color: #FFFFFF;
+        }
+        .gsc-completion-title {
+          color: #0000CC;
+        }
+        .gsc-completion-snippet {
+          color: #000000;
+        }
+        .gs-promotion a.gs-title:link,.gs-promotion a.gs-title:link 
+      *,.gs-promotion .gs-snippet a:link  {
+          color: #0000CC;
+        }
+        .gs-promotion a.gs-title:visited,.gs-promotion a.gs-title:visited 
+      *,.gs-promotion .gs-snippet a:visited {
+          color: #0000CC;
+        }
+        .gs-promotion a.gs-title:hover,.gs-promotion a.gs-title:hover 
+      *,.gs-promotion .gs-snippet a:hover  {
+          color: #0000CC;
+        }
+        .gs-promotion a.gs-title:active,.gs-promotion a.gs-title:active 
+      *,.gs-promotion .gs-snippet a:active {
+          color: #0000CC;
+        }
+        .gs-promotion .gs-snippet, .gs-promotion .gs-title 
+      .gs-promotion-title-right, .gs-promotion .gs-title 
+      .gs-promotion-title-right * {
+          color: #000000;
+        }
+        .gs-promotion .gs-visibleUrl,.gs-promotion .gs-visibleUrl-short  {
+          color: #008000;
+        }
+      </style>
+
+    </div><!--span-->
+  </div><!--row-->
+</div>
+            <div class="content">
+              <a class="pull-right" alt="Sitio del IGN de Argentina" href="http://www.ign.gob.ar"><img alt="Logo del stituto Geográfico Nacional de Argentina" style="max-height:100px" src="http://www.ign.gob.ar/sites/default/files/logo2012blanco.png"/></a>
+              <p class="form-inline"><btn class="btn">jQuery</btn><input title="URL de jQuery en CDN" class="input-xxlarge" type="text"  value="http://code.jquery.com/jquery-1.8.2.js"/></p>
+              <p class="form-inline"><btn class="btn">Google Maps API</btn><input title="URL de Google Maps API en CDN" class="input-xxlarge"  type="text" value="http://maps.google.com/maps/api/js?sensor=false"/></p>
+              <p class="form-inline"><btn class="btn">Argenmap</btn><input title="URL de Argenmap CDN" type="text" class="input-xxlarge"  value="http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js"/></p>                
+            </div>
+            <footer>
+	<div class="container">
+		<div>
+      <div class="alert alert-warning">
+        <strong>Importante:</strong> Se informa al usuario que al implementar este servicio en su propio sitio web, se requiere informar al Instituto Geográfico Nacional acerca de esta demanda para su evaluación. A fin de poder ofrecer la calidad de servicio requerida. Favor de enviar solicitud a <a href="mailto:argenmap@ign.gob.ar">argenmap@ign.gob.ar</a>
+      </div>			
+			<p><strong>argenmap</strong> es un servicio web del <a href="http://www.ign.gob.ar" target="_blank">Instituto Geográfico Nacional</a> de la República Argentina.</p>
+
+			<p>El código de argenmap.jquery está disponible bajo una <a href="http://www.ign.gob.ar/argenmap/argenmap.jquery/LICENCIA" target="_blank">licencia</a> basada en la BSD.</p>
+			<p>La documentación de argenmap.jquery usa  <a href="http://twitter.github.com/bootstrap/">Bootstrap, de Twitter</a> y <a href="http://jquery.com/">la librería jQuery</a> y la generamos con <a href="http://www.phrozn.info/">phrozn</a>. El hosting del proyecto corre por cuenta de <a href="http://github.com/">Github</a>.</p>  
+		</div>
+
+	</div>
+
+    
+</footer>
+<script type="text/javascript">
+$('input[type=text]').click(function(){
+    // Select input field contents
+    $(this).select();
+});
+</script>
+            
+        </div>
+        <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+        <script type="text/javascript" src="http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js"></script>
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1&appId=349894675076658";
+          fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+        </script>    
+    </body>
+</html>

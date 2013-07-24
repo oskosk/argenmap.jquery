@@ -1,0 +1,349 @@
+<style type="text/css">
+.content h5 {
+  text-transform:none;
+}
+</style>
+<div class="content">
+  <section id="api">
+      <h2>API
+          <small>versión 1.2
+          </small>
+      </h2>
+      <hr/>
+        <div class="row-fluid">
+          <h4>Lista rápida de los métodos del plugin</h4>            
+          <div class="span3">
+            <h5>Crear el mapa</h5>
+            <p>
+              <ul>
+                  <li><a href="#argenmap">argenmap()</a></li>
+              </ul>
+            </p>
+          </div><!--span3-->
+          <div class="span2">
+            <h5>Cambiar la vista actual</h5>
+            <p>
+              <ul>
+                  <li><a href="#centro">centro()</a></li>
+                  <li><a href="#zoom">zoom()</a></li>
+              </ul>
+            </p>
+          </div><!--span2-->
+          <div class="span2">
+            <h5>Superponer tus datos</h5>
+            <p>
+              <ul>
+                  <li><a href="#agregarCapaWMS">agregarCapaWMS()</a></li>
+                  <li><a href="#agregarCapaKML">agregarCapaKML()</a></li>
+              </ul>
+            </p>
+          </div><!--span2-->
+          <div class="span2">
+            <h5>Agregar marcadores</h5>
+            <p>
+              <ul>
+                <li><a href="#agregarMarcador">agregarMarcador()</a></li>
+                <li><a href="#modificarMarcador">modificarMarcador()</a></li>
+                <li><a href="#quitarMarcador">quitarMarcador()</a></li>
+                <li><a href="#agregarMarcadores">agregarMarcadores()</a></li>
+              </ul>
+            </p>
+          </div><!--span2-->
+          <div class="span2">
+            <h5>Capas Base</h5>
+            <p>
+              <ul>
+                  <li><a href="#agregarCapaBaseWMS">agregarCapaBaseWMS()</a></li>
+                  <li><a href="#capaBase">capaBase()</a></li>                    
+              </ul>
+            </p>
+          </div><!--span-->
+        </div><!--row-->
+      </section>
+      <h4>Descripción de los métodos</h4>
+
+      <section id="argenmap">
+        <h5 id="argenmap">argenmap()</h5>
+        <div class="well well-small">
+          <p>Crea un mapa simple sobre un elemento HTML.
+            <em>Preferentemente divs con un alto definido en píxels.</em> <strong>Este método inicializa el mapa y se llama una sola vez.</strong> Todos los demás métodos se usan después de usar éste y pueden concatenarse <code>$('#mapa').argenmap().centro(-34,-59)</code></p>
+        </div>
+      </section>
+      <section id="centro">
+        <h5 id="centro">centro( lat:float, lng:float )</h5>
+        <div class="well well-small">
+          <p>Luego de instanciar un mapa, puede usarse
+              <code>.centro(lat,lng)</code>
+              para cambiar el centro del mapa.</p>
+          <dl>
+            <dt>lat</dt>
+              <dd>(<em>float</em>): número indicando los grados decimales de latitud</dd>
+            <dt>lng</dt>
+                <dd>(<em>float</em>): número indicando los grados decimales de longitud</dd>
+          </dl> 
+            <p>Si llamás a centro() sin parámetros, devuelve el centro actual. Una
+                array del tipo [lat,lng].</p>              
+        </div>
+      </section>
+      <section id="zoom">
+        <h5>zoom(zoom:int)</h5>        
+        <div class="well well-small">
+          <p>Aumenta o disminuye la escala del mapa.</p>
+          <dl>
+            <dt>zoom</dt>
+              <dd>(<em>int</em>): Un entero de <strong>1 a 22</strong> indicando el nivel de zoom al que se quiere visualizar el mapa.</dd>
+          </dl>
+          <p>Si llamás a zoom() sin parámetros, devuelve el nivel de zoom
+              actual</p>
+        </div>
+      </section>
+
+      <section id="agregarCapaWMS">
+        <h5>agregarCapaWMS(opciones:Object)</h5>        
+        <div class="well well-small">
+          <p>
+              <a class="pull-right" target="_blank" href="ejemplos/agregarCapaWMS.html">Ver ejemplo &raquo;</a>
+          </p>
+
+          <p>Superpone una capa WMS sobre las capas base.</p>
+          <dl>
+            <dt>opciones</dt>
+            <dd>
+              (<em>objeto simple</em>): un set de pares de key/valor que configura el pedido a la capa WMS. <br/>
+              Las keys que pueden pasarse son los parámetros que pueden pasarse
+              a cualquier WMS:
+              <dl class="dl-horizontal">
+                <dt>url</dt>
+                <dd>(<em>string</em>). La URL del servidor WMS. Ejemplo:
+                  <em>http://wms.ign.gob.ar/geoserver/wms?</em>.
+                  <strong>La URL debe finalizar con el signo ? o con el signo &</strong>.</dd>
+                <dt>capas</dt>
+                <dd>(<em>string</em>). Los nombres de las capas separados por comas. (corresponde al formato del parámetro LAYERS de WMS)</em>
+                  de las capas que se quieren pedir al servidor WMS, separadas por coma.
+                  Ejemplo:
+                  <em>"departamentos,rios,ciudades"</em>
+                </dd>
+                <dt>nombre</dt>
+                <dd>(<em>string, opcional</em>). El nombre interno que tendrá la capa.
+                  Recordá que es importante definir el nombre y que sea entre para todas las capas que superpongas.</dd>
+                <dt>formato</dt>
+                <dd>(<em>string, opcional</em>). Valor por defecto:
+                  <code>"image/png"</code>
+                   el formato MIME de archivo: "image/jpeg",
+                  "image/jpg", "image/png", "image/png8", "image/gif".
+                </dd>
+              </dl>
+            </dd>
+          </dl>
+          <p class="alert alert-info">El servicio WMS tiene que estar configurado
+            para poder generar las imágenes con el sistema de referencia
+            <code>EPSG:3857</code>
+            que es el código que define la proyección de OpenStreetMap, Google Maps,
+            Bing Maps, ESRI WEB Maps y demás mapas web populares.</p>
+        </div>
+      </section>
+      <section id="agregarCapaBaseWMS">
+        <h5>agregarCapaBaseWMS(opciones:Object)</h5>        
+        <div class="well well-small">
+
+          <p class="hidden">
+              <a class="pull-right" target="_blank" href="ejemplos/agregarCapaBaseWMS.html">Ver
+                  ejemplo &raquo;</a>
+          </p>
+          <p>Esta función te permite agregar una capa base al mapa que salga de un
+              servicio WMS.</p>
+          <dl>
+            <dt>opciones</dt>
+            <dd>
+              (<em>objeto simple</em>): un set de pares de key/valor que configura el pedido a la capa WMS.<br/>
+              Las opciones que pueden pasarse son los parámetros que pueden pasarse
+              a cualquier WMS:
+              <dl class="dl-horizontal">
+                <dt>url</dt>
+                <dd>(<em>string</em>). Cadena de texto indicando la url del servidor WMS. Ejemplo:
+                    <em>http://wms.ign.gob.ar/geoserver/wms?</em>.
+                    <br/>
+                    <strong>La URL debe finalizar con el signo ? o con el signo &</strong>.
+                </dd>
+                <dt>capas</dt>
+                <dd>(<em>string</em>). Cadena de texto con los
+                    <em>nombres (el parámetro LAYERS de WMS)</em>
+                    de las capas que se quieren pedir al servidor WMS, separadas por coma.
+                    Ejemplo:
+                    <em>"departamentos,rios,ciudades"</em>
+                </dd>
+                <dt>nombre</dt>
+                <dd>(<em>string, opcional</em>). Cadena de texto indicando el nombre internoque tendrá la capa.
+                    Recordá que es importante definir el nombre y que sea único para todas
+                    las capas que superpongas.
+                </dd>
+                <dt>formato</dt>
+                <dd>(<em>string, opcional</em>). Valor por defecto:
+                    <code>"image/png"</code>
+                    Cadena de texto indicando un formato MIME de archivo: "image/jpeg",
+                    "image/jpg", "image/png", "image/png8", "image/gif".
+                </dd>
+              </dl>
+            </dd>
+          </dl>
+          <p class="alert alert-info">El servicio WMS tiene que estar configurado
+              para poder generar las imágenes con el sistema de referencia
+              <code>EPSG:3857</code>
+              que es el código que define la proyección de OpenStreetMap, Google Maps,
+              Bing Maps, ESRI WEB Maps y demás mapas web populares.
+          </p>
+        </div>
+      </section>
+      <section id="capaBase">
+        <h5>capaBase(nombre:string)</h5>
+        <div class="well well-small">
+          <p>
+            <a class="pull-right" target="_blank" href="ejemplos/capaBase.html">Ver
+              ejemplo &raquo;</a>
+            </p>            
+          <p>
+              Cambia la capa base actualmente visible en el mapa por la capa
+              especificada por el parámetro nombre. Si no se le pasan parámetros
+              devuelve el nombre de la capa base actualmente visible.
+          </p>
+          <dl >
+            <dt>nombre</dt>
+            <dd>
+              (<em>string</em>): El nombre de una de las capas estándar (<code>satellite</code>
+              o 
+              <code>IGN</code>) o el nombre de una capa superpuesta previamente con
+              <code>agregarCapaBaseWMS()</code>.
+            </dd>
+          </dl>
+        </div>
+      </section>
+             
+      <section id="agregarCapaKML">
+        <h5>agregarCapaKML(opciones:Object)</h5>
+        <div class="well well-small">
+
+          <p>
+            <a class="pull-right" target="_blank" href="ejemplos/agregarCapaKML.html">Ver ejemplo &raquo;</a>
+          </p>
+          <p>Superpone una capa que se importa desde un archivo
+            <code>.kml</code>
+            que esté online accesible por URL.</p>
+          <dl>
+            <dt>opciones</dt>
+            <dd>
+              (<em>objeto simple</em>): un set de pares de key/valor que configura el pedido a la capa WMS.<br/>
+              Las opciones son:
+              <dl class="dl-horizontal">
+                <dt>url</dt>
+                <dd>(<em>string</em>) la URL del KML.
+                </dd>
+                <dt>nombre</dt>
+                <dd>(<em>string - opcional</em>) el nombre que tendrá la capa. Recordá que
+                    es importante definir el nombre e intentar que sea único.
+                </dd>
+              </dl>
+            </dd>
+          </dl>
+          <p class="alert alert-info">El archivo KML tiene que estar accesible
+              públicamente. Este requerimiento de argenmap.jquery va a cambiar en la
+              versión 2.0.
+          </p>
+        </div>
+  </section>
+  <hr/>
+  <section id="agregarMarcador">
+    <h5>agregarMarcador(marcador:Object)</h5>
+      <div class="well well-small">
+
+      <p>
+        <a class="pull-right" target="_blank" href="ejemplos/agregarMarcador.html">Ver ejemplo &raquo;</a>
+      </p>
+      <p>
+        Para crear un marcador se puede suministrar un objeto con opciones o
+        simplemente hacer la llamada <code>$(selector).agregarMarcador()</code>
+        y por defecto el marcador se agregará en el centro del mapa.</p>
+      <p>Para personalizar el comportamiento del marcador pueden utilizarse
+        estas opciones
+      </p>
+      <dl>
+        <dt>marcador</dt>
+        <dd>
+          (<em>objeto simple, opcional</em>): un set de pares de key/valor que configura opciones
+          extra para el marcador que va a ser creado:<br/>
+          <dl class="dl-horizontal">
+            <dt>lat</dt>
+            <dd>(<em>float</em>). La latitud para el marcador (Coordenadas geográficas).</dd>
+            <dt>lng</dt>
+            <dd>(<em>float</em>). La longitud para el marcador (Coordenadas geográficas).</dd>
+            <dt>icono</dt>
+            <dd>(<em>string, opcional</em>). La URL de la imagen PNG a utilizar como ícono del marcador. 
+              <p class="alert alert-info">El marcador utiliza como punto de anclaje el centro horizontal y el borde inferior de la imagen. Ver <a href="http://mapicons.nicolasmollet.com/" target="_blank">Map Icons Collection</a>.
+              </p>
+            </dd>            
+            <dt>nombre</dt>
+            <dd>(<em>string, opcional</em>). El nombre que tendrá el marcador. Recordá
+                que si bien es opcional, es importante definir el nombre e intentar que
+                sea único para luego poder accederlo si necesitaras modificarlo.</dd>
+            <dt>contenido</dt>
+            <dd>(<em>string, opcional</em>). Contenido HTML que se mostrará al hacer click
+                sobre el marcador en un globo de texto.</dd>
+          </dl>
+        </dd>
+      </dl>      
+    </div>
+  </section>
+  <hr />
+  <section id="modificarMarcador">
+    <h5>$(selector).modificarMarcador(nombre, opciones)</h5>
+    <p>
+      Modifica un marcador previamente creado. Las opciones para modificar
+      el marcador son las mismas que al momento de <a href="#agregarMarcador">crear uno</a>.
+    </p>
+    <p>La referencia del marcador a modificar es el <code>nombre</code> asignado al marcador
+      y es el primer parámetro de este método:
+    </p>
+    <dl>
+      <dt>nombre</dt>
+      <dd>(<em>string</em>). El nombre asignado al marcador cuando fue creado.</dd>
+      <dt>opciones</dt>
+      <dd>
+        (<em>objeto simple</em>): set de pares de key/valor que el usado para <a href="#agregarMarcador">crear un marcador</a>.
+      </dd>
+    </dl>      
+
+  </section>
+  <hr />
+  <section id="quitarMarcador">
+    <h5>$(selector).quitarMarcador(nombre)</h5>
+    <p>
+      Quita un marcador del mapa.
+    </p>
+    <p>La referencia del marcador a modificar es a través del <code>nombre</code> asignado al marcador.
+    </p>
+    <dl>
+      <dt>nombre</dt>
+      <dd>(<em>string</em>). El nombre asignado al marcador cuando fue creado.</dd>
+    </dl>      
+  </section>  
+  <hr />
+  <section id="agregarMarcadores">
+    <h5>agregarMarcadores([marcador1:Object, marcador2:Object,...,
+        marcadorN:Object])</h5>
+    <div class="well well-small">
+
+      <p>
+        <a class="pull-right" target="_blank" href="ejemplos/agregarMarcadores.html">Ver
+            ejemplo &raquo;</a>
+      </p>
+      <p>
+        Crea varios marcadores sobre el mapa a partir de una array de objetos que
+        definen marcadores.
+      </p>
+      <p>
+        Cada objeto es igual al que recibe
+        <code>agregarMarcador()</code>
+      </p>
+    </div>
+    <div class="fb-comments" data-href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs#api" data-width="600" data-num-posts="10"></div>
+  </section>
+</div>
