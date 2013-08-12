@@ -152,22 +152,35 @@
     this.agregarMarcador = function (opciones) {
       var _this = this,
         defaults = {
-          icon: argenmap.BASEURL + 'img/marcadores/punto.png',
-          title: 'Marcador',
-          nombre: 'Marcador_' + Math.floor(Math.random() * 10100)
+          lat: _this.gmap.getCenter().lat(),
+          lng: _this.gmap.getCenter().lng(),
+          icono: argenmap.BASEURL + 'img/marcadores/punto.png',
+          nombre: 'Marcador_' + Math.floor(Math.random() * 10100),
+          contenido: undefined
         };
+      opciones = $.extend({}, defaults, opciones);
+      console.log(opciones);
 
-      opciones.icon = opciones.icono || undefined;
-      opciones.data = opciones.contenido;
-      opciones.position = new google.maps.LatLng(opciones.lat, opciones.lng);
-      opciones.title = opciones.nombre;
+      //compatibilidad entre lng, lon y long
+      if(opciones.hasOwnProperty("long")) {
+        //long es un reserved de JS, closure no puede manejarlo
+        opciones.lng = opciones['long'];
+      }else if(opciones.hasOwnProperty("lon")) {
+        opciones.lng = opciones.lon;
+      }else if(opciones.hasOwnProperty("lat") && typeof(opciones.lat) === "function"){
+        //el argument es un google.maps.LatLng
+        opciones.lat = opciones.lat();
+        opciones.lng = opciones.lng();
+      }
 
+      var marker = {};
+      marker.icon = opciones.icono;
+      marker.data = opciones.contenido;
+      marker.position = new google.maps.LatLng(opciones.lat, opciones.lng);
+      marker.title = opciones.nombre;
+      marker.map = _this.gmap;
 
-      opciones = $.extend(defaults, opciones);
-
-      opciones.map = _this.$el.data('gmap');
-
-      var m = new google.maps.Marker(opciones);
+      var m = new google.maps.Marker(marker);
 
       this._marcadores[opciones.nombre] = m;
 
@@ -1005,33 +1018,12 @@
    *   cuadro: objeto con opciones de cuadro (ver agregarCuadro)
    */
   $.fn.agregarMarcador = function (opciones) {
-    var _arguments = arguments;
-
     return this.each(function () {
-      var o = $.extend({}, opciones);
       var a = $(this).data('argenmap');
       if (!a) {
         return;
       }
-
-      if (_arguments.length === 0) {
-        o.lat = $(this).data('gmap').getCenter().lat();
-        o.lng = $(this).data('gmap').getCenter().lng();
-      }
-      //compatibilidad entre lng, lon y long
-      if(o.hasOwnProperty("long")) {
-        //long es un reserved de JS, closure no puede manejarlo
-        o.lng = o['long'];
-      }else if(o.hasOwnProperty("lon")) {
-        o.lng = o.lon;
-      }else if(o.hasOwnProperty("lat") && typeof(o.lat) === "function"){
-        //el argument es un google.maps.LatLng
-        o.lat = o.lat();
-        o.lng = o.lng();
-      }
-      a.agregarMarcador(o);
-
-
+      a.agregarMarcador(opciones);
     });
   };
 
