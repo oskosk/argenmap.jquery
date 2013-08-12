@@ -159,7 +159,7 @@
           contenido: undefined
         };
       opciones = $.extend({}, defaults, opciones);
-      console.log(opciones);
+
 
       //compatibilidad entre lng, lon y long
       if(opciones.hasOwnProperty("long")) {
