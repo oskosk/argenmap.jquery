@@ -731,16 +731,18 @@
       'box-shadow': '0 0 11px rgb(5, 66, 100) inset',
       'font-size': '10px',
       'text-align': 'right',
-      'height': '30px',
+      'height': '20px',
       'vertical-align': 'middle',
       'color': 'white',
-      'min-height': '25px',
-      'line-height': '13px',
-      'padding': '5px',
+      'min-height': '15px',
+      'line-height': '20px',
+      'padding': '5px 5px',
       'margin':0,
       'border':0
     });
-    var mapLogo_ = $('<img />');
+    var mapLogo_ = $('<img />').css({
+    	'height':'20px'
+    });
     var mapLogoAnchor_ = $('<a style="float:left" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs"></a>').append(
       mapLogo_);
     var $contenedor_ = div;
@@ -751,7 +753,7 @@
     $contenedor_.append(mapCanvas_);
     $contenedor_.append(mapFooter_);
     mapFooter_.append(mapLogoAnchor_);
-    mapFooter_.append('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/#datosvectoriales">Top&oacute;nimos, datos topogr&aacute;ficos - 2013 IGN Argentina // Calles - OpenStreetMap</a>');
+    mapFooter_.append('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/#datosvectoriales">Top&oacute;nimos, datos topogr&aacute;ficos - IGN Argentina // Calles - OpenStreetMap</a>');
 
     argenmap._maximizarCanvas($contenedor_, mapFooter_, mapCanvas_);
     return mapCanvas_.get(0);
