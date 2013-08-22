@@ -735,7 +735,7 @@
       'vertical-align': 'middle',
       'color': 'white',
       'min-height': '15px',
-      'line-height': '20px',
+      'line-height': '15px',
       'padding': '5px 5px',
       'margin':0,
       'border':0
