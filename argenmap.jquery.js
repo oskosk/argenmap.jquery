@@ -223,6 +223,18 @@
       this.agregarMarcador(opciones);
     };
 
+    this.encuadrar = function( extent ) {
+      var _this = this,
+        s = extent.sur;
+        w = extent.oeste;
+        n = extent.norte;
+        e = extent.este;
+        southwest = new google.maps.LatLng(s,w),
+        northeast = new google.maps.LatLng(n,w),
+        boundingbox = new google.maps.LatLngBounds(southwest, northeast);
+        _this.gmap.fitBounds( boundingbox);
+    };    
+
     this.geocodificar = function ( str, callback ) {
       var _this = this;
 
@@ -1086,6 +1098,12 @@
       a.modificarMarcador(_nombre,_opciones);
     });
   };
- 
+
+  $.fn.encuadrar = function (encuadre) {
+    return this.each(function () {
+      var a = $(this).data('argenmap');
+      $(this).data('argenmap').encuadrar(encuadre);
+    });
+  }; 
 
 })(jQuery);
