@@ -248,18 +248,6 @@
 
     };
 
-    this.encuadrarResultadoDeGeocodificacion = function( d ) {
-      var _this = this,
-        s = d.boundingbox[0],
-        w = d.boundingbox[2],
-        n = d.boundingbox[1],
-        e = d.boundingbox[3],
-        southwest = new L.LatLng(s,w),
-        northeast = new L.LatLng(n,w),
-        boundingbox = new L.LatLngBounds(southwest, northeast);
-      _this.Lmap.fitBounds( boundingbox);
-    };    
-
   }
   /* COMPATIBILIDAD CON IE < 9; implementacion de indexOf para arrays */
   if (!Array.prototype.indexOf)
