@@ -15,10 +15,9 @@
 (function ($) {
   var IGN_CACHES = [
     'http://cg.aws.af.cm/tms',
-    'http://robomap-cgastrell.rhcloud.com/tms',
-    'http://sig.ign.gob.ar/tms',
     'http://190.220.8.216/tms',
-    'http://mapaabierto.aws.af.cm/tms'
+    'http://mapaabierto.aws.af.cm/tms',
+    'http://igntiles1.ap01.aws.af.cm/tms'
   ];
 
   //Espacio de nombres para algunas funciones
@@ -153,22 +152,35 @@
     this.agregarMarcador = function (opciones) {
       var _this = this,
         defaults = {
-          icon: argenmap.BASEURL + 'img/marcadores/punto.png',
-          title: 'Marcador',
-          nombre: 'Marcador_' + Math.floor(Math.random() * 10100)
+          lat: _this.gmap.getCenter().lat(),
+          lng: _this.gmap.getCenter().lng(),
+          icono: argenmap.BASEURL + 'img/marcadores/punto.png',
+          nombre: 'Marcador_' + Math.floor(Math.random() * 10100),
+          contenido: undefined
         };
-
-      opciones.icon = opciones.icono || undefined;
-      opciones.data = opciones.contenido;
-      opciones.position = new google.maps.LatLng(opciones.lat, opciones.lng);
-      opciones.title = opciones.nombre;
+      opciones = $.extend({}, defaults, opciones);
 
 
-      opciones = $.extend(defaults, opciones);
+      //compatibilidad entre lng, lon y long
+      if(opciones.hasOwnProperty("long")) {
+        //long es un reserved de JS, closure no puede manejarlo
+        opciones.lng = opciones['long'];
+      }else if(opciones.hasOwnProperty("lon")) {
+        opciones.lng = opciones.lon;
+      }else if(opciones.hasOwnProperty("lat") && typeof(opciones.lat) === "function"){
+        //el argument es un google.maps.LatLng
+        opciones.lat = opciones.lat();
+        opciones.lng = opciones.lng();
+      }
 
-      opciones.map = _this.$el.data('gmap');
+      var marker = {};
+      marker.icon = opciones.icono;
+      marker.data = opciones.contenido;
+      marker.position = new google.maps.LatLng(opciones.lat, opciones.lng);
+      marker.title = opciones.nombre;
+      marker.map = _this.gmap;
 
-      var m = new google.maps.Marker(opciones);
+      var m = new google.maps.Marker(marker);
 
       this._marcadores[opciones.nombre] = m;
 
@@ -211,6 +223,18 @@
       this.agregarMarcador(opciones);
     };
 
+    this.encuadrar = function( extent ) {
+      var _this = this,
+        s = extent.sur;
+        w = extent.oeste;
+        n = extent.norte;
+        e = extent.este;
+        southwest = new google.maps.LatLng(s,w),
+        northeast = new google.maps.LatLng(n,w),
+        boundingbox = new google.maps.LatLngBounds(southwest, northeast);
+        _this.gmap.fitBounds( boundingbox);
+    };    
+
     this.geocodificar = function ( str, callback ) {
       var _this = this;
 
@@ -223,18 +247,6 @@
       }, _this);
 
     };
-
-    this.encuadrarResultadoDeGeocodificacion = function( d ) {
-      var _this = this,
-        s = d.boundingbox[0],
-        w = d.boundingbox[2],
-        n = d.boundingbox[1],
-        e = d.boundingbox[3],
-        southwest = new L.LatLng(s,w),
-        northeast = new L.LatLng(n,w),
-        boundingbox = new L.LatLngBounds(southwest, northeast);
-      _this.Lmap.fitBounds( boundingbox);
-    };    
 
   }
   /* COMPATIBILIDAD CON IE < 9; implementacion de indexOf para arrays */
@@ -563,7 +575,7 @@
 
     var styles = "";
 
-    var url = baseURL + "VERSION=" + version + "&REQUEST=" + request + "&LAYERS=" + layers + "&STYLES=" + styles + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height + "&FORMAT=" + format + "&TRANSPARENT=TRUE";
+    var url = baseURL + "VERSION=" + version + "&SERVICE=WMS" + "&REQUEST=" + request + "&LAYERS=" + layers + "&STYLES=" + styles + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height + "&FORMAT=" + format + "&TRANSPARENT=TRUE";
     return url;
   };
 
@@ -719,16 +731,18 @@
       'box-shadow': '0 0 11px rgb(5, 66, 100) inset',
       'font-size': '10px',
       'text-align': 'right',
-      'height': '30px',
+      'height': '20px',
       'vertical-align': 'middle',
       'color': 'white',
-      'min-height': '25px',
-      'line-height': '13px',
-      'padding': '5px',
+      'min-height': '15px',
+      'line-height': '15px',
+      'padding': '5px 5px',
       'margin':0,
       'border':0
     });
-    var mapLogo_ = $('<img />');
+    var mapLogo_ = $('<img />').css({
+    	'height':'20px'
+    });
     var mapLogoAnchor_ = $('<a style="float:left" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs"></a>').append(
       mapLogo_);
     var $contenedor_ = div;
@@ -739,7 +753,7 @@
     $contenedor_.append(mapCanvas_);
     $contenedor_.append(mapFooter_);
     mapFooter_.append(mapLogoAnchor_);
-    mapFooter_.append('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/#datosvectoriales">Top&oacute;nimos, datos topogr&aacute;ficos - 2013 IGN Argentina // Calles - OpenStreetMap</a>');
+    mapFooter_.append('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/#datosvectoriales">Top&oacute;nimos, datos topogr&aacute;ficos - IGN Argentina // Calles - OpenStreetMap</a>');
 
     argenmap._maximizarCanvas($contenedor_, mapFooter_, mapCanvas_);
     return mapCanvas_.get(0);
@@ -1006,33 +1020,12 @@
    *   cuadro: objeto con opciones de cuadro (ver agregarCuadro)
    */
   $.fn.agregarMarcador = function (opciones) {
-    var _arguments = arguments;
-
     return this.each(function () {
-      var o = $.extend({}, opciones);
       var a = $(this).data('argenmap');
       if (!a) {
         return;
       }
-
-      if (_arguments.length === 0) {
-        o.lat = $(this).data('gmap').getCenter().lat();
-        o.lng = $(this).data('gmap').getCenter().lng();
-      }
-      //compatibilidad entre lng, lon y long
-      if(o.hasOwnProperty("long")) {
-        //long es un reserved de JS, closure no puede manejarlo
-        o.lng = o['long'];
-      }else if(o.hasOwnProperty("lon")) {
-        o.lng = o.lon;
-      }else if(o.hasOwnProperty("lat") && typeof(o.lat) === "function"){
-        //el argument es un google.maps.LatLng
-        o.lat = o.lat();
-        o.lng = o.lng();
-      }
-      a.agregarMarcador(o);
-
-
+      a.agregarMarcador(opciones);
     });
   };
 
@@ -1093,6 +1086,12 @@
       a.modificarMarcador(_nombre,_opciones);
     });
   };
- 
+
+  $.fn.encuadrar = function (encuadre) {
+    return this.each(function () {
+      var a = $(this).data('argenmap');
+      $(this).data('argenmap').encuadrar(encuadre);
+    });
+  }; 
 
 })(jQuery);
