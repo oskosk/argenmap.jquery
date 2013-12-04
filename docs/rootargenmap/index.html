@@ -22,6 +22,13 @@
 
 
         <style>
+          #container-encabezado {
+            background: url('http://www.ign.gob.ar/images/headerbackground3.jpg') 0 -38px;            
+          }
+          #encabezado {
+            color: white;
+            text-shadow: 0 0 6px rgba(0,0,0,0.8);
+          }        
           .hero-unit  {
             background:none;
             padding:0px;
@@ -72,7 +79,19 @@
           }
         </style>
     </head>
-    <body >
+    <body>
+      <div id="container-encabezado" class="container-fluid">
+        <div class="container">
+          <div class="masthead row hidden-phone hidden-tablet" id="encabezado">
+            <div class="span6">
+              <a href="http://www.ign.gob.ar/" target="_self"><img src="http://ign.gob.ar/sites/default/files/logo2012blanco.png" alt="Instituto Geográfico Nacional de la República Argentina" style="max-height:120px"></a>
+            </div>
+            <div class="span6">
+              <img class="" src="http://www.ign.gob.ar/2013/img/LogoDefensab.png" alt="Ministerio de Defensa, Presidencia de la Nación, República Argentina" style="float:right; margin-top:0px; max-height:65px">
+            </div>
+          </div>      
+        </div>
+      </div><!--container-encabezado-->
       <div class="container-fluid">
         <div class="row-fluid">
           <div class="span4">
@@ -153,10 +172,9 @@
         </div>      
       </div>
       <footer>
-        <div class="container-fluid hidden-tablet hidden-phone" ">
+        <div class="container-fluid hidden-tablet hidden-phone">
           <div class="row-fluid">
             <div class="span12">
-              <a class="pull-right" alt="Sitio del IGN de Argentina" href="http://www.ign.gob.ar"><img alt="Logo del instituto Geográfico Nacional de Argentina" style="max-height:100px" src="http://www.ign.gob.ar/sites/default/files/logo2012blanco.png"></a>
               <p class="form-inline"><btn class="btn">jQuery</btn><input title="URL de jQuery en CDN" class="input-xxlarge" type="text" value="http://code.jquery.com/jquery-1.8.2.js"></p>
               <p class="form-inline"><btn class="btn">Google Maps API</btn><input title="URL de Google Maps API en CDN" class="input-xxlarge" type="text" value="http://maps.google.com/maps/api/js?sensor=false"></p>
               <p class="form-inline"><btn class="btn">Argenmap</btn><input title="URL de Argenmap CDN" type="text" class="input-xxlarge" value="http://www.ign.gob.ar/argenmap/argenmap.jquery.min.js"></p>                
@@ -170,12 +188,8 @@
                 Argenmap es un servicio web del Instituto Geográfico Nacional de la República Argentina.
             </p>
             </div><!--span4-->
-            <div class="span4">
-              <p class="lead">
-                <img src="http://www.ign.gob.ar/2013/img/LogoDefensab.png" alt="logo del ministerio de defensa de la Nación Argentina">
-              </p>
-            </div><!--span4-->            
-            <div class="span4" id="hosted_by_github">
+           
+            <div class="offset4 span4" id="hosted_by_github">
               <p class="lead">
                 Distribuido como software libre en <a target="_blank" href="https://github.com/oskosk/argenmap.jquery">
             <img src="http://owner.aeonbits.org/img/footer-logo.png" alt="isotipo de GitHub • Social coding">
