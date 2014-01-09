@@ -89,6 +89,7 @@
     this.opts = $.extend({}, _defaults, opciones);
     this.gmap = null;
     this._marcadores = {};
+    this._dragging = false;
 
     //-----------------------------------------------------------------------//
     // funciones de Argenmap
@@ -143,7 +144,20 @@
       var _this = this;
       google.maps.event.addListener(_this.gmap, "zoom_changed", function (e) {
         _this.$el.trigger('zoomend', _this.gmap.getZoom());
+        _this.$el.trigger('moveend', [_this.gmap.getZoom(), _this.$el.centro()]);
+      });
+      google.maps.event.addListener(_this.gmap, "dragstart", function (e) {
+        _this._dragging = true;
       });      
+      google.maps.event.addListener(_this.gmap, "dragend", function (e) {
+        _this._dragging = false;
+        _this.$el.trigger('moveend', [_this.gmap.getZoom(), _this.$el.centro()]);
+      });      
+      google.maps.event.addListener(_this.gmap, "center_changed", function (e) {
+        if (! _this._dragging) {
+          _this.$el.trigger('moveend', [_this.gmap.getZoom(), _this.$el.centro()]);
+        }
+      });            
     };
 
     this.agregarCapaKML = function (opciones) {
