@@ -9,14 +9,14 @@
 $(function() {
 	//El div tiene id="mapa"
 	$('#mapa').argenmap();
-  $('#mapa').centro(-34.6476, -58.4170);
-  $('#mapa').zoom(12);
+  $('#mapa').centro(-31.00774309244685, -60.38784426879885);
+  $('#mapa').zoom(5);
 
-  var escuelasSarmientoBA = {
-    url:'http://sarmientoba.buenosaires.gob.ar/wp-content/themes/plansarmiento/infografia/xml/escuelas.kml',
-    nombre:'escuelas según SarmientoBA'
+  var oficinasProvinciales = {
+    url:'http://www.ign.gob.ar/descargas/kml/OficinasProvincialesIGN.kml',
+    nombre:'Oficinas Provinciales IGN'
   };
-  $('#mapa').agregarCapaKML( escuelasSarmientoBA );
+  $('#mapa').agregarCapaKML( oficinasProvinciales );
 });
 </script>
 </head>
@@ -27,8 +27,8 @@ $(function() {
 
 <p>
   En este ejemplo se crea un mapa y se lo centra en la  ubicación con coordenadas
-  latitud: -34.6476 y longitud -58.4170. Se setea el zoom en el nivel 7. Luego se llama a agregarCapaKML() pasándole un objeto con las propiedades
-  necesarias para hacer referencia al archivo <a target="_blank" href="http://sarmientoba.buenosaires.gob.ar/wp-content/themes/plansarmiento/infografia/xml/escuelas.kml">http://sarmientoba.buenosaires.gob.ar/wp-content/themes/plansarmiento/infografia/xml/escuelas.kml</a> publicado por el proyecto SarmientoBA.
+  latitud: -31.0077 y longitud -60.3878. Se setea el zoom en el nivel 5. Luego se llama a agregarCapaKML() pasándole un objeto con las propiedades
+  necesarias para hacer referencia al archivo <a target="_blank" href="http://www.ign.gob.ar/descargas/kml/OficinasProvincialesIGN.kml">http://www.ign.gob.ar/descargas/kml/OficinasProvincialesIGN.kml</a> publicado por el Instituto Geográfico Nacional.
 </p>
 
 <p>
