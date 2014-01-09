@@ -116,6 +116,40 @@
           </div><!--span-->
         </div><!--row-->
       </section>
+      <section id="eventos">
+        <div class="row-fluid">
+          <h2>Eventos disparados por argenmap.jquery</h2>            
+          <p>
+            Los eventos disparados por argenmap.jquery se atienen a la interfaz de <a href="http://api.jquery.com/category/events/" target="_blank">eventos de Jquery</a>.
+          </p> 
+          <p>
+            Estos eventos se pueden aprovechar haciendo uso del método <a href="http://api.jquery.com/on/" target="_blank">.on()</a> del objeto jQuery creado con <code>.argenmap()</code>.
+          </p>
+          <p>
+            Estos son los eventos disponbiles:
+          </p>
+          <div class="span3">
+            <p>
+              <ul>
+                  <li><a href="#evento_zoomend">zoomend</a></li>
+              </ul>
+            </p>
+          </div><!--span3-->
+        </div><!--row-->        
+      </section>
+      <section id="evento_zoomend">
+        <h3>zoomend ( event , zoomActual )</h3>
+        <div class="well well-small">
+          <p>El evento zoomend se dispara cuando el mapa modificó su nivel de zoom
+          </p>
+          <dl>
+            <dt>event</dt>
+              <dd>(<em>jQuery Event</em>): El objeto de evento lanzado por jQuery</dd>
+            <dt>zoomActual</dt>
+                <dd>(<em>int</em>): número indicando el nuevo nivel de zoom</dd>
+          </dl> 
+        </div>
+      </section>      
       <h2>Descripción de los métodos</h2
 
       <section id="argenmap">

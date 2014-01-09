@@ -116,7 +116,9 @@
       var mapCanvas = argenmap._prepararContenedor(this.$el);
       
       this.gmap = map = new google.maps.Map(mapCanvas, _this.opts);
-
+      
+      _this.mapearEventosDelMapa();
+      
       this.$el.data('gmap', map);
 
         //Agrego la capa base del IGN a los tipos de mapas
@@ -130,6 +132,18 @@
       argenmap.GmapAgregarCapa(map, new argenmap.CapaTMSArgenmap());
       this.gmap.setMapTypeId('Mapa IGN');
       return true;
+    };
+
+    /*
+     * Mapa eventos del objeto google.maps.Map 
+     * a eventos de del objeto Jquery con .trigger()
+     */
+    this.mapearEventosDelMapa = function()
+    {
+      var _this = this;
+      google.maps.event.addListener(_this.gmap, "zoom_changed", function (e) {
+        _this.$el.trigger('zoomend', _this.gmap.getZoom());
+      });      
     };
 
     this.agregarCapaKML = function (opciones) {
@@ -986,6 +1000,7 @@
         return;
       }
       $(this).data('gmap').setZoom(zoom);
+
     });
   };
 
