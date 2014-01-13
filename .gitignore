@@ -19,3 +19,9 @@ Desktop.ini
 
 
 .DS_Store
+
+# Below are Grunt generated files so I don't want to include them in the repo
+# They'll get recreated automatically by a user when they run Grunt via the CLI
+_SpecRunner.html
+.grunt/grunt-contrib-jasmine
+node_modules
