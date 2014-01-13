@@ -1,5 +1,5 @@
 {
-  "name": "argenmap.jquery-v1",
+  "name": "argenmap.jquery",
   "version": "1.5.0",
   "devDependencies": {
     "grunt": "~0.4.2",
