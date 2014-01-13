@@ -1,10 +1,9 @@
 {
-  "name": "Argenmap v1",
+  "name": "argenmap.jquery-v1",
   "version": "1.5.0",
   "devDependencies": {
     "grunt": "~0.4.2",
-    "grunt-contrib-jshint": "~0.6.3"
-    "grunt-contrib-uglify": "~0.2.2"" 
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-uglify": "~0.2.2"
   }
 }
-  
