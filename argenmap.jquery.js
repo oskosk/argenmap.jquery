@@ -253,14 +253,14 @@
 
     this.encuadrar = function( extent ) {
       var _this = this,
-        s = extent.sur;
-        w = extent.oeste;
-        n = extent.norte;
-        e = extent.este;
+        s = extent.sur,
+        w = extent.oeste,
+        n = extent.norte,
+        e = extent.este,
         southwest = new google.maps.LatLng(s,w),
         northeast = new google.maps.LatLng(n,w),
         boundingbox = new google.maps.LatLngBounds(southwest, northeast);
-        _this.gmap.fitBounds( boundingbox);
+      _this.gmap.fitBounds( boundingbox);
     };    
 
     this.geocodificar = function ( str, callback ) {
@@ -285,9 +285,7 @@
       var len = this.length >>> 0;
 
       var from = Number(arguments[1]) || 0;
-      from = (from < 0)
-           ? Math.ceil(from)
-           : Math.floor(from);
+      from = (from < 0) ? Math.ceil(from) : Math.floor(from);
       if (from < 0)
         from += len;
 
@@ -769,7 +767,7 @@
       'border':0
     });
     var mapLogo_ = $('<img />').css({
-    	'height':'20px'
+      'height':'20px'
     });
     var mapLogoAnchor_ = $('<a style="float:left" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs"></a>').append(
       mapLogo_);
