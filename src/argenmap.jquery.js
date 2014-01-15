@@ -1,7 +1,10 @@
 /*
- * argenmap.jquery 
+ * argenmap.jquery v1
+ * 
+ * Licencia    : https://raw.github.com/oskosk/argenmap.jquery/master/LICENCIA
  * Web site    : http://ign.gob.ar/argenmap
  * Repositorio : http://github.com/oskosk/argenmap.jquery
+ * Issues      : https://github.com/oskosk/argenmap.jquery/issues
  * Contacto    : argenmap@ign.gob.ar
  * 
  * Instituto Geografico Nacional de Argentina
