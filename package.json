@@ -5,6 +5,10 @@
     "maps",
     "argentina"
   ],
+  "license": {
+         "type": "BSD-4",
+         "url": "https://raw.github.com/oskosk/argenmap.jquery/master/LICENCIA"
+  },
   "homepage": "http://ign.gob.ar/argenmap",
   "bugs": "http://github.com/oskosk/argenmap.jquery",
   "author": {
