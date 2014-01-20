@@ -1031,14 +1031,21 @@
       }
       var map = $(this).data('gmap');
       var o = jQuery.extend({}, defaults, opciones);
-      a.capasWms.push(o);
+      
       a.activarInfoMenu();
 
-      argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseWMS({
+      var capa = new argenmap.CapaBaseWMS({
         name: o.nombre,
         baseURL: o.url,
-        layers: o.capas
-      }));
+        layers: o.capas,
+      });
+
+      o.capa_objeto = capa;
+
+      a.capasWms.push(o);
+
+      argenmap.GmapAgregarCapaBase(map, capa);
+
     });
   };
 
@@ -1076,14 +1083,20 @@
       }
       var map = $(this).data('gmap');
       var o = jQuery.extend({}, defaults, opciones);
-      a.capasWms.push(o);
+
       a.activarInfoMenu();
 
-      argenmap.GmapAgregarCapa(map, new argenmap.CapaWMS({
+      var capa = new argenmap.CapaWMS({
         name: o.nombre,
         baseURL: o.url,
-        layers: o.capas
-      }));
+        layers: o.capas,
+      });
+
+      o.capa_objeto = capa;
+
+      a.capasWms.push(o);
+
+      argenmap.GmapAgregarCapa(map, capa);
     });
   };
 
