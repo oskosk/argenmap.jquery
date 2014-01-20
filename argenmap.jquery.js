@@ -91,6 +91,7 @@
     this._marcadores = {};
     this.capasWms = [];
     this.infoMenuActivado = false;
+    this._dragging = false;
 
     //-----------------------------------------------------------------------//
     // funciones de Argenmap
@@ -118,7 +119,9 @@
       var mapCanvas = argenmap._prepararContenedor(this.$el);
       
       this.gmap = map = new google.maps.Map(mapCanvas, _this.opts);
-
+      
+      _this.mapearEventosDelMapa();
+      
       this.$el.data('gmap', map);
 
         //Agrego la capa base del IGN a los tipos de mapas
@@ -241,6 +244,32 @@
       infow.open(_this.gmap);
       return;
     };
+
+    /*
+     * Mapa eventos del objeto google.maps.Map 
+     * a eventos de del objeto Jquery con .trigger()
+     */
+    this.mapearEventosDelMapa = function()
+    {
+      var _this = this;
+      google.maps.event.addListener(_this.gmap, "zoom_changed", function (e) {
+        _this.$el.trigger('zoomend', _this.gmap.getZoom());
+        _this.$el.trigger('moveend', [_this.gmap.getZoom(), _this.$el.centro()]);
+      });
+      google.maps.event.addListener(_this.gmap, "dragstart", function (e) {
+        _this._dragging = true;
+      });      
+      google.maps.event.addListener(_this.gmap, "dragend", function (e) {
+        _this._dragging = false;
+        _this.$el.trigger('moveend', [_this.gmap.getZoom(), _this.$el.centro()]);
+      });      
+      google.maps.event.addListener(_this.gmap, "center_changed", function (e) {
+        if (! _this._dragging) {
+          _this.$el.trigger('moveend', [_this.gmap.getZoom(), _this.$el.centro()]);
+        }
+      });            
+    };
+
     this.agregarCapaKML = function (opciones) {
       var _this = this,
         defaults = {
@@ -1125,6 +1154,7 @@
         return;
       }
       $(this).data('gmap').setZoom(zoom);
+
     });
   };
 
