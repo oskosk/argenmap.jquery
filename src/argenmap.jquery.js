@@ -493,7 +493,7 @@
 
     var wmsOptions = {
       alt: this.nombre,
-      getTileUrl: jQuery.proxy(this.getTileUrl, this),
+      getTileUrl: jQuery.proxy(argenmap.CapaWMS.getTileUrl, this),
       isPng: true,
       maxZoom: 17,
       minZoom: 3,
@@ -708,7 +708,7 @@
 
       var styles = "";
 
-      var transparent = this.transparent ? 'TRUE' : 'FALSE';
+      var transparent = this.transparente ? 'TRUE' : 'FALSE';
 
       var url = baseURL + "VERSION=" + version + "&SERVICE=WMS" + "&REQUEST=" + request + "&LAYERS=" + layers + "&STYLES=" + styles + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height + "&FORMAT=" + format + "&TRANSPARENT=" + transparent;
       return url;
