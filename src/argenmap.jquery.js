@@ -508,54 +508,6 @@
   };
 
   /**
-   * Devuelve la url para conseguir una tile de google maps equivalente
-   * en el servidor WMS
-   * @param {google.maps.MapTile} tile La tile de GMap que se necesita emular en el servidor WMS
-   * @param {Number} zoom El nivel de zoom actual. Utilizado para los cálculos de resoluciones
-   */
-  argenmap.CapaBaseWMS.prototype = {
-    getTileUrl : function (tile, zoom) {
-      var projection = this.gmap.getProjection();
-      var zpow = Math.pow(2, zoom);
-      var ul = new google.maps.Point(tile.x * 256.0 / zpow, (tile.y + 1) * 256.0 / zpow);
-      var lr = new google.maps.Point((tile.x + 1) * 256.0 / zpow, (tile.y) * 256.0 / zpow);
-
-      var ulw = projection.fromPointToLatLng(ul);
-
-      var lrw = projection.fromPointToLatLng(lr);
-      //The user will enter the address to the public WMS layer here.  The data must be in WGS84
-      var baseURL = this.url;
-      var version = "1.1.1";
-      var request = "GetMap";
-      var format = "image%2Fpng"; //type of image returned  or image/jpeg
-      //The layer ID.  Can be found when using the layers properties tool in ArcMap or from the WMS settings 
-      var layers = this.capas;
-      //projection to display. This is the projection of google map. Don't change unless you know what you are doing.  
-      //Different from other WMS servers that the projection information is called by crs, instead of srs
-
-
-      //usando mercator para pedir 3857
-      ulw = argenmap.latLngAMercator(ulw.lat(), ulw.lng());
-      lrw = argenmap.latLngAMercator(lrw.lat(), lrw.lng());
-
-      var crs = this.crs;
-      var bbox = ulw.lng + "," + ulw.lat + "," + lrw.lng + "," + lrw.lat;
-
-      var service = "WMS";
-      //the size of the tile, must be 256x256
-      var width = "256";
-      var height = "256";
-      //Some WMS come with named styles.  The user can set to default.
-      var styles = "";
-      //Establish the baseURL.  Several elements, including &EXCEPTIONS=INIMAGE and &Service are unique to openLayers addresses.
-
-      var url = baseURL + "LAYERS=" + layers + '&TRANSPARENT=FALSE' + "&VERSION=" + version + "&SERVICE=" + service + "&REQUEST=" + request + "&STYLES=" + styles + "&FORMAT=" + format + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height;
-      return url;
-    }
-  };
-
-
-  /**
    * @class Representa una capa TMS opaca que puede ser utilizada como capa base de los mapas
    * @constructor
    * @param {Object} opts opciones para construir la capa
