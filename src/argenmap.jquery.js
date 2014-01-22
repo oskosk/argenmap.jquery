@@ -462,93 +462,6 @@
     }
   };
 
-  /**
-   * @class Representa una capa TMS opaca que puede ser utilizada como capa base de los mapas
-   * @constructor
-   * @param {Object} opts opciones para construir la capa
-   * @export
-   */
-  argenmap.CapaBaseTMS = function (opts) {
-    /**
-     * Mantiene cache de tiles requeridas para no volver a pedir a distintos
-     * servidores del array
-     */
-    this.cache = new argenmap.cacheDeCliente();
-    /**
-     * El objeto ImageMapType q representa a esta capa en para la api de gmaps.
-     * @public 
-     * @type google.maps.ImageMapType
-     */
-    this.imageMapType = null;
-    /**
-     * Referencia al objeto map de google sobre el cual está capa está desplegada.
-     * Se setea con argenmap.agregarCapaBaseWMS().
-     * @public 
-     * @type google.maps.Map
-     */
-    this.gmap = null;
-    /**
-     * Un identificador de texto para esta capa. Este identificador
-     * es el que se mostrará en los selectores de capas del mapa.
-     * @public
-     * @default "Capa base WMS"
-     * @type google.maps.Map
-     */
-    this.name = "Capa base TMS";
-
-    this.tipo = 'tms-1.0.0';
-
-    jQuery.extend(this, opts);
-    //Creating the WMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
-    //wms layer is set 
-
-
-    var tmsOptions = {
-      alt: this.name,
-      getTileUrl: jQuery.proxy(this.getTileUrl, this),
-      isPng: true,
-      maxZoom: 17,
-      minZoom: 3,
-      name: this.name,
-      tileSize: new google.maps.Size(256, 256)
-
-    };
-
-
-    //Creating the object to create the ImageMapType that will call the WMS Layer Options.
-
-    this.imageMapType = new google.maps.ImageMapType(tmsOptions);
-  };
-
-  /**
-   * Devuelve la url para conseguir una tile de google maps equivalente
-   * en el servidor TMS
-   * @param {google.maps.MapTile} tile La tile de GMap que se necesita emular en el servidor WMS
-   * @param {Number} zoom El nivel de zoom actual. Utilizado para los cálculos de resoluciones
-   */
-  argenmap.CapaBaseTMS.prototype.getTileUrl = function (tile, zoom) {
-
-    var baseURL = this.baseURL;
-    if (typeof baseURL !== 'string') {
-      baseURL = selectURL(tile.x + '' + tile.y, baseURL);
-      var cached = this.cache.recuperar(tile.x,tile.y,zoom);
-      if(cached)
-      {
-        return cached;
-      }
-    }
-    var layers = this.layers;
-    /*
-     * Dark magic. Convierto la y de google a una y de TMS
-     * http://alastaira.wordpress.com/2011/07/06/converting-tms-tile-coordinates-to-googlebingosm-tile-coordinates/
-     */
-    var ytms = (1 << zoom) - tile.y - 1;
-    var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + '/' + ytms + ".png";
-    this.cache.guardar(tile.x,tile.y,zoom,url);
-    return url;
-  };
-
-
   argenmap.CapaWMS = function (opts) {
 
     var defaults = {
@@ -725,6 +638,92 @@
       this.cache.guardar(tile.x,tile.y,zoom,url);
       return url;
     }
+  };
+
+ /**
+   * @class Representa una capa TMS opaca que puede ser utilizada como capa base de los mapas
+   * @constructor
+   * @param {Object} opts opciones para construir la capa
+   * @export
+   */
+  argenmap.CapaBaseTMS = function (opts) {
+    /**
+     * Mantiene cache de tiles requeridas para no volver a pedir a distintos
+     * servidores del array
+     */
+    this.cache = new argenmap.cacheDeCliente();
+    /**
+     * El objeto ImageMapType q representa a esta capa en para la api de gmaps.
+     * @public 
+     * @type google.maps.ImageMapType
+     */
+    this.imageMapType = null;
+    /**
+     * Referencia al objeto map de google sobre el cual está capa está desplegada.
+     * Se setea con argenmap.agregarCapaBaseWMS().
+     * @public 
+     * @type google.maps.Map
+     */
+    this.gmap = null;
+    /**
+     * Un identificador de texto para esta capa. Este identificador
+     * es el que se mostrará en los selectores de capas del mapa.
+     * @public
+     * @default "Capa base WMS"
+     * @type google.maps.Map
+     */
+    this.name = "Capa base TMS";
+
+    this.tipo = 'tms-1.0.0';
+
+    jQuery.extend(this, opts);
+    //Creating the WMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
+    //wms layer is set 
+
+
+    var tmsOptions = {
+      alt: this.name,
+      getTileUrl: jQuery.proxy(this.getTileUrl, this),
+      isPng: true,
+      maxZoom: 17,
+      minZoom: 3,
+      name: this.name,
+      tileSize: new google.maps.Size(256, 256)
+
+    };
+
+
+    //Creating the object to create the ImageMapType that will call the WMS Layer Options.
+
+    this.imageMapType = new google.maps.ImageMapType(tmsOptions);
+  };
+
+  /**
+   * Devuelve la url para conseguir una tile de google maps equivalente
+   * en el servidor TMS
+   * @param {google.maps.MapTile} tile La tile de GMap que se necesita emular en el servidor WMS
+   * @param {Number} zoom El nivel de zoom actual. Utilizado para los cálculos de resoluciones
+   */
+  argenmap.CapaBaseTMS.prototype.getTileUrl = function (tile, zoom) {
+
+    var baseURL = this.baseURL;
+    if (typeof baseURL !== 'string') {
+      baseURL = selectURL(tile.x + '' + tile.y, baseURL);
+      var cached = this.cache.recuperar(tile.x,tile.y,zoom);
+      if(cached)
+      {
+        return cached;
+      }
+    }
+    var layers = this.layers;
+    /*
+     * Dark magic. Convierto la y de google a una y de TMS
+     * http://alastaira.wordpress.com/2011/07/06/converting-tms-tile-coordinates-to-googlebingosm-tile-coordinates/
+     */
+    var ytms = (1 << zoom) - tile.y - 1;
+    var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + '/' + ytms + ".png";
+    this.cache.guardar(tile.x,tile.y,zoom,url);
+    return url;
   };
 
   argenmap.CapaBaseArgenmap = function () {
