@@ -721,8 +721,10 @@
     argenmap.CapaBaseTMS.apply(this, [opts]);
   };
 
-  argenmap.CapaBaseArgenmap.prototype.getTileUrl = function () {
-    return argenmap.CapaBaseTMS.prototype.getTileUrl.apply(this, arguments);
+  argenmap.CapaBaseArgenmap.prototype = {
+    getTileUrl: function () {
+      return argenmap.CapaBaseTMS.prototype.getTileUrl.apply(this, arguments);
+    }
   };
 
   argenmap.CapaTMSArgenmap = function () {
