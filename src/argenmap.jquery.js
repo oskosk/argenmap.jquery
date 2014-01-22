@@ -1053,24 +1053,6 @@
     });
   };
 
-  $.fn.agregarCapaBaseTMS = function (opciones) {
-    //chainability
-    return this.each(function () {
-      var a = $(this).data('argenmap');
-      if (!a) {
-        return;
-      }
-
-      var map = $(this).data('gmap');
-
-      argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseTMS({
-        name: opciones.nombre,
-        baseURL: opciones.url,
-        layers: opciones.capas
-      }));
-    });
-  };
-
   $.fn.agregarCapaWMS = function (opciones) {
     //chainability
     return this.each(function () {
@@ -1088,6 +1070,24 @@
       a.capasWms.push( capa );
 
       argenmap.GmapAgregarCapa(map, capa);
+    });
+  };
+
+  $.fn.agregarCapaBaseTMS = function (opciones) {
+    //chainability
+    return this.each(function () {
+      var a = $(this).data('argenmap');
+      if (!a) {
+        return;
+      }
+
+      var map = $(this).data('gmap');
+
+      argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseTMS({
+        name: opciones.nombre,
+        baseURL: opciones.url,
+        layers: opciones.capas
+      }));
     });
   };
 
