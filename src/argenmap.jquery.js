@@ -470,42 +470,34 @@
    */
   argenmap.CapaBaseWMS = function (opts) {
 
-    /**
-     * El objeto ImageMapType q representa a esta capa en para la api de gmaps.
-     * @public 
-     * @type google.maps.ImageMapType
-     */
-    this.imageMapType = null;
-    /**
-     * Referencia al objeto map de google sobre el cual esta capa está desplegada.
-     * Se setea con argenmap.agregarCapaBaseWMS().
-     * @public 
-     * @type google.maps.Map
-     */
-    this.gmap = null;
-    /**
-     * Un identificador de texto para esta capa. Este identificador
-     * es el que se mostrará en los selectores de capas del mapa.
-     * @public
-     * @default "Capa base WMS"
-     * @type google.maps.Map
-     */
-    this.name = "Capa base WMS";
+    var defaults = {
+      // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
+      imageMapType : null,
+      // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
+      gmap : null,
+      tipo : 'wms-1.1.1',
+      url: "",
+      capas: "",
+        // Un identificador de texto para esta capa. Este identificador
+        // es el que se mostrará en los selectores de capas del mapa.      
+      nombre : 'Capa base WMS',
+      alt : 'Capa base WMS',
+      consultable: true,
+      crs: "EPSG:3857"
+    };
 
-    this.tipo = 'wms-1.1.1';
+    jQuery.extend(this, defaults, opts);
 
-    jQuery.extend(this, opts);
     //Creating the WMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
     //wms layer is set 
 
-
     var wmsOptions = {
-      alt: this.name,
+      alt: this.nombre,
       getTileUrl: jQuery.proxy(this.getTileUrl, this),
       isPng: true,
       maxZoom: 17,
       minZoom: 3,
-      name: this.name,
+      name: this.nombre,
       tileSize: new google.maps.Size(256, 256)
 
     };
@@ -515,52 +507,51 @@
     this.imageMapType = new google.maps.ImageMapType(wmsOptions);
   };
 
-
-
-
   /**
    * Devuelve la url para conseguir una tile de google maps equivalente
    * en el servidor WMS
    * @param {google.maps.MapTile} tile La tile de GMap que se necesita emular en el servidor WMS
    * @param {Number} zoom El nivel de zoom actual. Utilizado para los cálculos de resoluciones
    */
-  argenmap.CapaBaseWMS.prototype.getTileUrl = function (tile, zoom) {
-    var projection = this.gmap.getProjection();
-    var zpow = Math.pow(2, zoom);
-    var ul = new google.maps.Point(tile.x * 256.0 / zpow, (tile.y + 1) * 256.0 / zpow);
-    var lr = new google.maps.Point((tile.x + 1) * 256.0 / zpow, (tile.y) * 256.0 / zpow);
+  argenmap.CapaBaseWMS.prototype = {
+    getTileUrl : function (tile, zoom) {
+      var projection = this.gmap.getProjection();
+      var zpow = Math.pow(2, zoom);
+      var ul = new google.maps.Point(tile.x * 256.0 / zpow, (tile.y + 1) * 256.0 / zpow);
+      var lr = new google.maps.Point((tile.x + 1) * 256.0 / zpow, (tile.y) * 256.0 / zpow);
 
-    var ulw = projection.fromPointToLatLng(ul);
+      var ulw = projection.fromPointToLatLng(ul);
 
-    var lrw = projection.fromPointToLatLng(lr);
-    //The user will enter the address to the public WMS layer here.  The data must be in WGS84
-    var baseURL = this.baseURL;
-    var version = "1.1.1";
-    var request = "GetMap";
-    var format = "image%2Fpng"; //type of image returned  or image/jpeg
-    //The layer ID.  Can be found when using the layers properties tool in ArcMap or from the WMS settings 
-    var layers = this.layers;
-    //projection to display. This is the projection of google map. Don't change unless you know what you are doing.  
-    //Different from other WMS servers that the projection information is called by crs, instead of srs
+      var lrw = projection.fromPointToLatLng(lr);
+      //The user will enter the address to the public WMS layer here.  The data must be in WGS84
+      var baseURL = this.url;
+      var version = "1.1.1";
+      var request = "GetMap";
+      var format = "image%2Fpng"; //type of image returned  or image/jpeg
+      //The layer ID.  Can be found when using the layers properties tool in ArcMap or from the WMS settings 
+      var layers = this.capas;
+      //projection to display. This is the projection of google map. Don't change unless you know what you are doing.  
+      //Different from other WMS servers that the projection information is called by crs, instead of srs
 
 
-    //usando mercator para pedir 3857
-    ulw = argenmap.latLngAMercator(ulw.lat(), ulw.lng());
-    lrw = argenmap.latLngAMercator(lrw.lat(), lrw.lng());
+      //usando mercator para pedir 3857
+      ulw = argenmap.latLngAMercator(ulw.lat(), ulw.lng());
+      lrw = argenmap.latLngAMercator(lrw.lat(), lrw.lng());
 
-    var crs = "EPSG:3857";
-    var bbox = ulw.lng + "," + ulw.lat + "," + lrw.lng + "," + lrw.lat;
+      var crs = this.crs;
+      var bbox = ulw.lng + "," + ulw.lat + "," + lrw.lng + "," + lrw.lat;
 
-    var service = "WMS";
-    //the size of the tile, must be 256x256
-    var width = "256";
-    var height = "256";
-    //Some WMS come with named styles.  The user can set to default.
-    var styles = "";
-    //Establish the baseURL.  Several elements, including &EXCEPTIONS=INIMAGE and &Service are unique to openLayers addresses.
+      var service = "WMS";
+      //the size of the tile, must be 256x256
+      var width = "256";
+      var height = "256";
+      //Some WMS come with named styles.  The user can set to default.
+      var styles = "";
+      //Establish the baseURL.  Several elements, including &EXCEPTIONS=INIMAGE and &Service are unique to openLayers addresses.
 
-    var url = baseURL + "LAYERS=" + layers + '&TRANSPARENT=FALSE' + "&VERSION=" + version + "&SERVICE=" + service + "&REQUEST=" + request + "&STYLES=" + styles + "&FORMAT=" + format + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height;
-    return url;
+      var url = baseURL + "LAYERS=" + layers + '&TRANSPARENT=FALSE' + "&VERSION=" + version + "&SERVICE=" + service + "&REQUEST=" + request + "&STYLES=" + styles + "&FORMAT=" + format + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height;
+      return url;
+    }
   };
 
 
@@ -1027,26 +1018,14 @@
       if (!a) {
         return;
       }
-      var defaults = {
-        name: "Capa base WMS",
-        baseURL: "",
-        layers: "",
-        consultable: true
-      }
+
       var map = $(this).data('gmap');
-      var o = jQuery.extend({}, defaults, opciones);
       
       a.activarInfoMenu();
 
-      var capa = new argenmap.CapaBaseWMS({
-        name: o.nombre,
-        baseURL: o.url,
-        layers: o.capas,
-      });
+      var capa = new argenmap.CapaBaseWMS( opciones );
 
-      o.capa_objeto = capa;
-
-      a.capasWms.push(o);
+      a.capasWms.push( capa );
 
       argenmap.GmapAgregarCapaBase(map, capa);
 
