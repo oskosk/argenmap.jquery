@@ -652,27 +652,31 @@
 
 
   argenmap.CapaWMS = function (opts) {
-    // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
-    this.imageMapType = null;
-    // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
-    this.gmap = null;
 
-    this.tipo = 'wms-1.1.1';
+    var defaults = {
+      // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
+      imageMapType : null,
+      // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
+      gmap : null,
+      tipo : 'wms-1.1.1',
+      url: "",
+      capas: "",
+      nombre : 'Capa WMS',
+      alt : 'Capa WMS',
+      consultable: true
+    };
 
-    this.name = 'CAPA WMS';
-    this.alt = 'CAPA WMS';
-    jQuery.extend(this, opts);
+    jQuery.extend(this, defaults, opts);
+    
     //Creating the WMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
     //wms layer is set 
-
-
     var wmsOptions = {
       alt: this.alt,
       getTileUrl: jQuery.proxy(this.getTileUrl, this),
       isPng: false,
       maxZoom: 17,
       minZoom: 6,
-      name: this.name,
+      name: this.nombre,
       tileSize: new google.maps.Size(256, 256)
     };
 
@@ -682,38 +686,37 @@
 
   };
 
-  argenmap.CapaWMS.prototype.getTileUrl = function (tile, zoom) {
+  argenmap.CapaWMS.prototype = {
+    getTileUrl : function (tile, zoom) {
+      var projection = this.gmap.getProjection();
+      var zpow = Math.pow(2, zoom);
 
+      var ul = new google.maps.Point(tile.x * 256.0 / zpow, (tile.y + 1) * 256.0 / zpow);
+      var lr = new google.maps.Point((tile.x + 1) * 256.0 / zpow, (tile.y) * 256.0 / zpow);
+      var ulw = projection.fromPointToLatLng(ul);
+      var lrw = projection.fromPointToLatLng(lr);
+      //The user will enter the address to the public WMS layer here.  The data must be in WGS84
+      var baseURL = this.url;
+      var version = "1.1.1";
+      var request = "GetMap";
+      var format = "image/png"; //type of image returned 
+      var layers = this.capas;
 
+      //usando mercator para pedir 900913
+      ulw = argenmap.latLngAMercator(ulw.lat(), ulw.lng());
+      lrw = argenmap.latLngAMercator(lrw.lat(), lrw.lng());
 
-    var projection = this.gmap.getProjection();
-    var zpow = Math.pow(2, zoom);
+      var crs = "EPSG:3857";
+      var bbox = ulw.lng + "," + ulw.lat + "," + lrw.lng + "," + lrw.lat;
 
-    var ul = new google.maps.Point(tile.x * 256.0 / zpow, (tile.y + 1) * 256.0 / zpow);
-    var lr = new google.maps.Point((tile.x + 1) * 256.0 / zpow, (tile.y) * 256.0 / zpow);
-    var ulw = projection.fromPointToLatLng(ul);
-    var lrw = projection.fromPointToLatLng(lr);
-    //The user will enter the address to the public WMS layer here.  The data must be in WGS84
-    var baseURL = this.baseURL;
-    var version = "1.1.1";
-    var request = "GetMap";
-    var format = "image/png"; //type of image returned 
-    var layers = this.layers;
+      var width = "256";
+      var height = "256";
 
-    //usando mercator para pedir 900913
-    ulw = argenmap.latLngAMercator(ulw.lat(), ulw.lng());
-    lrw = argenmap.latLngAMercator(lrw.lat(), lrw.lng());
+      var styles = "";
 
-    var crs = "EPSG:3857";
-    var bbox = ulw.lng + "," + ulw.lat + "," + lrw.lng + "," + lrw.lat;
-
-    var width = "256";
-    var height = "256";
-
-    var styles = "";
-
-    var url = baseURL + "VERSION=" + version + "&SERVICE=WMS" + "&REQUEST=" + request + "&LAYERS=" + layers + "&STYLES=" + styles + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height + "&FORMAT=" + format + "&TRANSPARENT=TRUE";
-    return url;
+      var url = baseURL + "VERSION=" + version + "&SERVICE=WMS" + "&REQUEST=" + request + "&LAYERS=" + layers + "&STYLES=" + styles + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height + "&FORMAT=" + format + "&TRANSPARENT=TRUE";
+      return url;
+    }
   };
 
   argenmap.CapaTMS = function (opts) {
@@ -1075,26 +1078,15 @@
         return;
       }
 
-      var defaults = {
-        nombre: "Capa WMS",
-        url: "",
-        capas: "",
-        consultable: true
-      }
       var map = $(this).data('gmap');
-      var o = jQuery.extend({}, defaults, opciones);
 
       a.activarInfoMenu();
 
-      var capa = new argenmap.CapaWMS({
-        name: o.nombre,
-        baseURL: o.url,
-        layers: o.capas,
-      });
+      var capa = new argenmap.CapaWMS( opciones );
 
-      o.capa_objeto = capa;
+      opciones.capa_objeto = capa;
 
-      a.capasWms.push(o);
+      a.capasWms.push(opciones);
 
       argenmap.GmapAgregarCapa(map, capa);
     });
