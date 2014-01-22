@@ -463,51 +463,6 @@
   };
 
   /**
-   * @class Representa una capa WMS opaca que puede ser utilizada como capa base de los mapas
-   * @constructor
-   * @param {Object} opts opciones para construir la capa
-   * @export
-   */
-  argenmap.CapaBaseWMS = function (opts) {
-
-    var defaults = {
-      // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
-      imageMapType : null,
-      // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
-      gmap : null,
-      tipo : 'wms-1.1.1',
-      url: "",
-      capas: "",
-        // Un identificador de texto para esta capa. Este identificador
-        // es el que se mostrará en los selectores de capas del mapa.      
-      nombre : 'Capa base WMS',
-      consultable: true,
-      crs: "EPSG:3857",
-      transparente: false
-    };
-
-    jQuery.extend(this, defaults, opts);
-
-    //Creating the WMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
-    //wms layer is set 
-
-    var wmsOptions = {
-      alt: this.nombre,
-      getTileUrl: jQuery.proxy(argenmap.CapaWMS.getTileUrl, this),
-      isPng: true,
-      maxZoom: 17,
-      minZoom: 3,
-      name: this.nombre,
-      tileSize: new google.maps.Size(256, 256)
-
-    };
-
-    //Creating the object to create the ImageMapType that will call the WMS Layer Options.
-
-    this.imageMapType = new google.maps.ImageMapType(wmsOptions);
-  };
-
-  /**
    * @class Representa una capa TMS opaca que puede ser utilizada como capa base de los mapas
    * @constructor
    * @param {Object} opts opciones para construir la capa
@@ -665,6 +620,51 @@
       var url = baseURL + "VERSION=" + version + "&SERVICE=WMS" + "&REQUEST=" + request + "&LAYERS=" + layers + "&STYLES=" + styles + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height + "&FORMAT=" + format + "&TRANSPARENT=" + transparent;
       return url;
     }
+  };
+
+  /**
+   * @class Representa una capa WMS opaca que puede ser utilizada como capa base de los mapas
+   * @constructor
+   * @param {Object} opts opciones para construir la capa
+   * @export
+   */
+  argenmap.CapaBaseWMS = function (opts) {
+
+    var defaults = {
+      // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
+      imageMapType : null,
+      // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
+      gmap : null,
+      tipo : 'wms-1.1.1',
+      url: "",
+      capas: "",
+        // Un identificador de texto para esta capa. Este identificador
+        // es el que se mostrará en los selectores de capas del mapa.      
+      nombre : 'Capa base WMS',
+      consultable: true,
+      crs: "EPSG:3857",
+      transparente: false
+    };
+
+    jQuery.extend(this, defaults, opts);
+
+    //Creating the WMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
+    //wms layer is set 
+
+    var wmsOptions = {
+      alt: this.nombre,
+      getTileUrl: jQuery.proxy(argenmap.CapaWMS.getTileUrl, this),
+      isPng: true,
+      maxZoom: 17,
+      minZoom: 3,
+      name: this.nombre,
+      tileSize: new google.maps.Size(256, 256)
+
+    };
+
+    //Creating the object to create the ImageMapType that will call the WMS Layer Options.
+
+    this.imageMapType = new google.maps.ImageMapType(wmsOptions);
   };
 
   argenmap.CapaTMS = function (opts) {
