@@ -481,7 +481,6 @@
         // Un identificador de texto para esta capa. Este identificador
         // es el que se mostrará en los selectores de capas del mapa.      
       nombre : 'Capa base WMS',
-      alt : 'Capa base WMS',
       consultable: true,
       crs: "EPSG:3857"
     };
@@ -652,10 +651,12 @@
       tipo : 'wms-1.1.1',
       url: "",
       capas: "",
+        // Un identificador de texto para esta capa. Este identificador
+        // es el que se mostrará en los selectores de capas del mapa.       
       nombre : 'Capa WMS',
-      alt : 'Capa WMS',
       consultable: true,
-      crs: "EPSG:3857"
+      crs: "EPSG:3857",
+      transparente: true
     };
 
     jQuery.extend(this, defaults, opts);
@@ -663,7 +664,7 @@
     //Creating the WMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
     //wms layer is set 
     var wmsOptions = {
-      alt: this.alt,
+      alt: this.nombre,
       getTileUrl: jQuery.proxy(this.getTileUrl, this),
       isPng: false,
       maxZoom: 17,
@@ -706,7 +707,9 @@
 
       var styles = "";
 
-      var url = baseURL + "VERSION=" + version + "&SERVICE=WMS" + "&REQUEST=" + request + "&LAYERS=" + layers + "&STYLES=" + styles + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height + "&FORMAT=" + format + "&TRANSPARENT=TRUE";
+      var transparent = this.transparent ? 'TRUE' : 'FALSE';
+
+      var url = baseURL + "VERSION=" + version + "&SERVICE=WMS" + "&REQUEST=" + request + "&LAYERS=" + layers + "&STYLES=" + styles + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height + "&FORMAT=" + format + "&TRANSPARENT=" + transparent;
       return url;
     }
   };
