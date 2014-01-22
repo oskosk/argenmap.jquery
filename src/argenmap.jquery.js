@@ -703,28 +703,29 @@
 
   };
 
-  argenmap.CapaTMS.prototype.getTileUrl = function (tile, zoom) {
-
-    var baseURL = this.baseURL;
-    if (typeof baseURL !== 'string') {
-      baseURL = selectURL(tile.x + '' + tile.y, baseURL);
-      var cached = this.cache.recuperar(tile.x,tile.y,zoom);
-      if(cached)
-      {
-        return cached;
+  argenmap.CapaTMS.prototype = {
+    getTileUrl: function (tile, zoom) {
+      var baseURL = this.baseURL;
+      if (typeof baseURL !== 'string') {
+        baseURL = selectURL(tile.x + '' + tile.y, baseURL);
+        var cached = this.cache.recuperar(tile.x,tile.y,zoom);
+        if(cached)
+        {
+          return cached;
+        }
       }
+      var layers = this.layers;
+      /*
+       * Dark magic. Convierto la y de google a una y de TMS
+       * http://alastaira.wordpress.com/2011/07/06/converting-tms-tile-coordinates-to-googlebingosm-tile-coordinates/
+       */
+      var ytms = (1 << zoom) - tile.y - 1;
+      var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + '/' + ytms + ".png";
+      this.cache.guardar(tile.x,tile.y,zoom,url);
+      return url;
     }
-    var layers = this.layers;
-    /*
-     * Dark magic. Convierto la y de google a una y de TMS
-     * http://alastaira.wordpress.com/2011/07/06/converting-tms-tile-coordinates-to-googlebingosm-tile-coordinates/
-     */
-    var ytms = (1 << zoom) - tile.y - 1;
-    var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + '/' + ytms + ".png";
-    this.cache.guardar(tile.x,tile.y,zoom,url);
-    return url;
   };
-
+  
   argenmap.CapaBaseArgenmap = function () {
     var opts = {
       name: 'Mapa IGN',
