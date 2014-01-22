@@ -482,7 +482,8 @@
         // es el que se mostrará en los selectores de capas del mapa.      
       nombre : 'Capa base WMS',
       consultable: true,
-      crs: "EPSG:3857"
+      crs: "EPSG:3857",
+      transparente: false
     };
 
     jQuery.extend(this, defaults, opts);
