@@ -1,7 +1,7 @@
 /*!
  * argenmap.jquery v1
  * 
- * Version     : 1.5.0 (2014-01-15)
+ * Version     : 1.5.0 (2014-01-22)
  * Licencia    : https://raw.github.com/oskosk/argenmap.jquery/master/LICENCIA
  * Web site    : http://ign.gob.ar/argenmap
  * Repositorio : http://github.com/oskosk/argenmap.jquery
@@ -43,6 +43,8 @@
         this.opts = $.extend({}, _defaults, opciones);
         this.gmap = null;
         this._marcadores = {};
+        this.capasWms = [];
+        this.infoMenuActivado = false;
         this._dragging = false;
         this.init = function() {
             var _this = this;
@@ -64,6 +66,86 @@
             argenmap.GmapAgregarCapa(map, new argenmap.CapaTMSArgenmap());
             this.gmap.setMapTypeId("Mapa IGN");
             return true;
+        };
+        this.activarInfoMenu = function() {
+            if (this.infoMenuActivado === true) {
+                return;
+            }
+            this.infoMenuActivado = true;
+            google.maps.event.addListener(map, "click", $.proxy(this.mostrarInfoMenu, this));
+            $(".argenmapMapCanvas").on("mouseenter", "a.argenmapFeatureInfo", function(e) {
+                $(this).css({
+                    "background-color": "#1C74A5",
+                    color: "white"
+                });
+            });
+            $(".argenmapMapCanvas").on("mouseleave", "a.argenmapFeatureInfo", function(e) {
+                $(this).css({
+                    "background-color": "transparent",
+                    color: "#1C74A5"
+                });
+            });
+            $(".argenmapMapCanvas").on("click", "a.argenmapFeatureInfo", $.proxy(this.pedirInformacion, this));
+        };
+        this.desactivarInfoMenu = function() {
+            google.maps.event.clearListeners(map, "click");
+        };
+        this.mostrarInfoMenu = function(event) {
+            var infow = this.infoWindow();
+            infow.close();
+            var c = '<div id="infoMenu" style="width:200px;margin:0;padding:0">Lat/Long: <br /><strong>' + parseInt(event.latLng.lat() * 1e4, 10) / 1e4 + ", " + parseInt(event.latLng.lng() * 1e4, 10) / 1e4 + "</strong></div>" + '<a style="color:#1C74A5;text-decoration:none;display:block;padding:3px;" data-y="' + event.pixel.y + '" ' + 'data-x="' + event.pixel.x + '" data-maxwidth="' + parseInt(this.$el.width() * .6, 10) + '" href="#" class="argenmapFeatureInfo">Obtener información</a>';
+            infow.setOptions({
+                position: event.latLng,
+                maxWidth: 500,
+                content: c
+            });
+            infow.open(this.gmap);
+        };
+        this.pedirInformacion = function(event) {
+            var _this = this;
+            var infow = _this.infoWindow();
+            infow.close();
+            event.preventDefault();
+            if (_this.capasWms.length === 0) {
+                alert("No hay capas para consultar");
+                return false;
+            }
+            var content = $('<div style="width:500px"  />');
+            var x = parseInt($(event.currentTarget).data("x"), 10);
+            var y = parseInt($(event.currentTarget).data("y"), 10);
+            var sw = _this.gmap.getBounds().getSouthWest();
+            var ne = _this.gmap.getBounds().getNorthEast();
+            var version = "1.1.1";
+            var request = "GetFeatureInfo";
+            var nw = {
+                lat: ne.lat(),
+                lng: sw.lng()
+            };
+            var se = {
+                lat: sw.lat(),
+                lng: ne.lng()
+            };
+            var crs = "EPSG:4326";
+            var bbox = sw.lng() + "," + sw.lat() + "," + ne.lng() + "," + ne.lat();
+            var service = "WMS";
+            var width = _this.$el.width();
+            var height = _this.$el.height();
+            var styles = "";
+            $.each(_this.capasWms, function(i, e) {
+                if (e.consultable !== true) {
+                    return;
+                }
+                var baseURL = e.url;
+                var layers = e.capas;
+                var url = baseURL + "SERVICE=" + service + "&VERSION=" + version + "&REQUEST=" + request + "&LAYERS=" + layers + "&STYLES=" + styles + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height + "&QUERY_LAYERS=" + layers + "&FEATURE_COUNT=50" + "&X=" + x + "&Y=" + y + "&INFO_FORMAT=text/html";
+                var disclaimer = '<p style="margin:0;padding:0;font-size:12px;line-height:12px;">Los datos a continuación son provistos por:<br />' + " <strong>" + baseURL + "</strong><br />" + '<a target="_otra" href="' + url + '">Abrir en otra ventana</a></p>';
+                content.append(disclaimer);
+                content.append('<iframe src="' + url + '" style="margin:0;padding:0;width:480px;display:block;border:none;" />');
+                content.append("<hr />");
+            });
+            infow.setContent($("<div>").append(content).html());
+            infow.open(_this.gmap);
+            return;
         };
         this.mapearEventosDelMapa = function() {
             var _this = this;
@@ -92,10 +174,11 @@
             opciones = $.extend(defaults, opciones);
             var kml = new google.maps.KmlLayer(opciones);
         };
-        this.infoWindow = function() {
+        this.infoWindow = function(opciones) {
             if (this._infoWindow === undefined) {
                 this._infoWindow = new google.maps.InfoWindow();
             }
+            this._infoWindow.setOptions($.extend({}, opciones));
             return this._infoWindow;
         };
         this.agregarMarcador = function(opciones) {
@@ -127,8 +210,9 @@
                 if (!opciones.contenido) {
                     return;
                 }
-                _this.infoWindow().open(_this.$el.data("gmap"), m);
+                _this.infoWindow().close();
                 _this.infoWindow().setContent(opciones.contenido);
+                _this.infoWindow().open(_this.$el.data("gmap"), m);
             });
             return;
         };
@@ -462,7 +546,7 @@
                 if ($w !== $this.width() || $h !== $this.height()) {
                     $w = $this.width();
                     $h = $this.height();
-                    jQuery.event.handle.call(self, {
+                    jQuery.event.dispatch.call(self, {
                         type: "resized"
                     });
                 }
@@ -497,12 +581,23 @@
             if (!a) {
                 return;
             }
+            var defaults = {
+                name: "Capa base WMS",
+                baseURL: "",
+                layers: "",
+                consultable: true
+            };
             var map = $(this).data("gmap");
-            argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseWMS({
-                name: opciones.nombre,
-                baseURL: opciones.url,
-                layers: opciones.capas
-            }));
+            var o = jQuery.extend({}, defaults, opciones);
+            a.activarInfoMenu();
+            var capa = new argenmap.CapaBaseWMS({
+                name: o.nombre,
+                baseURL: o.url,
+                layers: o.capas
+            });
+            o.capa_objeto = capa;
+            a.capasWms.push(o);
+            argenmap.GmapAgregarCapaBase(map, capa);
         });
     };
     $.fn.agregarCapaBaseTMS = function(opciones) {
@@ -525,12 +620,23 @@
             if (!a) {
                 return;
             }
+            var defaults = {
+                nombre: "Capa WMS",
+                url: "",
+                capas: "",
+                consultable: true
+            };
             var map = $(this).data("gmap");
-            argenmap.GmapAgregarCapa(map, new argenmap.CapaWMS({
-                name: opciones.nombre,
-                baseURL: opciones.url,
-                layers: opciones.capas
-            }));
+            var o = jQuery.extend({}, defaults, opciones);
+            a.activarInfoMenu();
+            var capa = new argenmap.CapaWMS({
+                name: o.nombre,
+                baseURL: o.url,
+                layers: o.capas
+            });
+            o.capa_objeto = capa;
+            a.capasWms.push(o);
+            argenmap.GmapAgregarCapa(map, capa);
         });
     };
     $.fn.agregarCapaTMS = function(opciones) {
