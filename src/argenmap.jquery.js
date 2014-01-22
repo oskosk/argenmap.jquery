@@ -735,15 +735,17 @@
     };
     argenmap.CapaTMS.apply(this, [opts]);
   };
-  argenmap.CapaTMSArgenmap.prototype.getTileUrl = function (a, b) {
-    // Solo cargo tiles para este overlay
-    // si estoy en la capa satelite
-    if (this.gmap.getMapTypeId() !== 'satellite') {
-      return false;
+  argenmap.CapaTMSArgenmap.prototype = {
+    getTileUrl: function (a, b) {
+      // Solo cargo tiles para este overlay
+      // si estoy en la capa satelite
+      if (this.gmap.getMapTypeId() !== 'satellite') {
+        return false;
+      }
+      return argenmap.CapaTMS.prototype.getTileUrl.apply(this, arguments);
     }
-    return argenmap.CapaTMS.prototype.getTileUrl.apply(this, arguments);
-
   };
+  
   argenmap.GmapAgregarCapaBase = function (gmap, capa) {
     var mapTypeIds;
 
