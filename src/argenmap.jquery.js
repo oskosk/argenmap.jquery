@@ -669,7 +669,7 @@
 
     var tmsOptions = {
       alt: this.nombre,
-      getTileUrl: jQuery.proxy(this.getTileUrl, this),
+      getTileUrl: jQuery.proxy(argenmap.CapaTMS.prototype.getTileUrl, this),
       isPng: true,
       maxZoom: 17,
       minZoom: 3,
@@ -682,34 +682,6 @@
     //Creating the object to create the ImageMapType that will call the WMS Layer Options.
 
     this.imageMapType = new google.maps.ImageMapType(tmsOptions);
-  };
-
-  /**
-   * Devuelve la url para conseguir una tile de google maps equivalente
-   * en el servidor TMS
-   * @param {google.maps.MapTile} tile La tile de GMap que se necesita emular en el servidor WMS
-   * @param {Number} zoom El nivel de zoom actual. Utilizado para los cálculos de resoluciones
-   */
-  argenmap.CapaBaseTMS.prototype.getTileUrl = function (tile, zoom) {
-
-    var baseURL = this.url;
-    if (typeof baseURL !== 'string') {
-      baseURL = selectURL(tile.x + '' + tile.y, baseURL);
-      var cached = this.cache.recuperar(tile.x,tile.y,zoom);
-      if(cached)
-      {
-        return cached;
-      }
-    }
-    var layers = this.capas;
-    /*
-     * Dark magic. Convierto la y de google a una y de TMS
-     * http://alastaira.wordpress.com/2011/07/06/converting-tms-tile-coordinates-to-googlebingosm-tile-coordinates/
-     */
-    var ytms = (1 << zoom) - tile.y - 1;
-    var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + '/' + ytms + ".png";
-    this.cache.guardar(tile.x,tile.y,zoom,url);
-    return url;
   };
 
   argenmap.CapaBaseArgenmap = function () {
@@ -745,7 +717,7 @@
       return argenmap.CapaTMS.prototype.getTileUrl.apply(this, arguments);
     }
   };
-  
+
   argenmap.GmapAgregarCapaBase = function (gmap, capa) {
     var mapTypeIds;
 
