@@ -1,0 +1,34 @@
+{
+  "name": "argenmap.jquery",
+  "description": "Mapas web del IGN y jQuery",
+  "keywords": [
+    "maps",
+    "argentina"
+  ],
+  "license": {
+         "type": "BSD-4",
+         "url": "https://raw.github.com/oskosk/argenmap.jquery/master/LICENCIA"
+  },
+  "homepage": "http://ign.gob.ar/argenmap",
+  "bugs": "http://github.com/oskosk/argenmap.jquery",
+  "author": {
+    "name": "Instituto Geográfico Nacional de Argentina",
+    "url": "http://www.ign.gob.ar"
+  },
+  "contributors": [
+    {
+      "name": "Oscar Lopez",
+      "url": "http://github.com/oskosk"
+    },
+    {
+      "name": "Christian Gastrell",
+      "url": "http://github.com/cgastrell"
+    }
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-uglify": "~0.2.2"
+  },
+  "version": "1.5.0"
+}
