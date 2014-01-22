@@ -653,7 +653,7 @@
 
     var wmsOptions = {
       alt: this.nombre,
-      getTileUrl: jQuery.proxy(argenmap.CapaWMS.getTileUrl, this),
+      getTileUrl: jQuery.proxy(argenmap.CapaWMS.prototype.getTileUrl, this),
       isPng: true,
       maxZoom: 17,
       minZoom: 3,
@@ -725,7 +725,7 @@
       return url;
     }
   };
-  
+
   argenmap.CapaBaseArgenmap = function () {
     var opts = {
       name: 'Mapa IGN',
