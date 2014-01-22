@@ -663,7 +663,8 @@
       capas: "",
       nombre : 'Capa WMS',
       alt : 'Capa WMS',
-      consultable: true
+      consultable: true,
+      crs: "EPSG:3857"
     };
 
     jQuery.extend(this, defaults, opts);
@@ -706,7 +707,7 @@
       ulw = argenmap.latLngAMercator(ulw.lat(), ulw.lng());
       lrw = argenmap.latLngAMercator(lrw.lat(), lrw.lng());
 
-      var crs = "EPSG:3857";
+      var crs = this.crs;
       var bbox = ulw.lng + "," + ulw.lat + "," + lrw.lng + "," + lrw.lat;
 
       var width = "256";
@@ -1084,9 +1085,7 @@
 
       var capa = new argenmap.CapaWMS( opciones );
 
-      opciones.capa_objeto = capa;
-
-      a.capasWms.push(opciones);
+      a.capasWms.push( capa );
 
       argenmap.GmapAgregarCapa(map, capa);
     });
