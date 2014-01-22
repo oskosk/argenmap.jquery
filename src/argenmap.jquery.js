@@ -668,32 +668,33 @@
   };
 
   argenmap.CapaTMS = function (opts) {
-    /**
-     * Mantiene cache de tiles requeridas para no volver a pedir a distintos
-     * servidores del array
-     */
-    this.cache = new argenmap.cacheDeCliente();
-    // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
-    this.imageMapType = null;
-    // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
-    this.gmap = null;
+    var defaults = {
+        // Mantiene cache de tiles requeridas para no volver a pedir a distintos
+        // servidores del array
+      cache: new argenmap.cacheDeCliente(),
+        // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
+      imageMapType: null,
+      // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
+      gmap:  null,
+      tipo: 'tms-1.0.0',
+      nombre: 'CAPA TMS',
+      url: "",
+      capas: ""
+    };
 
-    this.tipo = 'tms-1.0.0';
+    jQuery.extend(this, defaults, opts);
 
-    this.name = 'CAPA TMS';
-    this.alt = 'CAPA TMS';
-    jQuery.extend(this, opts);
     //Creating the TMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
     //wms layer is set 
 
 
     var tmsOptions = {
-      alt: this.alt,
+      alt: this.nombre,
       getTileUrl: jQuery.proxy(this.getTileUrl, this),
       isPng: false,
       maxZoom: 17,
       minZoom: 6,
-      name: this.name,
+      name: this.nombre,
       tileSize: new google.maps.Size(256, 256)
     };
 
@@ -705,7 +706,7 @@
 
   argenmap.CapaTMS.prototype = {
     getTileUrl: function (tile, zoom) {
-      var baseURL = this.baseURL;
+      var baseURL = this.url;
       if (typeof baseURL !== 'string') {
         baseURL = selectURL(tile.x + '' + tile.y, baseURL);
         var cached = this.cache.recuperar(tile.x,tile.y,zoom);
@@ -714,7 +715,7 @@
           return cached;
         }
       }
-      var layers = this.layers;
+      var layers = this.capas;
       /*
        * Dark magic. Convierto la y de google a una y de TMS
        * http://alastaira.wordpress.com/2011/07/06/converting-tms-tile-coordinates-to-googlebingosm-tile-coordinates/
@@ -1037,11 +1038,7 @@
 
       var map = $(this).data('gmap');
 
-      argenmap.GmapAgregarCapaTMS(map, new argenmap.CapaTMS({
-        name: opciones.nombre,
-        baseURL: opciones.url,
-        layers: opciones.capas
-      }));
+      argenmap.GmapAgregarCapaTMS(map, new argenmap.CapaTMS( opciones) );
     });
   };
 
