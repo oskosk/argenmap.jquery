@@ -1020,11 +1020,7 @@
 
       var map = $(this).data('gmap');
 
-      argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseTMS({
-        name: opciones.nombre,
-        baseURL: opciones.url,
-        layers: opciones.capas
-      }));
+      argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseTMS( opciones ) );
     });
   };
 
