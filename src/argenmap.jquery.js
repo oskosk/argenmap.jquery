@@ -729,9 +729,9 @@
 
   argenmap.CapaTMSArgenmap = function () {
     var opts = {
-      name: 'IGN',
-      baseURL: IGN_CACHES,
-      layers: 'capabasesigign'
+      nombre: 'IGN',
+      url: IGN_CACHES,
+      capas: 'capabasesigign'
     };
     argenmap.CapaTMS.apply(this, [opts]);
   };
