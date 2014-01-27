@@ -30,36 +30,7 @@
 
   $.argenmap.BASE_URL = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
 
-   // {Float} Used to hash URL param strings for multi-WMS server selection.
-   //        Set to the Golden Ratio per Knuth's recommendation.
-  $.argenmap.URL_HASH_FACTOR = (Math.sqrt(5) - 1) / 2;
 
-  /**
-   * selectUrl() implements the standard floating-point multiplicative
-   *     hash function described by Knuth, and hashes the contents of the 
-   *     given param string into a float between 0 and 1. This float is then
-   *     scaled to the size of the provided urls array, and used to select
-   *     a URL.
-   *
-   * Parameters:
-   * paramString - {String}
-   * urls - {Array(String)}
-   * 
-   * Returns:
-   * {String} An entry from the urls array, deterministically selected based
-   *          on the paramString.
-   */
-  $.argenmap.selectURL = function(paramString, urls) {
-    var product = 1,
-      i,
-      len;
-    len = paramString.length;
-    for (i = 0, len; i < len; i++) {
-      product *= paramString.charCodeAt(i) * $.argenmap.URL_HASH_FACTOR;
-      product -= Math.floor(product);
-    }
-    return urls[Math.floor(product * urls.length)];
-  }
 
   /***************************************************************************/
   /*                           GLOBALS de Argenmap                                 */
@@ -580,6 +551,37 @@
 
     this.imageMapType = new google.maps.ImageMapType(wmsOptions);
   };
+
+   // {Float} Used to hash URL param strings for multi-WMS server selection.
+   //        Set to the Golden Ratio per Knuth's recommendation.
+  $.argenmap.URL_HASH_FACTOR = (Math.sqrt(5) - 1) / 2;
+
+  /**
+   * selectUrl() implements the standard floating-point multiplicative
+   *     hash function described by Knuth, and hashes the contents of the 
+   *     given param string into a float between 0 and 1. This float is then
+   *     scaled to the size of the provided urls array, and used to select
+   *     a URL.
+   *
+   * Parameters:
+   * paramString - {String}
+   * urls - {Array(String)}
+   * 
+   * Returns:
+   * {String} An entry from the urls array, deterministically selected based
+   *          on the paramString.
+   */
+  $.argenmap.selectURL = function(paramString, urls) {
+    var product = 1,
+      i,
+      len;
+    len = paramString.length;
+    for (i = 0, len; i < len; i++) {
+      product *= paramString.charCodeAt(i) * $.argenmap.URL_HASH_FACTOR;
+      product -= Math.floor(product);
+    }
+    return urls[Math.floor(product * urls.length)];
+  }
 
   $.argenmap.CapaTMS = function (opts) {
     var defaults = {
