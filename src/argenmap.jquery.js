@@ -552,6 +552,7 @@
     this.imageMapType = new google.maps.ImageMapType(wmsOptions);
   };
 
+
   $.argenmap.CapaTMS = function (opts) {
     var defaults = {
         // Mantiene cache de tiles requeridas para no volver a pedir a distintos
