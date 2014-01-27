@@ -114,25 +114,27 @@
       return true;
     };
     this.activarInfoMenu = function() {
+      var _this = this;
+      
       //infoMenu
       if(this.infoMenuActivado === true) {
         return;
       }
       this.infoMenuActivado = true;
       google.maps.event.addListener(map, 'click', $.proxy(this.mostrarInfoMenu,this));
-      $( '.argenmapMapCanvas' ).on( "mouseenter" ,"a.argenmapFeatureInfo", function(e) {
+      _this.$el.find( '.argenmapMapCanvas' ).on( "mouseenter" ,"a.argenmapFeatureInfo", function(e) {
         $(this).css({
           'background-color':"#1C74A5",
           color:'white'
         });
       });
-      $( '.argenmapMapCanvas' ).on( "mouseleave" ,"a.argenmapFeatureInfo", function(e) {
+      _this.$el.find( '.argenmapMapCanvas' ).on( "mouseleave" ,"a.argenmapFeatureInfo", function(e) {
         $(this).css({
           'background-color':"transparent",
           color: '#1C74A5'
         });
       });
-      $( '.argenmapMapCanvas' ).on( "click", "a.argenmapFeatureInfo", $.proxy(this.pedirInformacion,this));
+      _this.$el.find( '.argenmapMapCanvas' ).on( "click", "a.argenmapFeatureInfo", $.proxy(this.pedirInformacion,this));
     };
     this.desactivarInfoMenu = function() {
       google.maps.event.clearListeners(map, 'click');
