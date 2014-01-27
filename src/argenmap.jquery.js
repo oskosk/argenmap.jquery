@@ -21,19 +21,20 @@
   ];
 
   //Espacio de nombres para algunas funciones
-  var argenmap = {};
+  // Siguiendo pattern de:
+  // https://github.com/jquery-boilerplate/jquery-patterns/blob/master/patterns/jquery.namespace.plugin-boilerplate.js
+  if (! $.argenmap ) {
+    $.argenmap = {};  
+  }
+  
 
-  argenmap.BASEURL = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
+  $.argenmap.BASE_URL = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
 
-  /** 
-   * Constant: URL_HASH_FACTOR
-   * {Float} Used to hash URL param strings for multi-WMS server selection.
-   *         Set to the Golden Ratio per Knuth's recommendation.
-   */
-  var URL_HASH_FACTOR = (Math.sqrt(5) - 1) / 2;
+   // {Float} Used to hash URL param strings for multi-WMS server selection.
+   //        Set to the Golden Ratio per Knuth's recommendation.
+  $.argenmap.URL_HASH_FACTOR = (Math.sqrt(5) - 1) / 2;
 
   /**
-   * Method: selectUrl
    * selectUrl() implements the standard floating-point multiplicative
    *     hash function described by Knuth, and hashes the contents of the 
    *     given param string into a float between 0 and 1. This float is then
@@ -48,13 +49,13 @@
    * {String} An entry from the urls array, deterministically selected based
    *          on the paramString.
    */
-  function selectURL(paramString, urls) {
+  $.argenmap.selectURL = function(paramString, urls) {
     var product = 1,
       i,
       len;
     len = paramString.length;
     for (i = 0, len; i < len; i++) {
-      product *= paramString.charCodeAt(i) * URL_HASH_FACTOR;
+      product *= paramString.charCodeAt(i) * $.argenmap.URL_HASH_FACTOR;
       product -= Math.floor(product);
     }
     return urls[Math.floor(product * urls.length)];
@@ -116,7 +117,7 @@
       _this.opts.mapTypeControlOptions = {
         style:google.maps.MapTypeControlStyle.DROPDOWN_MENU
       };
-      var mapCanvas = argenmap._prepararContenedor(this.$el);
+      var mapCanvas = $.argenmap._prepararContenedor(this.$el);
       
       this.gmap = map = new google.maps.Map(mapCanvas, _this.opts);
       
@@ -131,8 +132,8 @@
         map.setZoom(map.getZoom() + 1);
         map.setZoom(map.getZoom() - 1);
       });
-      argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseArgenmap());
-      argenmap.GmapAgregarCapa(map, new argenmap.CapaTMSArgenmap());
+      $.argenmap.GmapAgregarCapaBase(map, new $.argenmap.CapaBaseArgenmap());
+      $.argenmap.GmapAgregarCapa(map, new $.argenmap.CapaTMSArgenmap());
       this.gmap.setMapTypeId('Mapa IGN');
 
       return true;
@@ -293,7 +294,7 @@
         defaults = {
           lat: _this.gmap.getCenter().lat(),
           lng: _this.gmap.getCenter().lng(),
-          icono: argenmap.BASEURL + 'img/marcadores/punto.png',
+          icono: $.argenmap.BASE_URL + 'img/marcadores/punto.png',
           nombre: 'Marcador_' + Math.floor(Math.random() * 10100),
           contenido: undefined
         };
@@ -414,7 +415,7 @@
   /**
    * Clase de cache interna de urls
    */
-  argenmap.cacheDeCliente = function () {
+  $.argenmap.cacheDeCliente = function () {
     this.MAX_TILES = 150;
     this.cache = [];
     this.cacheRef = {};
@@ -423,7 +424,7 @@
   /**
    * Metodos de cache interna
    */
-  argenmap.cacheDeCliente.prototype = {
+  $.argenmap.cacheDeCliente.prototype = {
     /**
      * Recupera un tile de la cache.
      * Si no existe, devuelve false
@@ -462,12 +463,12 @@
     }
   };
 
-  argenmap.CapaWMS = function (opts) {
+  $.argenmap.CapaWMS = function (opts) {
 
     var defaults = {
       // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
       imageMapType : null,
-      // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
+      // Referencia al objeto map de google. Se setea con $.argenmap.agregarCapaWMS
       gmap : null,
       tipo : 'wms-1.1.1',
       url: "",
@@ -500,7 +501,7 @@
 
   };
 
-  argenmap.CapaWMS.prototype = {
+  $.argenmap.CapaWMS.prototype = {
     getTileUrl : function (tile, zoom) {
       var projection = this.gmap.getProjection();
       var zpow = Math.pow(2, zoom);
@@ -517,8 +518,8 @@
       var layers = this.capas;
 
       //usando mercator para pedir 900913
-      ulw = argenmap.latLngAMercator(ulw.lat(), ulw.lng());
-      lrw = argenmap.latLngAMercator(lrw.lat(), lrw.lng());
+      ulw = $.argenmap.latLngAMercator(ulw.lat(), ulw.lng());
+      lrw = $.argenmap.latLngAMercator(lrw.lat(), lrw.lng());
 
       var crs = this.crs;
       var bbox = ulw.lng + "," + ulw.lat + "," + lrw.lng + "," + lrw.lat;
@@ -541,12 +542,12 @@
    * @param {Object} opts opciones para construir la capa
    * @export
    */
-  argenmap.CapaBaseWMS = function (opts) {
+  $.argenmap.CapaBaseWMS = function (opts) {
 
     var defaults = {
       // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
       imageMapType : null,
-      // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
+      // Referencia al objeto map de google. Se setea con $.argenmap.agregarCapaWMS
       gmap : null,
       tipo : 'wms-1.1.1',
       url: "",
@@ -566,7 +567,7 @@
 
     var wmsOptions = {
       alt: this.nombre,
-      getTileUrl: jQuery.proxy(argenmap.CapaWMS.prototype.getTileUrl, this),
+      getTileUrl: jQuery.proxy($.argenmap.CapaWMS.prototype.getTileUrl, this),
       isPng: true,
       maxZoom: 17,
       minZoom: 3,
@@ -580,14 +581,14 @@
     this.imageMapType = new google.maps.ImageMapType(wmsOptions);
   };
 
-  argenmap.CapaTMS = function (opts) {
+  $.argenmap.CapaTMS = function (opts) {
     var defaults = {
         // Mantiene cache de tiles requeridas para no volver a pedir a distintos
         // servidores del array
-      cache: new argenmap.cacheDeCliente(),
+      cache: new $.argenmap.cacheDeCliente(),
         // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
       imageMapType: null,
-      // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
+      // Referencia al objeto map de google. Se setea con $.argenmap.agregarCapaWMS
       gmap:  null,
       tipo: 'tms-1.0.0',
       nombre: 'CAPA TMS',
@@ -617,11 +618,11 @@
 
   };
 
-  argenmap.CapaTMS.prototype = {
+  $.argenmap.CapaTMS.prototype = {
     getTileUrl: function (tile, zoom) {
       var baseURL = this.url;
       if (typeof baseURL !== 'string') {
-        baseURL = selectURL(tile.x + '' + tile.y, baseURL);
+        baseURL = $.argenmap.selectURL(tile.x + '' + tile.y, baseURL);
         var cached = this.cache.recuperar(tile.x,tile.y,zoom);
         if(cached)
         {
@@ -646,14 +647,14 @@
    * @param {Object} opts opciones para construir la capa
    * @export
    */
-  argenmap.CapaBaseTMS = function (opts) {
+  $.argenmap.CapaBaseTMS = function (opts) {
     var defaults = {
         // Mantiene cache de tiles requeridas para no volver a pedir a distintos
         // servidores del array
-      cache: new argenmap.cacheDeCliente(),
+      cache: new $.argenmap.cacheDeCliente(),
         // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
       imageMapType: null,
-      // Referencia al objeto map de google. Se setea con argenmap.agregarCapaWMS
+      // Referencia al objeto map de google. Se setea con $.argenmap.agregarCapaWMS
       gmap:  null,
       tipo: 'tms-1.0.0',
       nombre: 'CAPA TMS',
@@ -669,7 +670,7 @@
 
     var tmsOptions = {
       alt: this.nombre,
-      getTileUrl: jQuery.proxy(argenmap.CapaTMS.prototype.getTileUrl, this),
+      getTileUrl: jQuery.proxy($.argenmap.CapaTMS.prototype.getTileUrl, this),
       isPng: true,
       maxZoom: 17,
       minZoom: 3,
@@ -684,41 +685,41 @@
     this.imageMapType = new google.maps.ImageMapType(tmsOptions);
   };
 
-  argenmap.CapaBaseArgenmap = function () {
+  $.argenmap.CapaBaseArgenmap = function () {
     var opts = {
       nombre: 'Mapa IGN',
       url: IGN_CACHES,
       capas: 'capabaseargenmap'
     };
-    argenmap.CapaBaseTMS.apply(this, [opts]);
+    $.argenmap.CapaBaseTMS.apply(this, [opts]);
   };
 
-  argenmap.CapaBaseArgenmap.prototype = {
+  $.argenmap.CapaBaseArgenmap.prototype = {
     getTileUrl: function () {
-      return argenmap.CapaBaseTMS.prototype.getTileUrl.apply(this, arguments);
+      return $.argenmap.CapaBaseTMS.prototype.getTileUrl.apply(this, arguments);
     }
   };
 
-  argenmap.CapaTMSArgenmap = function () {
+  $.argenmap.CapaTMSArgenmap = function () {
     var opts = {
       nombre: 'IGN',
       url: IGN_CACHES,
       capas: 'capabasesigign'
     };
-    argenmap.CapaTMS.apply(this, [opts]);
+    $.argenmap.CapaTMS.apply(this, [opts]);
   };
-  argenmap.CapaTMSArgenmap.prototype = {
+  $.argenmap.CapaTMSArgenmap.prototype = {
     getTileUrl: function (a, b) {
       // Solo cargo tiles para este overlay
       // si estoy en la capa satelite
       if (this.gmap.getMapTypeId() !== 'satellite') {
         return false;
       }
-      return argenmap.CapaTMS.prototype.getTileUrl.apply(this, arguments);
+      return $.argenmap.CapaTMS.prototype.getTileUrl.apply(this, arguments);
     }
   };
 
-  argenmap.GmapAgregarCapaBase = function (gmap, capa) {
+  $.argenmap.GmapAgregarCapaBase = function (gmap, capa) {
     var mapTypeIds;
 
     capa.gmap = gmap;
@@ -754,7 +755,7 @@
    *
    * @param {Object} capa La capa a superponer sobre al mapa.
    */
-  argenmap.GmapAgregarCapa = function (gmap, capa) {
+  $.argenmap.GmapAgregarCapa = function (gmap, capa) {
 
     capa.gmap = gmap;
     //gmap.overlayMapTypes.insertAt(0, capa.imageMapType);
@@ -769,8 +770,8 @@
    * @param {string} divId el id del div contenedor.
    * @private 
    */
-  argenmap._prepararContenedor = function (div) {
-    var LOGOURL = argenmap.BASEURL + 'img/logoignsintexto-25px.png';
+  $.argenmap._prepararContenedor = function (div) {
+    var LOGOURL = $.argenmap.BASE_URL + 'img/logoignsintexto-25px.png';
     var mapCanvas_ = $('<div class="argenmapMapCanvas" />').css({
       'width': '100%',
       'min-height': '200px'
@@ -806,7 +807,7 @@
     mapFooter_.append(mapLogoAnchor_);
     mapFooter_.append('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/#datosvectoriales">Top&oacute;nimos, datos topogr&aacute;ficos - IGN Argentina // Calles - OpenStreetMap</a>');
 
-    argenmap._maximizarCanvas($contenedor_, mapFooter_, mapCanvas_);
+    $.argenmap._maximizarCanvas($contenedor_, mapFooter_, mapCanvas_);
     return mapCanvas_.get(0);
   };
 
@@ -814,7 +815,7 @@
    * Cambia el tamaño del canvas del mapa de acuerdo al alto del contenedor
    * y setea el listener para cuando resizeo el div
    */
-  argenmap._maximizarCanvas = function (contenedor_, mapFooter_, mapCanvas_) {
+  $.argenmap._maximizarCanvas = function (contenedor_, mapFooter_, mapCanvas_) {
     var dif = contenedor_.innerHeight() - mapFooter_.outerHeight();
     mapCanvas_.height(dif);
 
@@ -848,7 +849,7 @@
    *     PARAMETER["false_northing", 0.0], UNIT["m", 1.0], AXIS["x", EAST],
    *     AXIS["y", NORTH], AUTHORITY["EPSG","900913"]]
    */
-  argenmap.latLngAMercator = function (lat, lon) {
+  $.argenmap.latLngAMercator = function (lat, lon) {
     var x = lon * 20037508.34 / 180;
     var y = Math.log(Math.tan((90 + lat) * Math.PI / 360)) / (Math.PI / 180);
 
@@ -904,6 +905,8 @@
   // argenmap.jQuery plugin
   //-----------------------------------------------------------------------//
 
+  // Creo el pseudo :argenmap para poder encontrar todos
+  // los mapas de la página en la  que argenmap haya sido instanciado
   $.expr[':'][ "argenmap" ] = function( elem ) {
     return !!$.data( elem, "argenmap" );
   };
@@ -946,11 +949,11 @@
       
       a.activarInfoMenu();
 
-      var capa = new argenmap.CapaBaseWMS( opciones );
+      var capa = new $.argenmap.CapaBaseWMS( opciones );
 
       a.capasWms.push( capa );
 
-      argenmap.GmapAgregarCapaBase(map, capa);
+      $.argenmap.GmapAgregarCapaBase(map, capa);
 
     });
   };
@@ -967,11 +970,11 @@
 
       a.activarInfoMenu();
 
-      var capa = new argenmap.CapaWMS( opciones );
+      var capa = new $.argenmap.CapaWMS( opciones );
 
       a.capasWms.push( capa );
 
-      argenmap.GmapAgregarCapa(map, capa);
+      $.argenmap.GmapAgregarCapa(map, capa);
     });
   };
 
@@ -985,7 +988,7 @@
 
       var map = $(this).data('gmap');
 
-      argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseTMS( opciones ) );
+      $.argenmap.GmapAgregarCapaBase(map, new $.argenmap.CapaBaseTMS( opciones ) );
     });
   };
 
@@ -999,7 +1002,7 @@
 
       var map = $(this).data('gmap');
 
-      argenmap.GmapAgregarCapaTMS(map, new argenmap.CapaTMS( opciones) );
+      $.argenmap.GmapAgregarCapaTMS(map, new $.argenmap.CapaTMS( opciones) );
     });
   };
 
