@@ -904,6 +904,10 @@
   // argenmap.jQuery plugin
   //-----------------------------------------------------------------------//
 
+  $.expr[':'][ "argenmap" ] = function( elem ) {
+    return !!$.data( elem, "argenmap" );
+  };
+
   $.fn.argenmap = function (opciones) {
     var i, args,
       results = [];
