@@ -44,11 +44,11 @@
     unit: 'km',
     zoom: 5,
     mapTypeControl: true,
-
-    center: {
+    centro: {
       lat: -34,
       lng: -59
-    }
+    },
+    center: null
   };
 
 
@@ -82,7 +82,7 @@
       init: function () {
         var _this = this;
         
-        _this.opts.center = new google.maps.LatLng(_this.opts.center.lat, _this.opts.center.lng);
+        _this.opts.center = new google.maps.LatLng(_this.opts.centro.lat, _this.opts.centro.lng);
           //Kludge pa que no muestre el tipito de streetView
         _this.opts.streetViewControl = false;
           //Kludge pa que muestre escala gráfica
@@ -161,7 +161,7 @@
         });
         infow.open(this.gmap);
       },
-      
+
       pedirInformacion: function(event) {
         var _this = this;
         var infow = _this.infoWindow();
