@@ -12,7 +12,7 @@
  *
  */
 
-(function ($) {
+;(function ($) {
   var IGN_CACHES = [
     'http://cg.aws.af.cm/tms',
     'http://190.220.8.216/tms',
