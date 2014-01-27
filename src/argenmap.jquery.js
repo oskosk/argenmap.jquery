@@ -89,7 +89,7 @@
       _this.opts.mapTypeControlOptions = {
         style:google.maps.MapTypeControlStyle.DROPDOWN_MENU
       };
-      var mapCanvas = $.argenmap._prepararContenedor(this.$el);
+      var mapCanvas = $.argenmap._crearDivParaElMapa(this.$el);
       
       this.gmap = map = new google.maps.Map(mapCanvas, _this.opts);
       
@@ -734,7 +734,7 @@
    * @param {string} divId el id del div contenedor.
    * @private 
    */
-  $.argenmap._prepararContenedor = function (div) {
+  $.argenmap._crearDivParaElMapa = function (div) {
     var LOGOURL = $.argenmap.BASE_URL + 'img/logoignsintexto-25px.png';
     var mapCanvas_ = $('<div class="argenmapMapCanvas" />').css({
       'width': '100%',
