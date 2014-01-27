@@ -12,7 +12,10 @@
  *
  */
 
+// Hecho acorde a los patterns de jqueryboilerplate.com
+// https://github.com/jquery-boilerplate/jquery-boilerplate/
 ;(function ($) {
+
 
   //Espacio de nombres para algunas funciones
   // Siguiendo pattern de:
