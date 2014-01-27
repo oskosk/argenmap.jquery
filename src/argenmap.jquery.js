@@ -13,12 +13,6 @@
  */
 
 ;(function ($) {
-  var IGN_CACHES = [
-    'http://cg.aws.af.cm/tms',
-    'http://190.220.8.216/tms',
-    'http://mapaabierto.aws.af.cm/tms',
-    'http://igntiles1.ap01.aws.af.cm/tms'
-  ];
 
   //Espacio de nombres para algunas funciones
   // Siguiendo pattern de:
@@ -29,6 +23,13 @@
   
 
   $.argenmap.BASE_URL = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
+
+  $.argenmap.IGN_CACHES = [
+    'http://cg.aws.af.cm/tms',
+    'http://190.220.8.216/tms',
+    'http://mapaabierto.aws.af.cm/tms',
+    'http://igntiles1.ap01.aws.af.cm/tms'
+  ];
 
 
 
@@ -386,7 +387,7 @@
   /**
    * Clase de cache interna de urls
    */
-  $.argenmap.cacheDeCliente = function () {
+  $.argenmap.CacheDeCliente = function () {
     this.MAX_TILES = 150;
     this.cache = [];
     this.cacheRef = {};
@@ -395,7 +396,7 @@
   /**
    * Metodos de cache interna
    */
-  $.argenmap.cacheDeCliente.prototype = {
+  $.argenmap.CacheDeCliente.prototype = {
     /**
      * Recupera un tile de la cache.
      * Si no existe, devuelve false
@@ -557,7 +558,7 @@
     var defaults = {
         // Mantiene cache de tiles requeridas para no volver a pedir a distintos
         // servidores del array
-      cache: new $.argenmap.cacheDeCliente(),
+      cache: new $.argenmap.CacheDeCliente(),
         // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
       imageMapType: null,
       // Referencia al objeto map de google. Se setea con $.argenmap.agregarCapaWMS
@@ -652,7 +653,7 @@
   $.argenmap.CapaBaseArgenmap = function () {
     var opts = {
       nombre: 'Mapa IGN',
-      url: IGN_CACHES,
+      url: $.argenmap.IGN_CACHES,
       capas: 'capabaseargenmap'
     };
     $.argenmap.CapaTMS.apply(this, [opts]);
@@ -665,7 +666,7 @@
   $.argenmap.CapaTMSArgenmap = function () {
     var opts = {
       nombre: 'IGN',
-      url: IGN_CACHES,
+      url: $.argenmap.IGN_CACHES,
       capas: 'capabasesigign'
     };
     $.argenmap.CapaTMS.apply(this, [opts]);
