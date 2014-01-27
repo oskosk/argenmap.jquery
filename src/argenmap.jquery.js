@@ -552,37 +552,6 @@
     this.imageMapType = new google.maps.ImageMapType(wmsOptions);
   };
 
-   // {Float} Used to hash URL param strings for multi-WMS server selection.
-   //        Set to the Golden Ratio per Knuth's recommendation.
-  $.argenmap.URL_HASH_FACTOR = (Math.sqrt(5) - 1) / 2;
-
-  /**
-   * selectUrl() implements the standard floating-point multiplicative
-   *     hash function described by Knuth, and hashes the contents of the 
-   *     given param string into a float between 0 and 1. This float is then
-   *     scaled to the size of the provided urls array, and used to select
-   *     a URL.
-   *
-   * Parameters:
-   * paramString - {String}
-   * urls - {Array(String)}
-   * 
-   * Returns:
-   * {String} An entry from the urls array, deterministically selected based
-   *          on the paramString.
-   */
-  $.argenmap.selectURL = function(paramString, urls) {
-    var product = 1,
-      i,
-      len;
-    len = paramString.length;
-    for (i = 0, len; i < len; i++) {
-      product *= paramString.charCodeAt(i) * $.argenmap.URL_HASH_FACTOR;
-      product -= Math.floor(product);
-    }
-    return urls[Math.floor(product * urls.length)];
-  }
-
   $.argenmap.CapaTMS = function (opts) {
     var defaults = {
         // Mantiene cache de tiles requeridas para no volver a pedir a distintos
@@ -606,7 +575,7 @@
 
     var tmsOptions = {
       alt: this.nombre,
-      getTileUrl: jQuery.proxy(this.getTileUrl, this),
+      getTileUrl: $.proxy(this.getTileUrl, this), 
       isPng: false,
       maxZoom: 17,
       minZoom: 6,
@@ -621,10 +590,44 @@
   };
 
   $.argenmap.CapaTMS.prototype = {
+     // {Float} Used to hash URL param strings for multi-WMS server selection.
+     //        Set to the Golden Ratio per Knuth's recommendation.
+    URL_HASH_FACTOR:  (Math.sqrt(5) - 1) / 2,
+    /**
+     * selectUrl() implements the standard floating-point multiplicative
+     *     hash function described by Knuth, and hashes the contents of the 
+     *     given param string into a float between 0 and 1. This float is then
+     *     scaled to the size of the provided urls array, and used to select
+     *     a URL.
+     *
+     * Parameters:
+     * paramString - {String}
+     * urls - {Array(String)}
+     * 
+     * Returns:
+     * {String} An entry from the urls array, deterministically selected based
+     *          on the paramString.
+     */
+    selectURL: function(paramString, urls) {
+      var _this = this,
+        product = 1,
+        i,
+        len;
+      len = paramString.length;
+      for (i = 0, len; i < len; i++) {
+
+        product *= paramString.charCodeAt(i) * _this.URL_HASH_FACTOR;
+        product -= Math.floor(product);
+      }
+      return urls[Math.floor(product * urls.length)];
+    },
+
     getTileUrl: function (tile, zoom) {
       var baseURL = this.url;
+
       if (typeof baseURL !== 'string') {
-        baseURL = $.argenmap.selectURL(tile.x + '' + tile.y, baseURL);
+        
+        baseURL = this.selectURL(tile.x + '' + tile.y, baseURL);
         var cached = this.cache.recuperar(tile.x,tile.y,zoom);
         if(cached)
         {
@@ -643,49 +646,7 @@
     }
   };
 
- /**
-   * @class Representa una capa TMS opaca que puede ser utilizada como capa base de los mapas
-   * @constructor
-   * @param {Object} opts opciones para construir la capa
-   * @export
-   */
-  $.argenmap.CapaBaseTMS = function (opts) {
-    var defaults = {
-        // Mantiene cache de tiles requeridas para no volver a pedir a distintos
-        // servidores del array
-      cache: new $.argenmap.cacheDeCliente(),
-        // El objeto ImageMapType q representa a esta capa en para la api de gmaps.
-      imageMapType: null,
-      // Referencia al objeto map de google. Se setea con $.argenmap.agregarCapaWMS
-      gmap:  null,
-      tipo: 'tms-1.0.0',
-      nombre: 'CAPA TMS',
-      url: "",
-      capas: ""
-    };
-
-    jQuery.extend(this, defaults, opts);    
-    
-    //Creating the WMS layer options.  This code creates the Google imagemaptype options for each wms layer.  In the options the function that calls the individual 
-    //wms layer is set 
-
-
-    var tmsOptions = {
-      alt: this.nombre,
-      getTileUrl: jQuery.proxy($.argenmap.CapaTMS.prototype.getTileUrl, this),
-      isPng: true,
-      maxZoom: 17,
-      minZoom: 3,
-      name: this.nombre,
-      tileSize: new google.maps.Size(256, 256)
-
-    };
-
-
-    //Creating the object to create the ImageMapType that will call the WMS Layer Options.
-
-    this.imageMapType = new google.maps.ImageMapType(tmsOptions);
-  };
+ 
 
   $.argenmap.CapaBaseArgenmap = function () {
     var opts = {
@@ -693,15 +654,13 @@
       url: IGN_CACHES,
       capas: 'capabaseargenmap'
     };
-    $.argenmap.CapaBaseTMS.apply(this, [opts]);
+    $.argenmap.CapaTMS.apply(this, [opts]);
   };
-
-  $.argenmap.CapaBaseArgenmap.prototype = {
-    getTileUrl: function () {
-      return $.argenmap.CapaBaseTMS.prototype.getTileUrl.apply(this, arguments);
-    }
-  };
-
+  //heredo el prototipo de $.argenmap.CapaTMS
+  $.argenmap.CapaBaseArgenmap.prototype = new $.argenmap.CapaTMS();
+  $.argenmap.CapaBaseArgenmap.prototype.constructor = $.argenmap.CapaBaseArgenmap;
+  
+  
   $.argenmap.CapaTMSArgenmap = function () {
     var opts = {
       nombre: 'IGN',
@@ -710,15 +669,16 @@
     };
     $.argenmap.CapaTMS.apply(this, [opts]);
   };
-  $.argenmap.CapaTMSArgenmap.prototype = {
-    getTileUrl: function (a, b) {
-      // Solo cargo tiles para este overlay
-      // si estoy en la capa satelite
-      if (this.gmap.getMapTypeId() !== 'satellite') {
-        return false;
-      }
-      return $.argenmap.CapaTMS.prototype.getTileUrl.apply(this, arguments);
+
+  $.argenmap.CapaTMSArgenmap.prototype = new $.argenmap.CapaTMS();
+  $.argenmap.CapaTMSArgenmap.prototype.constructor = $.argenmap.CapaTMSArgenmap;
+  $.argenmap.CapaTMSArgenmap.prototype.getTileUrl = function (a, b) {
+    // Solo cargo tiles para este overlay
+    // si estoy en la capa satelite
+    if (this.gmap.getMapTypeId() !== 'satellite') {
+      return false;
     }
+    return $.argenmap.CapaTMS.prototype.getTileUrl.apply(this, arguments);
   };
 
   $.argenmap.GmapAgregarCapaBase = function (gmap, capa) {
