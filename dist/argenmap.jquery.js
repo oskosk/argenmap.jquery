@@ -1,7 +1,7 @@
 /*!
  * argenmap.jquery v1
  * 
- * Version     : 1.5.0 (2014-01-22)
+ * Version     : 1.5.0 (2014-03-11)
  * Licencia    : https://raw.github.com/oskosk/argenmap.jquery/master/LICENCIA
  * Web site    : http://ign.gob.ar/argenmap
  * Repositorio : http://github.com/oskosk/argenmap.jquery
@@ -14,27 +14,20 @@
  */
 
 (function($) {
-    var IGN_CACHES = [ "http://cg.aws.af.cm/tms", "http://190.220.8.216/tms", "http://mapaabierto.aws.af.cm/tms", "http://igntiles1.ap01.aws.af.cm/tms" ];
-    var argenmap = {};
-    argenmap.BASEURL = "http://www.ign.gob.ar/argenmap/argenmap.jquery/";
-    var URL_HASH_FACTOR = (Math.sqrt(5) - 1) / 2;
-    function selectURL(paramString, urls) {
-        var product = 1, i, len;
-        len = paramString.length;
-        for (i = 0, len; i < len; i++) {
-            product *= paramString.charCodeAt(i) * URL_HASH_FACTOR;
-            product -= Math.floor(product);
-        }
-        return urls[Math.floor(product * urls.length)];
+    if (!$.argenmap) {
+        $.argenmap = {};
     }
+    $.argenmap.BASE_URL = "http://www.ign.gob.ar/argenmap/argenmap.jquery/";
+    $.argenmap.IGN_CACHES = [ "http://igntiles2.eu01.aws.af.cm/tms", "http://190.220.8.216/tms", "http://mapaabierto.aws.af.cm/tms", "http://igntiles1.ap01.aws.af.cm/tms" ];
     var _defaults = {
         unit: "km",
         zoom: 5,
         mapTypeControl: true,
-        center: {
+        centro: {
             lat: -34,
             lng: -59
-        }
+        },
+        center: null
     };
     function Argenmap(element, opciones) {
         var map = null;
@@ -46,15 +39,17 @@
         this.capasWms = [];
         this.infoMenuActivado = false;
         this._dragging = false;
-        this.init = function() {
+    }
+    Argenmap.prototype = {
+        init: function() {
             var _this = this;
-            _this.opts.center = new google.maps.LatLng(_this.opts.center.lat, _this.opts.center.lng);
+            _this.opts.center = new google.maps.LatLng(_this.opts.centro.lat, _this.opts.centro.lng);
             _this.opts.streetViewControl = false;
             _this.opts.scaleControl = true;
             _this.opts.mapTypeControlOptions = {
                 style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
             };
-            var mapCanvas = argenmap._prepararContenedor(this.$el);
+            var mapCanvas = $.argenmap._crearDivParaElMapa(this.$el);
             this.gmap = map = new google.maps.Map(mapCanvas, _this.opts);
             _this.mapearEventosDelMapa();
             this.$el.data("gmap", map);
@@ -62,35 +57,36 @@
                 map.setZoom(map.getZoom() + 1);
                 map.setZoom(map.getZoom() - 1);
             });
-            argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseArgenmap());
-            argenmap.GmapAgregarCapa(map, new argenmap.CapaTMSArgenmap());
+            $.argenmap.GmapAgregarCapaBase(map, new $.argenmap.CapaBaseArgenmap());
+            $.argenmap.GmapAgregarCapa(map, new $.argenmap.CapaTMSArgenmap());
             this.gmap.setMapTypeId("Mapa IGN");
             return true;
-        };
-        this.activarInfoMenu = function() {
+        },
+        activarInfoMenu: function() {
+            var _this = this;
             if (this.infoMenuActivado === true) {
                 return;
             }
             this.infoMenuActivado = true;
             google.maps.event.addListener(map, "click", $.proxy(this.mostrarInfoMenu, this));
-            $(".argenmapMapCanvas").on("mouseenter", "a.argenmapFeatureInfo", function(e) {
+            _this.$el.find(".argenmapMapCanvas").on("mouseenter", "a.argenmapFeatureInfo", function(e) {
                 $(this).css({
                     "background-color": "#1C74A5",
                     color: "white"
                 });
             });
-            $(".argenmapMapCanvas").on("mouseleave", "a.argenmapFeatureInfo", function(e) {
+            _this.$el.find(".argenmapMapCanvas").on("mouseleave", "a.argenmapFeatureInfo", function(e) {
                 $(this).css({
                     "background-color": "transparent",
                     color: "#1C74A5"
                 });
             });
-            $(".argenmapMapCanvas").on("click", "a.argenmapFeatureInfo", $.proxy(this.pedirInformacion, this));
-        };
-        this.desactivarInfoMenu = function() {
+            _this.$el.find(".argenmapMapCanvas").on("click", "a.argenmapFeatureInfo", $.proxy(this.pedirInformacion, this));
+        },
+        desactivarInfoMenu: function() {
             google.maps.event.clearListeners(map, "click");
-        };
-        this.mostrarInfoMenu = function(event) {
+        },
+        mostrarInfoMenu: function(event) {
             var infow = this.infoWindow();
             infow.close();
             var c = '<div id="infoMenu" style="width:200px;margin:0;padding:0">Lat/Long: <br /><strong>' + parseInt(event.latLng.lat() * 1e4, 10) / 1e4 + ", " + parseInt(event.latLng.lng() * 1e4, 10) / 1e4 + "</strong></div>" + '<a style="color:#1C74A5;text-decoration:none;display:block;padding:3px;" data-y="' + event.pixel.y + '" ' + 'data-x="' + event.pixel.x + '" data-maxwidth="' + parseInt(this.$el.width() * .6, 10) + '" href="#" class="argenmapFeatureInfo">Obtener información</a>';
@@ -100,8 +96,8 @@
                 content: c
             });
             infow.open(this.gmap);
-        };
-        this.pedirInformacion = function(event) {
+        },
+        pedirInformacion: function(event) {
             var _this = this;
             var infow = _this.infoWindow();
             infow.close();
@@ -146,8 +142,8 @@
             infow.setContent($("<div>").append(content).html());
             infow.open(_this.gmap);
             return;
-        };
-        this.mapearEventosDelMapa = function() {
+        },
+        mapearEventosDelMapa: function() {
             var _this = this;
             google.maps.event.addListener(_this.gmap, "zoom_changed", function(e) {
                 _this.$el.trigger("zoomend", _this.gmap.getZoom());
@@ -165,27 +161,27 @@
                     _this.$el.trigger("moveend", [ _this.gmap.getZoom(), _this.$el.centro() ]);
                 }
             });
-        };
-        this.agregarCapaKML = function(opciones) {
+        },
+        agregarCapaKML: function(opciones) {
             var _this = this, defaults = {
                 preserveViewport: true,
                 map: _this.$el.data("gmap")
             };
             opciones = $.extend(defaults, opciones);
             var kml = new google.maps.KmlLayer(opciones);
-        };
-        this.infoWindow = function(opciones) {
+        },
+        infoWindow: function(opciones) {
             if (this._infoWindow === undefined) {
                 this._infoWindow = new google.maps.InfoWindow();
             }
             this._infoWindow.setOptions($.extend({}, opciones));
             return this._infoWindow;
-        };
-        this.agregarMarcador = function(opciones) {
+        },
+        agregarMarcador: function(opciones) {
             var _this = this, defaults = {
                 lat: _this.gmap.getCenter().lat(),
                 lng: _this.gmap.getCenter().lng(),
-                icono: argenmap.BASEURL + "img/marcadores/punto.png",
+                icono: $.argenmap.BASE_URL + "img/marcadores/punto.png",
                 nombre: "Marcador_" + Math.floor(Math.random() * 10100),
                 contenido: undefined
             };
@@ -215,14 +211,14 @@
                 _this.infoWindow().open(_this.$el.data("gmap"), m);
             });
             return;
-        };
-        this.quitarMarcador = function(nombre) {
+        },
+        quitarMarcador: function(nombre) {
             if (this._marcadores[nombre] !== undefined) {
                 this._marcadores[nombre].setMap(null);
                 delete this._marcadores[nombre];
             }
-        };
-        this.modificarMarcador = function(nombre, opciones) {
+        },
+        modificarMarcador: function(nombre, opciones) {
             if (this._marcadores[nombre] === undefined) {
                 return;
             }
@@ -231,12 +227,12 @@
             opciones = $.extend(m, opciones);
             opciones.nombre = nombre;
             this.agregarMarcador(opciones);
-        };
-        this.encuadrar = function(extent) {
+        },
+        encuadrar: function(extent) {
             var _this = this, s = extent.sur, w = extent.oeste, n = extent.norte, e = extent.este, southwest = new google.maps.LatLng(s, w), northeast = new google.maps.LatLng(n, w), boundingbox = new google.maps.LatLngBounds(southwest, northeast);
             _this.gmap.fitBounds(boundingbox);
-        };
-        this.geocodificar = function(str, callback) {
+        },
+        geocodificar: function(str, callback) {
             var _this = this;
             $.getJSON("http://nominatim.openstreetmap.org/search?format=json&limit=5&q=" + str, function(data) {
                 if (data.length) {
@@ -244,29 +240,17 @@
                 }
                 console.log(data);
             }, _this);
-        };
-    }
-    if (!Array.prototype.indexOf) {
-        Array.prototype.indexOf = function(elt) {
-            var len = this.length >>> 0;
-            var from = Number(arguments[1]) || 0;
-            from = from < 0 ? Math.ceil(from) : Math.floor(from);
-            if (from < 0) from += len;
-            for (;from < len; from++) {
-                if (from in this && this[from] === elt) return from;
-            }
-            return -1;
-        };
-    }
-    argenmap.cacheDeCliente = function() {
+        }
+    };
+    $.argenmap.CacheDeCliente = function() {
         this.MAX_TILES = 150;
         this.cache = [];
         this.cacheRef = {};
     };
-    argenmap.cacheDeCliente.prototype = {
+    $.argenmap.CacheDeCliente.prototype = {
         recuperar: function(x, y, z) {
             var tilecode = x + "-" + y + "-" + z;
-            if (this.cache.indexOf(tilecode) !== -1) {
+            if ($.inArray(tilecode, this.cache) !== -1) {
                 return this.cacheRef[tilecode];
             }
             return false;
@@ -285,179 +269,155 @@
             }
         }
     };
-    argenmap.CapaBaseWMS = function(opts) {
-        this.imageMapType = null;
-        this.gmap = null;
-        this.name = "Capa base WMS";
-        this.tipo = "wms-1.1.1";
-        jQuery.extend(this, opts);
-        var wmsOptions = {
-            alt: this.name,
-            getTileUrl: jQuery.proxy(this.getTileUrl, this),
-            isPng: true,
-            maxZoom: 17,
-            minZoom: 3,
-            name: this.name,
-            tileSize: new google.maps.Size(256, 256)
+    $.argenmap.CapaWMS = function(opts) {
+        var defaults = {
+            imageMapType: null,
+            gmap: null,
+            tipo: "wms-1.1.1",
+            url: "",
+            capas: "",
+            nombre: "Capa WMS",
+            consultable: true,
+            crs: "EPSG:3857",
+            transparente: true
         };
-        this.imageMapType = new google.maps.ImageMapType(wmsOptions);
-    };
-    argenmap.CapaBaseWMS.prototype.getTileUrl = function(tile, zoom) {
-        var projection = this.gmap.getProjection();
-        var zpow = Math.pow(2, zoom);
-        var ul = new google.maps.Point(tile.x * 256 / zpow, (tile.y + 1) * 256 / zpow);
-        var lr = new google.maps.Point((tile.x + 1) * 256 / zpow, tile.y * 256 / zpow);
-        var ulw = projection.fromPointToLatLng(ul);
-        var lrw = projection.fromPointToLatLng(lr);
-        var baseURL = this.baseURL;
-        var version = "1.1.1";
-        var request = "GetMap";
-        var format = "image%2Fpng";
-        var layers = this.layers;
-        ulw = argenmap.latLngAMercator(ulw.lat(), ulw.lng());
-        lrw = argenmap.latLngAMercator(lrw.lat(), lrw.lng());
-        var crs = "EPSG:3857";
-        var bbox = ulw.lng + "," + ulw.lat + "," + lrw.lng + "," + lrw.lat;
-        var service = "WMS";
-        var width = "256";
-        var height = "256";
-        var styles = "";
-        var url = baseURL + "LAYERS=" + layers + "&TRANSPARENT=FALSE" + "&VERSION=" + version + "&SERVICE=" + service + "&REQUEST=" + request + "&STYLES=" + styles + "&FORMAT=" + format + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height;
-        return url;
-    };
-    argenmap.CapaBaseTMS = function(opts) {
-        this.cache = new argenmap.cacheDeCliente();
-        this.imageMapType = null;
-        this.gmap = null;
-        this.name = "Capa base TMS";
-        this.tipo = "tms-1.0.0";
-        jQuery.extend(this, opts);
-        var tmsOptions = {
-            alt: this.name,
-            getTileUrl: jQuery.proxy(this.getTileUrl, this),
-            isPng: true,
-            maxZoom: 17,
-            minZoom: 3,
-            name: this.name,
-            tileSize: new google.maps.Size(256, 256)
-        };
-        this.imageMapType = new google.maps.ImageMapType(tmsOptions);
-    };
-    argenmap.CapaBaseTMS.prototype.getTileUrl = function(tile, zoom) {
-        var baseURL = this.baseURL;
-        if (typeof baseURL !== "string") {
-            baseURL = selectURL(tile.x + "" + tile.y, baseURL);
-            var cached = this.cache.recuperar(tile.x, tile.y, zoom);
-            if (cached) {
-                return cached;
-            }
-        }
-        var layers = this.layers;
-        var ytms = (1 << zoom) - tile.y - 1;
-        var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + "/" + ytms + ".png";
-        this.cache.guardar(tile.x, tile.y, zoom, url);
-        return url;
-    };
-    argenmap.CapaWMS = function(opts) {
-        this.imageMapType = null;
-        this.gmap = null;
-        this.tipo = "wms-1.1.1";
-        this.name = "CAPA WMS";
-        this.alt = "CAPA WMS";
-        jQuery.extend(this, opts);
+        jQuery.extend(this, defaults, opts);
         var wmsOptions = {
-            alt: this.alt,
+            alt: this.nombre,
             getTileUrl: jQuery.proxy(this.getTileUrl, this),
             isPng: false,
             maxZoom: 17,
             minZoom: 6,
-            name: this.name,
+            name: this.nombre,
             tileSize: new google.maps.Size(256, 256)
         };
         this.imageMapType = new google.maps.ImageMapType(wmsOptions);
     };
-    argenmap.CapaWMS.prototype.getTileUrl = function(tile, zoom) {
-        var projection = this.gmap.getProjection();
-        var zpow = Math.pow(2, zoom);
-        var ul = new google.maps.Point(tile.x * 256 / zpow, (tile.y + 1) * 256 / zpow);
-        var lr = new google.maps.Point((tile.x + 1) * 256 / zpow, tile.y * 256 / zpow);
-        var ulw = projection.fromPointToLatLng(ul);
-        var lrw = projection.fromPointToLatLng(lr);
-        var baseURL = this.baseURL;
-        var version = "1.1.1";
-        var request = "GetMap";
-        var format = "image/png";
-        var layers = this.layers;
-        ulw = argenmap.latLngAMercator(ulw.lat(), ulw.lng());
-        lrw = argenmap.latLngAMercator(lrw.lat(), lrw.lng());
-        var crs = "EPSG:3857";
-        var bbox = ulw.lng + "," + ulw.lat + "," + lrw.lng + "," + lrw.lat;
-        var width = "256";
-        var height = "256";
-        var styles = "";
-        var url = baseURL + "VERSION=" + version + "&SERVICE=WMS" + "&REQUEST=" + request + "&LAYERS=" + layers + "&STYLES=" + styles + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height + "&FORMAT=" + format + "&TRANSPARENT=TRUE";
-        return url;
+    $.argenmap.CapaWMS.prototype = {
+        getTileUrl: function(tile, zoom) {
+            var projection = this.gmap.getProjection();
+            var zpow = Math.pow(2, zoom);
+            var ul = new google.maps.Point(tile.x * 256 / zpow, (tile.y + 1) * 256 / zpow);
+            var lr = new google.maps.Point((tile.x + 1) * 256 / zpow, tile.y * 256 / zpow);
+            var ulw = projection.fromPointToLatLng(ul);
+            var lrw = projection.fromPointToLatLng(lr);
+            var baseURL = this.url;
+            var version = "1.1.1";
+            var request = "GetMap";
+            var format = "image/png";
+            var layers = this.capas;
+            ulw = $.argenmap.latLngAMercator(ulw.lat(), ulw.lng());
+            lrw = $.argenmap.latLngAMercator(lrw.lat(), lrw.lng());
+            var crs = this.crs;
+            var bbox = ulw.lng + "," + ulw.lat + "," + lrw.lng + "," + lrw.lat;
+            var width = "256";
+            var height = "256";
+            var styles = "";
+            var transparent = this.transparente ? "TRUE" : "FALSE";
+            var url = baseURL + "VERSION=" + version + "&SERVICE=WMS" + "&REQUEST=" + request + "&LAYERS=" + layers + "&STYLES=" + styles + "&SRS=" + crs + "&BBOX=" + bbox + "&WIDTH=" + width + "&HEIGHT=" + height + "&FORMAT=" + format + "&TRANSPARENT=" + transparent;
+            return url;
+        }
     };
-    argenmap.CapaTMS = function(opts) {
-        this.cache = new argenmap.cacheDeCliente();
-        this.imageMapType = null;
-        this.gmap = null;
-        this.tipo = "tms-1.0.0";
-        this.name = "CAPA TMS";
-        this.alt = "CAPA TMS";
-        jQuery.extend(this, opts);
+    $.argenmap.CapaBaseWMS = function(opts) {
+        var defaults = {
+            imageMapType: null,
+            gmap: null,
+            tipo: "wms-1.1.1",
+            url: "",
+            capas: "",
+            nombre: "Capa base WMS",
+            consultable: true,
+            crs: "EPSG:3857",
+            transparente: false
+        };
+        jQuery.extend(this, defaults, opts);
+        var wmsOptions = {
+            alt: this.nombre,
+            getTileUrl: jQuery.proxy($.argenmap.CapaWMS.prototype.getTileUrl, this),
+            isPng: true,
+            maxZoom: 17,
+            minZoom: 3,
+            name: this.nombre,
+            tileSize: new google.maps.Size(256, 256)
+        };
+        this.imageMapType = new google.maps.ImageMapType(wmsOptions);
+    };
+    $.argenmap.CapaTMS = function(opts) {
+        var defaults = {
+            cache: new $.argenmap.CacheDeCliente(),
+            imageMapType: null,
+            gmap: null,
+            tipo: "tms-1.0.0",
+            nombre: "CAPA TMS",
+            url: "",
+            capas: ""
+        };
+        jQuery.extend(this, defaults, opts);
         var tmsOptions = {
-            alt: this.alt,
-            getTileUrl: jQuery.proxy(this.getTileUrl, this),
+            alt: this.nombre,
+            getTileUrl: $.proxy(this.getTileUrl, this),
             isPng: false,
             maxZoom: 17,
             minZoom: 6,
-            name: this.name,
+            name: this.nombre,
             tileSize: new google.maps.Size(256, 256)
         };
         this.imageMapType = new google.maps.ImageMapType(tmsOptions);
     };
-    argenmap.CapaTMS.prototype.getTileUrl = function(tile, zoom) {
-        var baseURL = this.baseURL;
-        if (typeof baseURL !== "string") {
-            baseURL = selectURL(tile.x + "" + tile.y, baseURL);
-            var cached = this.cache.recuperar(tile.x, tile.y, zoom);
-            if (cached) {
-                return cached;
+    $.argenmap.CapaTMS.prototype = {
+        URL_HASH_FACTOR: (Math.sqrt(5) - 1) / 2,
+        selectURL: function(paramString, urls) {
+            var _this = this, product = 1, i, len;
+            len = paramString.length;
+            for (i = 0, len; i < len; i++) {
+                product *= paramString.charCodeAt(i) * _this.URL_HASH_FACTOR;
+                product -= Math.floor(product);
             }
+            return urls[Math.floor(product * urls.length)];
+        },
+        getTileUrl: function(tile, zoom) {
+            var baseURL = this.url;
+            if (typeof baseURL !== "string") {
+                baseURL = this.selectURL(tile.x + "" + tile.y, baseURL);
+                var cached = this.cache.recuperar(tile.x, tile.y, zoom);
+                if (cached) {
+                    return cached;
+                }
+            }
+            var layers = this.capas;
+            var ytms = (1 << zoom) - tile.y - 1;
+            var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + "/" + ytms + ".png";
+            this.cache.guardar(tile.x, tile.y, zoom, url);
+            return url;
         }
-        var layers = this.layers;
-        var ytms = (1 << zoom) - tile.y - 1;
-        var url = baseURL + "/" + layers + "/" + zoom + "/" + tile.x + "/" + ytms + ".png";
-        this.cache.guardar(tile.x, tile.y, zoom, url);
-        return url;
     };
-    argenmap.CapaBaseArgenmap = function() {
+    $.argenmap.CapaBaseArgenmap = function() {
         var opts = {
-            name: "Mapa IGN",
-            baseURL: IGN_CACHES,
-            layers: "capabaseargenmap"
+            nombre: "Mapa IGN",
+            url: $.argenmap.IGN_CACHES,
+            capas: "capabaseargenmap"
         };
-        argenmap.CapaBaseTMS.apply(this, [ opts ]);
+        $.argenmap.CapaTMS.apply(this, [ opts ]);
     };
-    argenmap.CapaBaseArgenmap.prototype.getTileUrl = function() {
-        return argenmap.CapaBaseTMS.prototype.getTileUrl.apply(this, arguments);
-    };
-    argenmap.CapaTMSArgenmap = function() {
+    $.argenmap.CapaBaseArgenmap.prototype = new $.argenmap.CapaTMS();
+    $.argenmap.CapaBaseArgenmap.prototype.constructor = $.argenmap.CapaBaseArgenmap;
+    $.argenmap.CapaTMSArgenmap = function() {
         var opts = {
-            name: "IGN",
-            baseURL: IGN_CACHES,
-            layers: "capabasesigign"
+            nombre: "IGN",
+            url: $.argenmap.IGN_CACHES,
+            capas: "capabasesigign"
         };
-        argenmap.CapaTMS.apply(this, [ opts ]);
+        $.argenmap.CapaTMS.apply(this, [ opts ]);
     };
-    argenmap.CapaTMSArgenmap.prototype.getTileUrl = function(a, b) {
+    $.argenmap.CapaTMSArgenmap.prototype = new $.argenmap.CapaTMS();
+    $.argenmap.CapaTMSArgenmap.prototype.constructor = $.argenmap.CapaTMSArgenmap;
+    $.argenmap.CapaTMSArgenmap.prototype.getTileUrl = function(a, b) {
         if (this.gmap.getMapTypeId() !== "satellite") {
             return false;
         }
-        return argenmap.CapaTMS.prototype.getTileUrl.apply(this, arguments);
+        return $.argenmap.CapaTMS.prototype.getTileUrl.apply(this, arguments);
     };
-    argenmap.GmapAgregarCapaBase = function(gmap, capa) {
+    $.argenmap.GmapAgregarCapaBase = function(gmap, capa) {
         var mapTypeIds;
         capa.gmap = gmap;
         gmap.mapTypes.set(capa.imageMapType.name, capa.imageMapType);
@@ -478,12 +438,12 @@
             }
         });
     };
-    argenmap.GmapAgregarCapa = function(gmap, capa) {
+    $.argenmap.GmapAgregarCapa = function(gmap, capa) {
         capa.gmap = gmap;
         gmap.overlayMapTypes.push(capa.imageMapType);
     };
-    argenmap._prepararContenedor = function(div) {
-        var LOGOURL = argenmap.BASEURL + "img/logoignsintexto-25px.png";
+    $.argenmap._crearDivParaElMapa = function(div) {
+        var LOGOURL = $.argenmap.BASE_URL + "img/logoignsintexto-25px.png";
         var mapCanvas_ = $('<div class="argenmapMapCanvas" />').css({
             width: "100%",
             "min-height": "200px"
@@ -515,10 +475,10 @@
         $contenedor_.append(mapFooter_);
         mapFooter_.append(mapLogoAnchor_);
         mapFooter_.append('<a style="color:white;text-decoration:underline;font-weight:normal" target="_blank" href="http://www.ign.gob.ar/argenmap/argenmap.jquery/docs/#datosvectoriales">Top&oacute;nimos, datos topogr&aacute;ficos - IGN Argentina // Calles - OpenStreetMap</a>');
-        argenmap._maximizarCanvas($contenedor_, mapFooter_, mapCanvas_);
+        $.argenmap._maximizarCanvas($contenedor_, mapFooter_, mapCanvas_);
         return mapCanvas_.get(0);
     };
-    argenmap._maximizarCanvas = function(contenedor_, mapFooter_, mapCanvas_) {
+    $.argenmap._maximizarCanvas = function(contenedor_, mapFooter_, mapCanvas_) {
         var dif = contenedor_.innerHeight() - mapFooter_.outerHeight();
         mapCanvas_.height(dif);
         contenedor_.bind("resized", function(e) {
@@ -527,7 +487,7 @@
             google.maps.event.trigger(contenedor_.data().gmap, "resize");
         });
     };
-    argenmap.latLngAMercator = function(lat, lon) {
+    $.argenmap.latLngAMercator = function(lat, lon) {
         var x = lon * 20037508.34 / 180;
         var y = Math.log(Math.tan((90 + lat) * Math.PI / 360)) / (Math.PI / 180);
         y = y * 20037508.34 / 180;
@@ -556,6 +516,9 @@
             clearInterval($.event.special.resized.interval);
         }
     };
+    $.expr[":"]["argenmap"] = function(elem) {
+        return !!$.data(elem, "argenmap");
+    };
     $.fn.argenmap = function(opciones) {
         var i, args, results = [];
         $.each(this, function() {
@@ -581,23 +544,24 @@
             if (!a) {
                 return;
             }
-            var defaults = {
-                name: "Capa base WMS",
-                baseURL: "",
-                layers: "",
-                consultable: true
-            };
             var map = $(this).data("gmap");
-            var o = jQuery.extend({}, defaults, opciones);
             a.activarInfoMenu();
-            var capa = new argenmap.CapaBaseWMS({
-                name: o.nombre,
-                baseURL: o.url,
-                layers: o.capas
-            });
-            o.capa_objeto = capa;
-            a.capasWms.push(o);
-            argenmap.GmapAgregarCapaBase(map, capa);
+            var capa = new $.argenmap.CapaBaseWMS(opciones);
+            a.capasWms.push(capa);
+            $.argenmap.GmapAgregarCapaBase(map, capa);
+        });
+    };
+    $.fn.agregarCapaWMS = function(opciones) {
+        return this.each(function() {
+            var a = $(this).data("argenmap");
+            if (!a) {
+                return;
+            }
+            var map = $(this).data("gmap");
+            a.activarInfoMenu();
+            var capa = new $.argenmap.CapaWMS(opciones);
+            a.capasWms.push(capa);
+            $.argenmap.GmapAgregarCapa(map, capa);
         });
     };
     $.fn.agregarCapaBaseTMS = function(opciones) {
@@ -607,36 +571,7 @@
                 return;
             }
             var map = $(this).data("gmap");
-            argenmap.GmapAgregarCapaBase(map, new argenmap.CapaBaseTMS({
-                name: opciones.nombre,
-                baseURL: opciones.url,
-                layers: opciones.capas
-            }));
-        });
-    };
-    $.fn.agregarCapaWMS = function(opciones) {
-        return this.each(function() {
-            var a = $(this).data("argenmap");
-            if (!a) {
-                return;
-            }
-            var defaults = {
-                nombre: "Capa WMS",
-                url: "",
-                capas: "",
-                consultable: true
-            };
-            var map = $(this).data("gmap");
-            var o = jQuery.extend({}, defaults, opciones);
-            a.activarInfoMenu();
-            var capa = new argenmap.CapaWMS({
-                name: o.nombre,
-                baseURL: o.url,
-                layers: o.capas
-            });
-            o.capa_objeto = capa;
-            a.capasWms.push(o);
-            argenmap.GmapAgregarCapa(map, capa);
+            $.argenmap.GmapAgregarCapaBase(map, new $.argenmap.CapaBaseTMS(opciones));
         });
     };
     $.fn.agregarCapaTMS = function(opciones) {
@@ -646,11 +581,7 @@
                 return;
             }
             var map = $(this).data("gmap");
-            argenmap.GmapAgregarCapaTMS(map, new argenmap.CapaTMS({
-                name: opciones.nombre,
-                baseURL: opciones.url,
-                layers: opciones.capas
-            }));
+            $.argenmap.GmapAgregarCapaTMS(map, new $.argenmap.CapaTMS(opciones));
         });
     };
     $.fn.agregarCapaKML = function(opciones) {
