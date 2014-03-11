@@ -1,8 +1,7 @@
-[argenmap.jquery v1](http://www.ign.gob.ar/argenmap/argenmap.jquery/docs) - Mapas web del IGN y jQuery
+[argenmap.jquery v1](http://www.ign.gob.ar/argenmap/argenmap.jquery/docs) 
 ===================================================
 
-Presentación
-------------
+Mapas web del IGN y jQuery.
 
 **argenmap.jquery v1** es un plugin para jQuery que te permite usar fácilmente los mapas web del Instituto Geográfico Nacional
 de la República Argentina (IGN) sobre la API de Google Maps aprovechando esta librería y sus imágenes satelitales.

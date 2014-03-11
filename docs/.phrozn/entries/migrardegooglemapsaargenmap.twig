@@ -1,0 +1,86 @@
+<div class="content">
+    <h1>Tutorial <small>Migración de un mapa de Google Maps a uno de argenmap</small></h1>
+    <section id="migrar">
+        <div class="row-fluid">
+            <div class="span12">
+    <h2>Migrar desde Google Maps a Argenmap.jquery</h2>
+                <p>Este es un ejemplo basico de uso de Google Maps: </p>
+    <div class="ejemplo">
+        <div id="mapahtml2" style="height:315px;border:1px dashed #222"></div>
+    </div>                
+                <pre id="fuente"  class="prettyprint linenums">
+&lt;script type="text/javascript" &gt;
+  var map;
+  function initialize() {
+    var mapOptions = {
+      zoom: 8,
+      center: new google.maps.LatLng(-37.9800587, -57.58995909999999),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('mapahtml'), mapOptions);
+  }
+&lt;/script&gt;
+</pre>
+     <p>Los valores que tenemos que tomar para poder migrarlos a argenmap.jquery son los siguientes:</p>
+      <pre id="fuente-detalle"  class="prettyprint">
+&lt;script type="text/javascript" &gt;
+  var map;
+  function initialize() {
+    var mapOptions = {
+      zoom: <strong><abbr title="Este atributo corresponde al zoom en argenmap.jquery">8</abbr></strong>,
+      center: new google.maps.LatLng(<strong><abbr title="Este atributo corresponde al centro en argenmap.jquery">-34.5722189, -58.44053759999997</abbr></strong>),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('<strong><abbr title="Este atributo corresponde al html id en argenmap.jquery">mapahtml</abbr></strong>'), mapOptions);
+  }
+&lt;/script&gt;
+</pre>
+                    <p>
+                        Los atributos se encuentran subrayados con linea de puntos, para una mayor comprensi&oacute;n se listan aqui:
+                        <ul>
+                            <li>zoom = 8</li>
+                            <li>centro = -37.9800587, -57.58995909999999</li>
+                            <li>elementId = mapahtml</li>
+                        </ul>
+                    </p>
+            </div>
+            <!-- span12-->
+        </div>
+         
+        <!-- row-->
+        <div class="row-fluid">
+            <h3>Convirtiendo el ejemplo de Google Maps a Argenmap.jquery</h3>
+            <p>Siguiendo con el ejemplo anterior ahora veremos como instanciar el mapa de argenmap.jquery con los parametros que tomamos</p>
+                <div class="ejemplo">
+                    <div id="mapahtml" style="height:315px;border:1px dashed #222"></div>
+                </div>
+                <pre id="fuente"  class="prettyprint linenums">
+$(function () {
+  $('#mapahtml').argenmap().centro(-37.9800587, -57.58995909999999).zoom(8);
+});
+</pre>
+                <script type="text/javascript">
+                $(function () {
+                    $('#mapahtml').argenmap().centro(-37.9800587, -57.58995909999999).zoom(8);
+
+                    initialize();
+                }); 
+
+                function initialize()
+                {
+                    var mapOptions = {
+                      zoom: 8,
+                      center: new google.maps.LatLng(-37.9800587, -57.58995909999999),
+                      mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    map = new google.maps.Map(document.getElementById('mapahtml2'),
+                        mapOptions);
+
+                }
+                </script>
+                
+
+        </div>
+       
+    </section>
+</div>
