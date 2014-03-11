@@ -28,7 +28,7 @@
   $.argenmap.BASE_URL = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
 
   $.argenmap.IGN_CACHES = [
-    'http://cg.aws.af.cm/tms',
+    'http://igntiles2.eu01.aws.af.cm/tms',
     'http://190.220.8.216/tms',
     'http://mapaabierto.aws.af.cm/tms',
     'http://igntiles1.ap01.aws.af.cm/tms'
