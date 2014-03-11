@@ -1065,20 +1065,6 @@
     });
   };
 
-  $.fn.limpiarMapa = function (marcadores) {
-
-    return this.each(function () {
-      var a = $(this).data('argenmap');
-      if (!a) {
-        return;
-      }
-      $(this).argenmap({
-        accion: 'limpiar'
-      });
-
-    });
-
-  };
   $.fn.quitarMarcador = function (nombre) {
     var _nombre = nombre;
     return this.each(function (i, e) {
