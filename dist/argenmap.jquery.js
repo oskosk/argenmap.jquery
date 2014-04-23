@@ -17,7 +17,7 @@
     if (!$.argenmap) {
         $.argenmap = {};
     }
-    $.argenmap.BASE_URL = "http://www.ign.gob.ar/argenmap/argenmap.jquery/";
+    $.argenmap.BASE_URL = "http://static.ign.gob.ar/dist/";
     $.argenmap.IGN_CACHES = [ "http://igntiles2.eu01.aws.af.cm/tms", "http://mapaabierto.aws.af.cm/tms", "http://igntiles1.ap01.aws.af.cm/tms" ];
     var _defaults = {
         unit: "km",
