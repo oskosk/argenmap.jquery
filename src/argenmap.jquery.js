@@ -26,7 +26,7 @@
   }
 
 
-  $.argenmap.BASE_URL = 'http://www.ign.gob.ar/argenmap/argenmap.jquery/';
+  $.argenmap.BASE_URL = 'http://satic.ign.gob.ar/argenmap.jquery/dist/';
 
   $.argenmap.IGN_CACHES = [
     'http://igntiles2.eu01.aws.af.cm/tms',
