@@ -1,7 +1,16 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     buildDir: 'dist',
+    copy: {
+      images: {
+        expand: true,
+        flatten: false,
+        src: ['img/marcadores/punto.png', 'img/logoignsintexto-25px.png'],
+        dest: 'dist/'
+
+      }
+    },
     uglify: {
       options: {
         banner: [
@@ -10,7 +19,7 @@ module.exports = function(grunt) {
           ' * ',
           ' * Version     : <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>)',
           ' * Licencia    : <%= pkg.license.url %>',
-          ' * Web site    : http://ign.gob.ar/argenmap',          
+          ' * Web site    : http://ign.gob.ar/argenmap',
           ' * Repositorio : http://github.com/oskosk/argenmap.jquery',
           ' * Issues      : https://github.com/oskosk/argenmap.jquery/issues',
           ' * Contacto    : argenmap@ign.gob.ar',
@@ -19,32 +28,34 @@ module.exports = function(grunt) {
           ' * Todos los derechos reservados.',
           ' *',
           ' */\n\n'
-        ].join('\n'),        
+        ].join('\n'),
       },
       build: {
         options: {
-          'preserveComments':'some'
+          'preserveComments': 'some'
         },
         src: 'src/<%= pkg.name %>.js',
-        dest: '<%= buildDir %>/<%= pkg.name %>.min.js' 
+        dest: '<%= buildDir %>/<%= pkg.name %>.min.js'
       },
       build2: {
         options: {
           'mangle': false,
           'preserveComments': false,
-	        'compress': false,
+          'compress': false,
           'beautify': true
         },
         files: {
-          '<%= buildDir %>/<%= pkg.name %>.js': [ 'src/<%= pkg.name %>.js'],
+          '<%= buildDir %>/<%= pkg.name %>.js': ['src/<%= pkg.name %>.js'],
         }
       }
-    }  
+    }
   });
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Default Task(s).
-  grunt.registerTask('default', ['uglify']);
+  grunt.registerTask('default', ['copy', 'uglify']);
+
 };
