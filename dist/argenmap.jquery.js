@@ -1,7 +1,7 @@
 /*!
  * argenmap.jquery v1
  * 
- * Version     : 1.5.0 (2014-03-11)
+ * Version     : 1.5.0 (2014-04-23)
  * Licencia    : https://raw.github.com/oskosk/argenmap.jquery/master/LICENCIA
  * Web site    : http://ign.gob.ar/argenmap
  * Repositorio : http://github.com/oskosk/argenmap.jquery
@@ -18,7 +18,7 @@
         $.argenmap = {};
     }
     $.argenmap.BASE_URL = "http://www.ign.gob.ar/argenmap/argenmap.jquery/";
-    $.argenmap.IGN_CACHES = [ "http://igntiles2.eu01.aws.af.cm/tms", "http://190.220.8.216/tms", "http://mapaabierto.aws.af.cm/tms", "http://igntiles1.ap01.aws.af.cm/tms" ];
+    $.argenmap.IGN_CACHES = [ "http://igntiles2.eu01.aws.af.cm/tms", "http://mapaabierto.aws.af.cm/tms", "http://igntiles1.ap01.aws.af.cm/tms" ];
     var _defaults = {
         unit: "km",
         zoom: 5,
@@ -659,17 +659,6 @@
             }
             $(marcadores).each(function(i, v) {
                 $(_this).agregarMarcador(v);
-            });
-        });
-    };
-    $.fn.limpiarMapa = function(marcadores) {
-        return this.each(function() {
-            var a = $(this).data("argenmap");
-            if (!a) {
-                return;
-            }
-            $(this).argenmap({
-                accion: "limpiar"
             });
         });
     };
