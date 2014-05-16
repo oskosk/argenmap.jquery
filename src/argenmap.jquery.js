@@ -66,6 +66,7 @@
     this.gmap = null;
     this._marcadores = {};
     this.capasWms = [];
+    this.capasKml = [];
     this.infoMenuActivado = false;
     this._dragging = false;
 
@@ -267,6 +268,7 @@
         };
       opciones = $.extend(defaults, opciones);
       var kml = new google.maps.KmlLayer(opciones);
+      this.capasKml.push(kml);
     },
 
     infoWindow: function (opciones) {
@@ -379,8 +381,16 @@
     quitarCapa: function(nombre) {
       var c = this._traerCapaPorNombre(nombre);
       if(c) {
-        this.gmap.overlayMapTypes.removeAt(c.id,null);
-        this.capasWms.splice(this.capasWms.indexOf(c.capa),1);
+        switch(c.tipo) {
+          case 'wms':
+            this.gmap.overlayMapTypes.removeAt(c.id,null);
+            this.capasWms.splice(this.capasWms.indexOf(c.capa),1);
+          break;
+          case 'kml':
+            c.capa.setMap(null);
+            this.capasKml.splice(this.capasKml.indexOf(c.capa),1);
+          break;
+        }
       }
     },
     /**
@@ -392,7 +402,12 @@
       var capas = this.gmap.overlayMapTypes.getArray();
       for(var i = 0; i < capas.length; i++) {
         if(capas[i].name == nombre) {
-          return {id:i, capa: capas[i]};
+          return {id:i, capa: capas[i], tipo: 'wms'};
+        }
+      }
+      for(i = 0; i < this.capasKml.length; i++) {
+        if(this.capasKml[i].nombre == nombre) {
+          return {id:i, capa: this.capasKml[i], tipo: 'kml'};
         }
       }
       return null;
