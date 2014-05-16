@@ -21,6 +21,7 @@
     $.argenmap.IGN_CACHES = [ "http://igntiles2.eu01.aws.af.cm/tms", "http://mapaabierto.aws.af.cm/tms", "http://igntiles1.ap01.aws.af.cm/tms" ];
     var _defaults = {
         unit: "km",
+        minZoom: 1,
         zoom: 5,
         mapTypeControl: true,
         centro: {
@@ -327,7 +328,7 @@
             getTileUrl: jQuery.proxy(this.getTileUrl, this),
             isPng: false,
             maxZoom: 17,
-            minZoom: 6,
+            minZoom: 1,
             name: this.nombre,
             tileSize: new google.maps.Size(256, 256)
         };
@@ -376,7 +377,7 @@
             getTileUrl: jQuery.proxy($.argenmap.CapaWMS.prototype.getTileUrl, this),
             isPng: true,
             maxZoom: 17,
-            minZoom: 3,
+            minZoom: 1,
             name: this.nombre,
             tileSize: new google.maps.Size(256, 256)
         };
@@ -398,7 +399,7 @@
             getTileUrl: $.proxy(this.getTileUrl, this),
             isPng: false,
             maxZoom: 17,
-            minZoom: 6,
+            minZoom: 1,
             name: this.nombre,
             tileSize: new google.maps.Size(256, 256)
         };
