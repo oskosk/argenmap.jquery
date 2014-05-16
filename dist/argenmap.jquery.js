@@ -1,7 +1,7 @@
 /*!
  * argenmap.jquery v1
  * 
- * Version     : 1.5.0 (2014-04-23)
+ * Version     : 1.5.0 (2014-05-16)
  * Licencia    : https://raw.github.com/oskosk/argenmap.jquery/master/LICENCIA
  * Web site    : http://ign.gob.ar/argenmap
  * Repositorio : http://github.com/oskosk/argenmap.jquery
@@ -240,6 +240,25 @@
                 }
                 console.log(data);
             }, _this);
+        },
+        quitarCapa: function(nombre) {
+            var c = this._traerCapaPorNombre(nombre);
+            if (c) {
+                this.gmap.overlayMapTypes.removeAt(c.id, null);
+                this.capasWms.splice(this.capasWms.indexOf(c.capa), 1);
+            }
+        },
+        _traerCapaPorNombre: function(nombre) {
+            var capas = this.gmap.overlayMapTypes.getArray();
+            for (var i = 0; i < capas.length; i++) {
+                if (capas[i].name == nombre) {
+                    return {
+                        id: i,
+                        capa: capas[i]
+                    };
+                }
+            }
+            return null;
         }
     };
     $.argenmap.CacheDeCliente = function() {
@@ -648,6 +667,19 @@
                 return;
             }
             a.agregarMarcador(opciones);
+        });
+    };
+    $.fn.quitarCapa = function(nombre) {
+        var _nombre = nombre;
+        return this.each(function(i, e) {
+            if (typeof _nombre !== "string") {
+                return;
+            }
+            var a = $(this).data("argenmap");
+            if (!a) {
+                return;
+            }
+            a.quitarCapa(_nombre);
         });
     };
     $.fn.agregarMarcadores = function(marcadores) {
