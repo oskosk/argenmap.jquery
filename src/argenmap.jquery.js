@@ -375,6 +375,27 @@
         console.log(data);
       }, _this);
 
+    },
+    quitarCapa: function(nombre) {
+      var c = this._traerCapaPorNombre(nombre);
+      if(c) {
+        this.gmap.overlayMapTypes.removeAt(c.id,null);
+        this.capasWms.splice(this.capasWms.indexOf(c.capa),1);
+      }
+    },
+    /**
+      Busca una capa por nombre en el array gmap.overlayMapTypes
+      Devuelve un objeto con id y capa. Id corresponde al "nivel"
+      donde se encuentra la capa para luego poder usar getAt, setAt, removeAt o insertAt
+     */
+    _traerCapaPorNombre: function(nombre) {
+      var capas = this.gmap.overlayMapTypes.getArray();
+      for(var i = 0; i < capas.length; i++) {
+        if(capas[i].name == nombre) {
+          return {id:i, capa: capas[i]};
+        }
+      }
+      return null;
     }
 
   };
@@ -1050,6 +1071,19 @@
       a.agregarMarcador(opciones);
     });
   };
+  $.fn.quitarCapa = function(nombre) {
+    var _nombre = nombre;
+    return this.each(function (i, e) {
+      if (typeof (_nombre) !== 'string') {
+        return;
+      }
+      var a = $(this).data('argenmap');
+      if (!a) {
+        return;
+      }
+      a.quitarCapa(_nombre);
+    });
+  };
 
   $.fn.agregarMarcadores = function (marcadores) {
     return this.each(function () {
@@ -1063,7 +1097,6 @@
       });
     });
   };
-
   $.fn.quitarMarcador = function (nombre) {
     var _nombre = nombre;
     return this.each(function (i, e) {
